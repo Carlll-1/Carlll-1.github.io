@@ -34,7 +34,8 @@
 
         .card-img-top {
             object-fit: cover;
-            height: 300px;
+            width: 100%;
+            height: 250px;
         }
 
         .card-title {
@@ -55,12 +56,27 @@
             text-align: center;
             font-size: 0.9rem;
         }
+
+        @media (max-width: 768px) {
+            .jumbotron {
+                padding: 2rem 1rem;
+            }
+
+            .card-img-top {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-img-top {
+                height: 150px;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="#">Destinations</a>
@@ -93,21 +109,21 @@
         </div>
     </nav>
 
-    <!-- Jumbotron -->
     <div class="jumbotron">
         <h1 class="display-4">Ayala Malls Vertis North</h1>
         <p class="lead">Unleash your inner archer and discover a new passion at Ayala Malls Vertis North.</p>
     </div>
 
-    <!-- Content Section -->
     <div class="container my-5">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 mb-4">
                 <div class="card">
                     <img src="styles/ayf.jpg" class="card-img-top" alt="Ayala Malls Vertis North">
                     <div class="card-body">
                         <h5 class="card-title">Discover Archery</h5>
-                        <p class="card-text">Ayala Malls Vertis North offers a unique archery experience for all ages. Whether you're a beginner or an experienced archer, you'll find the perfect challenge here.</p>
+                        <p class="card-text">Ayala Malls Vertis North offers a unique archery experience for all ages.
+                            Whether you're a beginner or an experienced archer, you'll find the perfect challenge here.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -123,7 +139,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2023 Soon Go to Destinations. All rights reserved.</p>
     </footer>
