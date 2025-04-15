@@ -34,7 +34,8 @@
 
         .card-img-top {
             object-fit: cover;
-            height: 300px;
+            width: 100%;
+            height: 250px;
         }
 
         .card-title {
@@ -55,12 +56,27 @@
             text-align: center;
             font-size: 0.9rem;
         }
+
+        @media (max-width: 768px) {
+            .jumbotron {
+                padding: 2rem 1rem;
+            }
+
+            .card-img-top {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-img-top {
+                height: 150px;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="#">Destinations</a>
@@ -93,18 +109,16 @@
         </div>
     </nav>
 
-    <!-- Jumbotron -->
     <div class="jumbotron">
         <h1 class="display-4">Ugbo</h1>
         <p class="lead">Savor a variety of local dishes and immerse yourself in the vibrant Tondo experience.</p>
     </div>
 
-    <!-- Content Section -->
     <div class="container my-5">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 mb-4">
                 <div class="card">
-                    <img src="styles/ugbof.jpg" class="card-img-top">
+                    <img src="styles/ugbof.jpg" class="card-img-top" alt="Ugbo">
                     <div class="card-body">
                         <h5 class="card-title">Tondo Experience</h5>
                         <p class="card-text">Ugbo offers a unique opportunity to explore the local culture and cuisine.
@@ -124,7 +138,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2023 Soon Go to Destinations. All rights reserved.</p>
     </footer>
