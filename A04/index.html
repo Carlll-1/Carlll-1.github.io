@@ -181,9 +181,9 @@
         function changeMode() {
             const html = document.documentElement
             const colorBtn = document.getElementById("colorBtn")
-            mode = mode === "light" ? "dark" : "light"
+            mode = mode == "light" ? "dark" : "light"
             html.setAttribute("data-bs-theme", mode)
-            colorBtn.textContent = mode === "dark" ? "Light Mode" : "Dark Mode"
+            colorBtn.textContent = mode == "dark" ? "Light Mode" : "Dark Mode"
             colorBtn.classList.toggle("btn-light")
             colorBtn.classList.toggle("btn-dark")
         }
