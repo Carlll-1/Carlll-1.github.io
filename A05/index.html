@@ -73,6 +73,18 @@
             right: 15px;
         }
 
+<<<<<<< HEAD
+=======
+        #modeBtn {
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #modeBtn:hover {
+            opacity: 0.85;
+        }
+
+>>>>>>> 34e4829 (Initial commit)
         [data-bs-theme="dark"] body {
             background-color: #121212;
             color: #f1f1f1;
@@ -110,6 +122,15 @@
             .card-img-top {
                 height: 150px;
             }
+<<<<<<< HEAD
+=======
+
+            .toggle-container {
+                position: static;
+                margin-bottom: 1rem;
+                text-align: right;
+            }
+>>>>>>> 34e4829 (Initial commit)
         }
     </style>
 </head>
@@ -117,7 +138,11 @@
 <body>
 
     <div class="toggle-container">
+<<<<<<< HEAD
         <button id="modeBtn" onclick="toggleTheme()" class="btn btn-dark">Dark Mode</button>
+=======
+        <button id="modeBtn" onclick="toggleTheme()" class="btn btn-dark" aria-pressed="false">Dark Mode</button>
+>>>>>>> 34e4829 (Initial commit)
     </div>
 
     <a href="../index.html" class="btn btn-outline-primary btn-sm mx-2">← Back</a>
@@ -218,6 +243,10 @@
             btn.textContent = mode == "dark" ? "Light Mode" : "Dark Mode"
             btn.classList.toggle("btn-light")
             btn.classList.toggle("btn-dark")
+<<<<<<< HEAD
+=======
+            btn.setAttribute("aria-pressed", mode === "dark")
+>>>>>>> 34e4829 (Initial commit)
         }
     </script>
 
