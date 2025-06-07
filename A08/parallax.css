@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* PARALLAX.CSS */
 /*CSS created by Christopher Jay De Claro*/
 /*github.com/cjdeclaro*/
@@ -85,4 +86,80 @@
 		background-position: center center;
 		background-size: cover;
 	}
+=======
+/* PARALLAX.CSS */
+/* Responsive revision by OpenAI based on original by Christopher Jay De Claro */
+/* github.com/cjdeclaro */
+
+/* Key Art default settings */
+.keyart,
+.keyart_layer {
+	height: 100vh;
+	width: 100%;
+}
+
+.keyart {
+	position: relative;
+	z-index: 10;
+	overflow: hidden;
+}
+
+.keyart_layer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-position: center bottom;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.keyart_layer.parallax {
+	position: fixed;
+}
+
+.main-content {
+	width: 100%;
+	position: absolute;
+	z-index: 200;
+}
+
+#keyart-0 {
+	background-image: url(styles/para0.png);
+}
+
+#keyart-1 {
+	background-image: url(styles/para.png);
+}
+
+#keyart-2 {
+	background-image: url(styles/para1.png);
+}
+
+#keyart-3 {
+	background-image: url(styles/para2.png);
+}
+
+#keyart-4 {
+	background-image: url(styles/para3.png);
+}
+
+#keyart-5 {
+	background-image: url(styles/para4.png);
+}
+
+#keyart-6 {
+	background-image: url(styles/para52.png);
+}
+
+#keyart-scrim {
+	opacity: 0;
+}
+
+@media (max-width: 768px) {
+	.keyart_layer {
+		background-position: center center;
+	}
+>>>>>>> 3f8b81f1371eac34f1cb68bbf891ff55d832ec44
 }
