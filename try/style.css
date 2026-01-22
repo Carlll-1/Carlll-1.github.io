@@ -1,0 +1,37 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #fff0f5;
+}
+
+/* Header & Navbar */
+.bg-pink-light {
+    background-color: #ffe4e1 !important;
+}
+
+h1,
+h2 {
+    font-family: 'Patrick Hand', cursive;
+}
+
+.btn-pink {
+    background-color: #ff69b4;
+    color: white;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-pink:hover {
+    background-color: #ff1493;
+    transform: scale(1.05);
+}
+
+/* Cards */
+.card {
+    border-radius: 20px;
+}
+
+.card img {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
