@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hey Cinna :>></title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --yellow-50: #fffef5;
+            --yellow-100: #fff9db;
+            --yellow-200: #fff3b0;
+            --yellow-300: #ffec85;
+            --yellow-400: #ffe45a;
+            --yellow-500: #ffdc2e;
+            --yellow-600: #f5c800;
+            --yellow-700: #c9a400;
+            --yellow-800: #7a6400;
+            --yellow-900: #3d3200;
+            --cream: #fffdf0;
+            --warm-white: #fffefa;
+            --text-dark: #4a3f00;
+            --text-medium: #6b5e14;
+            --text-light: #8a7a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--yellow-100);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--yellow-400);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--yellow-500);
+        }
+
+        .navbar-custom {
+            background: rgba(255, 249, 219, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--yellow-200);
+            padding: 0.8rem 0;
+            transition: all 0.4s ease;
+        }
+
+        .navbar-custom.scrolled {
+            background: rgba(255, 249, 219, 0.95);
+            box-shadow: 0 4px 30px rgba(255, 220, 46, 0.15);
+        }
+
+        .navbar-brand {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--yellow-700) !important;
+        }
+
+        .nav-link {
+            color: var(--text-medium) !important;
+            font-weight: 500;
+            margin: 0 0.3rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--yellow-500);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover {
+            color: var(--yellow-700) !important;
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        .navbar-toggler {
+            border-color: var(--yellow-300);
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 3px rgba(255, 220, 46, 0.3);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23c9a400' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        .floating-dots {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .dot {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--yellow-300);
+            opacity: 0.15;
+            animation: floatDot linear infinite;
+        }
+
+        @keyframes floatDot {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.15;
+            }
+
+            90% {
+                opacity: 0.15;
+            }
+
+            100% {
+                transform: translateY(-10vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg,
+                    var(--yellow-50) 0%,
+                    var(--yellow-100) 30%,
+                    var(--yellow-200) 70%,
+                    var(--yellow-100) 100%);
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, var(--yellow-200) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: -20%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, var(--yellow-300) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: heroGlow 10s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes heroGlow {
+            0% {
+                transform: scale(1) translate(0, 0);
+            }
+
+            100% {
+                transform: scale(1.1) translate(30px, -20px);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-greeting {
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            animation: fadeInDown 1s ease forwards;
+            opacity: 0;
+        }
+
+        .hero-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 700;
+            color: var(--yellow-700);
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            opacity: 0;
+            text-shadow: 2px 4px 20px rgba(201, 164, 0, 0.15);
+        }
+
+        .hero-tagline {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: var(--text-medium);
+            font-weight: 300;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            animation: fadeInUp 1s ease 0.6s forwards;
+            opacity: 0;
+        }
+
+        .hero-cta {
+            animation: fadeInUp 1s ease 0.9s forwards;
+            opacity: 0;
+        }
+
+        .btn-yellow {
+            background: linear-gradient(135deg, var(--yellow-400), var(--yellow-500));
+            color: var(--text-dark);
+            border: none;
+            padding: 0.85rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(255, 220, 46, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-yellow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-yellow:hover::before {
+            left: 100%;
+        }
+
+        .btn-yellow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 220, 46, 0.5);
+            color: var(--text-dark);
+        }
+
+        .btn-yellow-outline {
+            background: transparent;
+            color: var(--yellow-700);
+            border: 2px solid var(--yellow-400);
+            padding: 0.8rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s ease;
+        }
+
+        .btn-yellow-outline:hover {
+            background: var(--yellow-400);
+            color: var(--text-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 220, 46, 0.35);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator .mouse {
+            width: 26px;
+            height: 40px;
+            border: 2px solid var(--yellow-600);
+            border-radius: 13px;
+            display: flex;
+            justify-content: center;
+            padding-top: 8px;
+        }
+
+        .scroll-indicator .wheel {
+            width: 4px;
+            height: 8px;
+            background: var(--yellow-600);
+            border-radius: 2px;
+            animation: scrollWheel 1.5s infinite;
+        }
+
+        @keyframes scrollWheel {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-padding {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            color: var(--yellow-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            font-family: 'Caveat', cursive;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+        }
+
+        .section-divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--yellow-400), var(--yellow-600));
+            border-radius: 2px;
+            margin: 1rem auto 2rem;
+        }
+
+        .question-section {
+            background: var(--warm-white);
+        }
+
+        .letter-card {
+            background: linear-gradient(145deg, #fffef8, #fff9db);
+            border: 1px solid var(--yellow-200);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow:
+                0 10px 40px rgba(255, 220, 46, 0.1),
+                0 1px 3px rgba(201, 164, 0, 0.08);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .letter-card:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 20px 60px rgba(255, 220, 46, 0.18),
+                0 1px 3px rgba(201, 164, 0, 0.08);
+        }
+
+        .letter-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 2rem;
+            right: 2rem;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--yellow-400), transparent);
+            border-radius: 0 0 3px 3px;
+        }
+
+        .letter-text {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--text-medium);
+            font-weight: 400;
+        }
+
+        .letter-text .highlight {
+            color: var(--yellow-700);
+            font-weight: 600;
+        }
+
+        .letter-text .cinna-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: var(--yellow-700);
+            font-weight: 700;
+        }
+
+        .letter-signature {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            color: var(--text-light);
+            margin-top: 1.5rem;
+            text-align: right;
+        }
+
+        .details-section {
+            background: linear-gradient(180deg, var(--yellow-50), var(--yellow-100), var(--yellow-50));
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--yellow-200);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            height: 100%;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--yellow-300), var(--yellow-500), var(--yellow-300));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(255, 220, 46, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .detail-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .detail-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--yellow-200), var(--yellow-300));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+            transition: transform 0.4s ease;
+        }
+
+        .detail-card:hover .detail-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .detail-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--yellow-800);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .detail-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--yellow-700);
+            margin-bottom: 0.8rem;
+        }
+
+        .detail-text {
+            font-size: 0.95rem;
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+
+        .promises-section {
+            background: var(--warm-white);
+        }
+
+        .promise-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .promise-item:hover {
+            background: var(--yellow-50);
+            transform: translateX(5px);
+        }
+
+        .promise-number {
+            width: 45px;
+            height: 45px;
+            min-width: 45px;
+            background: linear-gradient(135deg, var(--yellow-300), var(--yellow-500));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            box-shadow: 0 4px 15px rgba(255, 220, 46, 0.3);
+        }
+
+        .promise-content h5 {
+            font-weight: 600;
+            color: var(--yellow-800);
+            margin-bottom: 0.3rem;
+            font-size: 1.05rem;
+        }
+
+        .promise-content p {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg,
+                    var(--yellow-100) 0%,
+                    var(--yellow-200) 50%,
+                    var(--yellow-100) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--yellow-400), transparent);
+        }
+
+        .cta-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--yellow-200);
+            border-radius: 24px;
+            padding: 3.5rem 3rem;
+            max-width: 650px;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(255, 220, 46, 0.15);
+        }
+
+        .cta-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--yellow-700);
+            margin-bottom: 1rem;
+        }
+
+        .cta-text {
+            font-size: 1.05rem;
+            color: var(--text-medium);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .response-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        footer {
+            background: var(--yellow-900);
+            color: var(--yellow-200);
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--yellow-700), var(--yellow-500), var(--yellow-700));
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        footer .footer-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            color: var(--yellow-400);
+        }
+
+        /* ===================== MODAL ===================== */
+        .modal-content {
+            background: linear-gradient(145deg, var(--yellow-50), var(--cream));
+            border: 1px solid var(--yellow-200);
+            border-radius: 20px;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--yellow-200);
+        }
+
+        .modal-title {
+            font-family: 'Dancing Script', cursive;
+            color: var(--yellow-700);
+            font-size: 1.8rem;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-body p {
+            color: var(--text-medium);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .btn-close:focus {
+            box-shadow: 0 0 0 3px rgba(255, 220, 46, 0.3);
+        }
+
+        .wave-divider {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .wave-divider svg {
+            display: block;
+            width: 100%;
+            height: 60px;
+        }
+
+        .wave-divider.flip {
+            transform: rotate(180deg);
+        }
+
+        .sparkle-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--yellow-400);
+            border-radius: 50%;
+            animation: sparkleAnim 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkleAnim {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+        }
+
+        .typewriter {
+            display: inline-block;
+            border-right: 2px solid var(--yellow-600);
+            animation: blink 0.8s step-end infinite;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .section-padding {
+                padding: 4rem 0;
+            }
+
+            .letter-card {
+                padding: 2.5rem 2rem;
+            }
+
+            .cta-card {
+                padding: 2.5rem 2rem;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .section-padding {
+                padding: 3rem 0;
+            }
+
+            .letter-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .letter-text {
+                font-size: 0.98rem;
+                line-height: 1.8;
+            }
+
+            .cta-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .detail-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .promise-item {
+                padding: 1rem;
+            }
+
+            .response-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-yellow,
+            .btn-yellow-outline {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .hero-greeting {
+                font-size: 1.2rem;
+            }
+
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .section-padding {
+                padding: 2.5rem 0;
+            }
+        }
+
+        /* ===================== SMOOTH REVEAL ===================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pulse-ring {
+            position: relative;
+            display: inline-block;
+        }
+
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--yellow-400);
+            border-radius: 50px;
+            transform: translate(-50%, -50%);
+            animation: pulseRing 2s ease-out infinite;
+        }
+
+        @keyframes pulseRing {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.06;
+            pointer-events: none;
+        }
+
+        .bg-shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--yellow-500);
+            top: 10%;
+            right: -5%;
+        }
+
+        .bg-shape-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--yellow-400);
+            bottom: 15%;
+            left: -3%;
+        }
+
+        .bg-shape-3 {
+            width: 150px;
+            height: 150px;
+            background: var(--yellow-600);
+            top: 40%;
+            left: 10%;
+        }
+
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                background: rgba(255, 249, 219, 0.98);
+                border-radius: 12px;
+                padding: 1rem;
+                margin-top: 0.5rem;
+                border: 1px solid var(--yellow-200);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="floating-dots" id="floatingDots"></div>
+
+    <nav class="navbar navbar-expand-lg fixed-top navbar-custom" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#hero">For Cinna :>></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#question">The Question</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#details">Details</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#promises">Promises</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#answer">Your Answer</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section" id="hero">
+        <div class="sparkle-container" id="heroSparkles"></div>
+        <div class="hero-content">
+            <h1 class="hero-name">Cinna :>></h1>
+            <p class="hero-tagline">
+                I made this little website :>>
+                Take your time and scroll down whenever you are ready.
+            </p>
+            <div class="hero-cta">
+                <a href="#question" class="btn-yellow">Read On</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="wave-divider">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+            <path d="M0,0 C300,60 900,0 1200,60 L1200,0 L0,0 Z" fill="#fffef5" />
+        </svg>
+    </div>
+
+    <section class="question-section section-padding" id="question">
+        <div class="container">
+            <div class="text-center mb-4" data-aos="fade-up">
+                <h2 class="section-title">Small Question</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="letter-card" data-aos="fade-up" data-aos-delay="200">
+                <p class="letter-text">
+                    Helloo <span class="cinna-name">Cinna</span> :>>
+                </p>
+                <br />
+                <p class="letter-text">
+                    I hope you are doing well. I just wanted to ask you something, and I thought maybe
+                    this would be a nice way to do it.
+                </p>
+                <br />
+                <p class="letter-text">
+                    <span class="highlight">Are you free this weekend?</span> Because if you are,
+                    I would really like to take you out. Nothing complicated, nothing fancy if you do not
+                    want it to be. Just us, going to out, and hopefully having a good time together.
+                </p>
+                <br />
+                <p class="letter-text">
+                    I already have a place in mind, but if you have somewhere you would rather go,
+                    just say the word and I will change the plan. Whatever makes you comfortable, that
+                    is what matters to me :>>
+                </p>
+                <br />
+                <p class="letter-text">
+                    No pressure at all. Only if you are free and only if you want to.
+                </p>
+                <p class="letter-signature">
+                    scroll down for more details :>>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="wave-divider flip" style="background: var(--warm-white);">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+            <path d="M0,0 C300,60 900,0 1200,60 L1200,0 L0,0 Z" fill="#fffef5" />
+        </svg>
+    </div>
+
+    <section class="details-section section-padding" id="details">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">The Little Details</h2>
+                <p class="section-subtitle">so you know what to expect</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                <line x1="16" y1="2" x2="16" y2="6" />
+                                <line x1="8" y1="2" x2="8" y2="6" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                            </svg>
+                        </div>
+                        <h4 class="detail-title">When</h4>
+                        <p class="detail-text">
+                            This weekend, whenever you are free.
+                            Anytime works for me.
+                            Morning, afternoon, evening, you pick and I will be there :>>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                        </div>
+                        <h4 class="detail-title">Where</h4>
+                        <p class="detail-text">
+                            I already have a cafe in mind.
+                            But if there is a place you have been wanting to try or somewhere you feel more comfortable,
+                            let me know and I will change the plan. No problem at all :>>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M20.38 3.46L16 2 12 5.5 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+                            </svg>
+                        </div>
+                        <h4 class="detail-title">What to Wear</h4>
+                        <p class="detail-text">
+                            Anything you want.
+                            Seriously, just wear whatever you feel like wearing.
+                            Just be yourself, Cinna. That is more than enough :>>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
+                        </div>
+                        <h4 class="detail-title">Your Presence</h4>
+                        <p class="detail-text">
+                            That alone is already appreciated.
+                            I do not need anything else.
+                            You showing up is the best part :>>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                <polyline points="9 22 9 12 15 12 15 22" />
+                            </svg>
+                        </div>
+                        <h4 class="detail-title">Getting Home</h4>
+                        <p class="detail-text">
+                            I will make sure you get home safely and sound.
+                            And I will make sure you are home before your curfew.
+                            That is a promise :>>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                                <line x1="9" y1="9" x2="9.01" y2="9" />
+                                <line x1="15" y1="9" x2="15.01" y2="9" />
+                            </svg>
+                        </div>
+                        <h4 class="detail-title">No Pressure</h4>
+                        <p class="detail-text">
+                            Only if you are free.
+                            Only if you feel like it.
+                            There is no pressure at all, okay?
+                            Just thought I would ask :>>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="wave-divider" style="background: linear-gradient(180deg, var(--yellow-50), var(--yellow-50));">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+            <path d="M0,60 C300,0 900,60 1200,0 L1200,60 L0,60 Z" fill="#fffefa" />
+        </svg>
+    </div>
+
+    <section class="promises-section section-padding" id="promises">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title">My Promises to You</h2>
+                <p class="section-subtitle">things I want you to know</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+
+                    <div class="promise-item" data-aos="fade-right" data-aos-delay="100">
+                        <div class="promise-number">1</div>
+                        <div class="promise-content">
+                            <h5>I will respect your time</h5>
+                            <p>Whenever you want to start and whenever you want to end, I am completely fine with it.
+                                Your schedule comes first :>></p>
+                        </div>
+                    </div>
+
+                    <div class="promise-item" data-aos="fade-right" data-aos-delay="200">
+                        <div class="promise-number">2</div>
+                        <div class="promise-content">
+                            <h5>I will get you home safely</h5>
+                            <p>I will make sure you get home safe and sound, and well before your curfew. You do not
+                                have to worry about that at all :>></p>
+                        </div>
+                    </div>
+
+                    <div class="promise-item" data-aos="fade-right" data-aos-delay="300">
+                        <div class="promise-number">3</div>
+                        <div class="promise-content">
+                            <h5>I will respect your choices</h5>
+                            <p>If you want a different place, a different time, or even if you change your mind
+                                entirely, that is okay. No hard feelings, ever :>></p>
+                        </div>
+                    </div>
+
+                    <div class="promise-item" data-aos="fade-right" data-aos-delay="400">
+                        <div class="promise-number">4</div>
+                        <div class="promise-content">
+                            <h5>I just want you to have a good time</h5>
+                            <p>That is really all this is about. A nice weekend, good food, and hopefully some good
+                                conversation with you, Cinna :>></p>
+                        </div>
+                    </div>
+
+                    <div class="promise-item" data-aos="fade-right" data-aos-delay="500">
+                        <div class="promise-number">5</div>
+                        <div class="promise-content">
+                            <h5>Just be yourself</h5>
+                            <p>You do not have to prepare anything special. You do not have to dress up unless you want
+                                to. Just come as you are. That is already perfect :>></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="wave-divider" style="background: var(--warm-white);">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+            <path d="M0,0 C300,60 900,0 1200,60 L1200,0 L0,0 Z" fill="#fffefa" />
+        </svg>
+    </div>
+
+    <section class="cta-section section-padding" id="answer">
+        <div class="bg-shape bg-shape-1"></div>
+        <div class="bg-shape bg-shape-2"></div>
+        <div class="container">
+            <div class="cta-card" data-aos="zoom-in" data-aos-duration="800">
+                <h2 class="cta-title">So.. :>></h2>
+                <p class="cta-text">
+                    That is basically it. No fancy tricks, no hidden agenda.
+                    Just me asking you if you would like to go out this weekend.
+                    <br /><br />
+                    Only if you are free. Only if you want to.
+                    <br />
+                    Whatever your answer is, I will respect it completely :>>
+                </p>
+                <div class="response-buttons">
+                    <a href="#" class="btn-yellow pulse-ring" data-bs-toggle="modal" data-bs-target="#yesModal">
+                        I would love to :>>
+                    </a>
+                    <a href="#" class="btn-yellow-outline" data-bs-toggle="modal" data-bs-target="#thinkModal">
+                        Let me think about it
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="yesModal" tabindex="-1" aria-labelledby="yesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title" id="yesModalLabel">Really? :>></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        You just made my day, Cinna :>>
+                    </p>
+                    <p>
+                        I will take care of everything. Just let me know what time works best for you and
+                        if you have a place in mind. Otherwise, leave it all to me.
+                    </p>
+                    <p>
+                        I am really looking forward to it. See you this weekend :>>
+                    </p>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn-yellow" data-bs-dismiss="modal">Can not wait :>></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========== THINK MODAL =========== -->
+    <div class="modal fade" id="thinkModal" tabindex="-1" aria-labelledby="thinkModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title" id="thinkModalLabel">Of course :>></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Take all the time you need, Cinna. There is absolutely no rush :>>
+                    </p>
+                    <p>
+                        Whenever you have an answer, just let me know.
+                        And whatever you decide, it is completely okay. I mean that.
+                    </p>
+                    <p>
+                        This page will still be here if you want to look at it again :>>
+                    </p>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn-yellow-outline" data-bs-dismiss="modal">Okay, thank you
+                        :>></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 80,
+        });
+
+        const navbar = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navCollapse = document.getElementById('navMenu');
+                const bsCollapse = bootstrap.Collapse.getInstance(navCollapse);
+                if (bsCollapse) bsCollapse.hide();
+            });
+        });
+
+        (function createDots() {
+            const container = document.getElementById('floatingDots');
+            const count = 25;
+            for (let i = 0; i < count; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                const size = Math.random() * 15 + 5;
+                dot.style.width = size + 'px';
+                dot.style.height = size + 'px';
+                dot.style.left = Math.random() * 100 + '%';
+                dot.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                dot.style.animationDelay = (Math.random() * 10) + 's';
+                container.appendChild(dot);
+            }
+        })();
+
+        (function createSparkles() {
+            const container = document.getElementById('heroSparkles');
+            const count = 15;
+            for (let i = 0; i < count; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = (Math.random() * 3) + 's';
+                sparkle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                const size = Math.random() * 4 + 3;
+                sparkle.style.width = size + 'px';
+                sparkle.style.height = size + 'px';
+                container.appendChild(sparkle);
+            }
+        })();
+
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.style.color = '';
+                if (link.getAttribute('href') === '#' + current) {
+                    link.style.color = 'var(--yellow-700)';
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
