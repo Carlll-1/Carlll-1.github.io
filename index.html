@@ -643,11 +643,7 @@
         </div>
     </section>
 
-    <footer class="py-4">
-        <div class="container text-center">
-            <p class="mb-0">&copy; 2026 Carl Justine M. Piamonte. All rights reserved.</p>
-        </div>
-    </footer>
+  
 
     <script>
         const toggleButton = document.getElementById('darkModeToggle');
@@ -659,7 +655,7 @@
                 : '<i class="bi bi-moon-stars"></i> Dark Mode';
         }
 
-        if (localStorage.getItem('theme') === 'dark') {
+        if (localStorage.getItem('theme') == 'dark') {
             body.classList.add('dark-mode');
             setToggleLabel(true);
         }
