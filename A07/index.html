@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Disney Character Gallery | Carl Justine M. Piamonte</title>
+    <title>Disney Character Explorer | Carl Justine M. Piamonte</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,23 +12,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f8f1e9;
-            --surface: #fff9f4;
-            --text: #2c2418;
-            --text-muted: #6b5f4c;
-            --border: #ecdfc9;
-            --accent: #a9744f;
-            --accent-dark: #8c5e3d;
+            --bg: #f7f3ec;
+            --surface: #fffdfa;
+            --text: #241f2e;
+            --text-muted: #6c6478;
+            --border: #e9e2d6;
+            --accent: #6c4fd1;
+            --accent-dark: #4f37a8;
+            --gold: #e0a72e;
+            --hero-from: #0b1339;
+            --hero-via: #1c2360;
+            --hero-to: #3c2a6e;
         }
 
         [data-bs-theme="dark"] {
-            --bg: #17140f;
-            --surface: #201a12;
-            --text: #f2ede1;
-            --text-muted: #b4a891;
-            --border: #332a1c;
-            --accent: #d99a6c;
-            --accent-dark: #e6b088;
+            --bg: #14121c;
+            --surface: #1e1b28;
+            --text: #f3f0f8;
+            --text-muted: #aca3bd;
+            --border: #322c40;
+            --accent: #9c85ef;
+            --accent-dark: #b7a3ff;
+            --gold: #f0bf55;
         }
 
         body {
@@ -69,45 +74,107 @@
             color: #fff;
         }
 
-        .page-header {
+        /* Hero */
+        .hero-disney {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.75rem;
+            padding: 3.5rem 2rem;
             text-align: center;
-            padding: 1rem 0 2rem;
+            background: linear-gradient(160deg, var(--hero-from) 0%, var(--hero-via) 50%, var(--hero-to) 100%);
+            color: #fdf6e3;
+            box-shadow: 0 20px 45px rgba(20, 10, 50, 0.28);
         }
 
-        .page-header h1 {
+        .hero-disney h1 {
             font-weight: 700;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
+            color: #fff;
+            text-shadow: 0 2px 12px rgba(224, 167, 46, 0.35);
         }
 
-        .page-header p {
-            color: var(--text-muted);
+        .hero-disney p {
+            color: #d9d3f2;
+            max-width: 560px;
+            margin: 0.75rem auto 0;
         }
 
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            justify-content: center;
-            margin-bottom: 2rem;
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 3.5s ease-in-out infinite;
+            box-shadow: 0 0 6px 1px rgba(224, 167, 46, 0.8);
         }
 
-        .search-box {
-            max-width: 320px;
-            width: 100%;
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0.6);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Controls panel */
+        .controls-panel {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 1.25rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+            padding: 1.25rem;
+            margin: -2rem auto 2.5rem;
+            max-width: 780px;
+            position: relative;
+            z-index: 3;
         }
 
         .search-box .form-control,
         .search-box .input-group-text {
-            background-color: var(--surface);
+            background-color: var(--bg);
             border: 1px solid var(--border);
             color: var(--text);
+        }
+
+        .search-box .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(108, 79, 209, 0.2);
+            border-color: var(--accent);
+        }
+
+        .clear-search {
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .control-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+            margin-top: 0.9rem;
+        }
+
+        .search-hint {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 0.6rem;
         }
 
         .card {
             background-color: var(--surface);
             border: 1px solid var(--border);
             border-radius: 1.25rem;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
             cursor: pointer;
             color: var(--text);
             text-decoration: none;
@@ -118,6 +185,7 @@
         .card:hover {
             transform: translateY(-6px);
             box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+            border-color: var(--gold);
         }
 
         .char-card {
@@ -137,10 +205,10 @@
             }
         }
 
-        .fav-btn {
+        .fav-btn,
+        .sound-btn {
             position: absolute;
             top: 0.5rem;
-            right: 0.5rem;
             width: 34px;
             height: 34px;
             border-radius: 50%;
@@ -154,12 +222,25 @@
             z-index: 2;
         }
 
-        .fav-btn:hover {
+        .fav-btn {
+            right: 0.5rem;
+        }
+
+        .sound-btn {
+            left: 0.5rem;
+        }
+
+        .fav-btn:hover,
+        .sound-btn:hover {
             transform: scale(1.12);
         }
 
         .fav-btn.is-fav {
-            background-color: #e0a11c;
+            background-color: var(--gold);
+        }
+
+        .sound-btn.is-speaking {
+            background-color: var(--accent);
         }
 
         .picture-container {
@@ -169,6 +250,12 @@
             border-radius: 50%;
             overflow: hidden;
             margin: auto;
+            border: 3px solid transparent;
+            transition: border-color 0.25s ease;
+        }
+
+        .card:hover .picture-container {
+            border-color: var(--gold);
         }
 
         .picture-container img {
@@ -238,6 +325,13 @@
             color: var(--text-muted);
         }
 
+        .results-heading {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+        }
+
         .load-more-wrap {
             text-align: center;
             margin: 2rem 0;
@@ -257,6 +351,14 @@
             .char-name {
                 font-size: 0.9rem;
             }
+
+            .hero-disney {
+                padding: 2.5rem 1.25rem;
+            }
+
+            .hero-disney h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
@@ -270,23 +372,37 @@
             </button>
         </div>
 
-        <div class="page-header">
-            <h1>Disney Character Gallery</h1>
-            <p>A small front-end project that fetches live character data from the Disney API.</p>
+        <div class="hero-disney mb-0">
+            <h1><i class="bi bi-stars me-2"></i>Disney Character Explorer</h1>
+            <p>Search the entire Disney API catalog live &mdash; no pagination required &mdash; save favorites, and
+                hear each name spoken aloud.</p>
         </div>
 
-        <div class="controls">
+        <div class="controls-panel">
             <div class="input-group search-box">
                 <span class="input-group-text"><i class="bi bi-search"></i></span>
-                <input type="text" id="charSearch" class="form-control" placeholder="Search characters&hellip;">
+                <input type="text" id="charSearch" class="form-control"
+                    placeholder="Search any Disney character, e.g. Elsa, Simba, Stitch&hellip;">
+                <button class="btn clear-search" id="clearSearch" type="button" title="Clear search">
+                    <i class="bi bi-x-lg"></i>
+                </button>
             </div>
-            <button id="favToggle" class="btn btn-soft btn-sm">
-                <i class="bi bi-star me-1"></i>Show Favorites Only
-            </button>
+            <div class="control-actions">
+                <button id="favToggle" class="btn btn-soft btn-sm">
+                    <i class="bi bi-star me-1"></i>Show Favorites Only
+                </button>
+                <button id="surpriseBtn" class="btn btn-soft btn-sm">
+                    <i class="bi bi-shuffle me-1"></i>Surprise Me
+                </button>
+            </div>
+            <p class="search-hint mb-0">Type a name to search the full API directly &mdash; results appear as you
+                type.</p>
         </div>
 
+        <p class="results-heading" id="resultsHeading" style="display: none;"></p>
+
         <div id="skeletonWrap" class="row g-3">
-            <!-- skeleton placeholders while first page loads -->
+            <!-- skeleton placeholders while characters load -->
         </div>
 
         <div id="statusMessage" class="status-message" style="display: none;"></div>
@@ -295,30 +411,27 @@
 
         <div class="no-results status-message" id="noResults" style="display: none;">
             <i class="bi bi-emoji-frown fs-2"></i>
-            <p class="mt-2 mb-0">No characters match your search.</p>
+            <p class="mt-2 mb-0" id="noResultsText">No characters match your search.</p>
         </div>
 
         <div class="load-more-wrap">
-            <button id="loadMoreBtn" class="btn btn-accent btn-soft" style="display: none;">
+            <button id="loadMoreBtn" class="btn btn-soft" style="display: none;">
                 <i class="bi bi-arrow-down-circle me-1"></i>Load More Characters
             </button>
         </div>
     </div>
 
-    <footer class="py-4 text-center">
-        <div class="container">
-            <p class="mb-0 small">Activity 7 &middot; Front-end practice project by Carl Justine M. Piamonte</p>
-        </div>
-    </footer>
-
     <script>
         const FALLBACK_IMG =
             "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='100%25' height='100%25' fill='%23e8d8c3'/%3E%3Ctext x='50%25' y='50%25' fill='%23a0916f' font-family='sans-serif' font-size='16' text-anchor='middle' dominant-baseline='middle'%3ENo Image%3C/text%3E%3C/svg%3E";
         const FAVORITES_KEY = "a07-favorites";
+        const API_BASE = "https://api.disneyapi.dev/character";
 
-        let currentPage = 1;
-        let allCharacters = [];
+        let mode = "browse"; // "browse" | "search"
+        let browsePage = 1;
         let showFavoritesOnly = false;
+        let totalPages = null;
+        let searchDebounce = null;
 
         function getFavorites() {
             try {
@@ -340,6 +453,14 @@
             return favorites.includes(id);
         }
 
+        function speak(text) {
+            if (!("speechSynthesis" in window)) return;
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.95;
+            window.speechSynthesis.speak(utterance);
+        }
+
         function renderSkeletons(count) {
             const wrap = document.getElementById("skeletonWrap");
             let html = "";
@@ -355,6 +476,18 @@
             wrap.innerHTML = html;
         }
 
+        function generateSparkles(count) {
+            const hero = document.querySelector(".hero-disney");
+            let html = "";
+            for (let i = 0; i < count; i++) {
+                const top = Math.random() * 90;
+                const left = Math.random() * 96;
+                const delay = (Math.random() * 3.5).toFixed(2);
+                html += `<span class="sparkle" style="top:${top}%; left:${left}%; animation-delay:${delay}s;"></span>`;
+            }
+            hero.insertAdjacentHTML("beforeend", html);
+        }
+
         function cardTemplate(char, index) {
             const name = char.name;
             const film = char.films && char.films.length > 0 ? char.films[0] : "No film listed";
@@ -368,8 +501,11 @@
                 "&img=" + encodeURIComponent(img);
 
             return `
-                <div class="col-6 col-sm-4 col-md-3 char-item" data-name="${name.toLowerCase()}" data-id="${id}">
+                <div class="col-6 col-sm-4 col-md-3 char-item" data-id="${id}">
                     <div class="card h-100 text-center p-3 char-card" style="animation-delay: ${Math.min(index, 12) * 0.05}s;">
+                        <button class="sound-btn" data-speak="${name.replace(/"/g, '&quot;')}" aria-label="Hear name">
+                            <i class="bi bi-volume-up-fill"></i>
+                        </button>
                         <button class="fav-btn ${isFav ? "is-fav" : ""}" data-fav-id="${id}" aria-label="Toggle favorite">
                             <i class="bi ${isFav ? "bi-star-fill" : "bi-star"}"></i>
                         </button>
@@ -385,68 +521,100 @@
                 </div>`;
         }
 
-        function renderCharacters(characters, append) {
+        function renderCharacters(characters) {
             const container = document.getElementById("container");
             const html = characters.map((char, i) => cardTemplate(char, i)).join("");
-            container.insertAdjacentHTML(append ? "beforeend" : "afterbegin", html);
+            container.insertAdjacentHTML("beforeend", html);
 
-            container.querySelectorAll(".fav-btn").forEach((btn) => {
+            container.querySelectorAll(".fav-btn:not([data-bound])").forEach((btn) => {
+                btn.setAttribute("data-bound", "1");
                 btn.onclick = (e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     const isFav = toggleFavorite(btn.dataset.favId);
                     btn.classList.toggle("is-fav", isFav);
                     btn.innerHTML = `<i class="bi ${isFav ? "bi-star-fill" : "bi-star"}"></i>`;
-                    if (showFavoritesOnly) applyFilters();
+                    if (showFavoritesOnly) applyFavoritesFilter();
+                };
+            });
+
+            container.querySelectorAll(".sound-btn:not([data-bound])").forEach((btn) => {
+                btn.setAttribute("data-bound", "1");
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    speak(btn.dataset.speak);
+                    btn.classList.add("is-speaking");
+                    setTimeout(() => btn.classList.remove("is-speaking"), 600);
                 };
             });
         }
 
-        function applyFilters() {
-            const query = document.getElementById("charSearch").value.trim().toLowerCase();
+        function applyFavoritesFilter() {
             const favorites = getFavorites();
             const items = document.querySelectorAll(".char-item");
             let visibleCount = 0;
 
             items.forEach((item) => {
-                const matchesSearch = item.dataset.name.includes(query);
-                const matchesFav = !showFavoritesOnly || favorites.includes(item.dataset.id);
-                const visible = matchesSearch && matchesFav;
+                const visible = !showFavoritesOnly || favorites.includes(item.dataset.id);
                 item.classList.toggle("d-none", !visible);
                 if (visible) visibleCount++;
             });
 
-            document.getElementById("noResults").style.display = visibleCount === 0 ? "block" : "none";
+            const noResults = document.getElementById("noResults");
+            const noResultsText = document.getElementById("noResultsText");
+            if (visibleCount === 0 && items.length > 0) {
+                noResultsText.textContent = "None of your favorites match right now.";
+                noResults.style.display = "block";
+            } else {
+                noResults.style.display = "none";
+            }
         }
 
-        async function fetchPage(page) {
-            const response = await fetch(`https://api.disneyapi.dev/character?page=${page}&pageSize=24`);
+        async function fetchJson(url) {
+            const response = await fetch(url);
             if (!response.ok) throw new Error("Request failed with status " + response.status);
             return response.json();
         }
 
-        async function loadInitialCharacters() {
+        function clearResults() {
+            document.getElementById("container").innerHTML = "";
+            document.getElementById("noResults").style.display = "none";
+            document.getElementById("statusMessage").style.display = "none";
+        }
+
+        async function loadBrowsePage(page) {
             const statusMessage = document.getElementById("statusMessage");
-            renderSkeletons(12);
+            const loadMoreBtn = document.getElementById("loadMoreBtn");
+
+            if (page === 1) {
+                clearResults();
+                renderSkeletons(12);
+            } else {
+                loadMoreBtn.disabled = true;
+                loadMoreBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Loading&hellip;';
+            }
 
             try {
-                const json = await fetchPage(currentPage);
+                const json = await fetchJson(`${API_BASE}?page=${page}&pageSize=24`);
                 const characters = json.data || [];
-                allCharacters = allCharacters.concat(characters);
+                totalPages = (json.info && json.info.totalPages) || totalPages;
 
                 document.getElementById("skeletonWrap").innerHTML = "";
 
-                if (characters.length === 0) {
+                if (characters.length === 0 && page === 1) {
                     statusMessage.style.display = "block";
                     statusMessage.innerHTML = "<p class='mb-0'>No characters found.</p>";
                     return;
                 }
 
-                renderCharacters(characters, false);
+                renderCharacters(characters);
+                applyFavoritesFilter();
 
-                const loadMoreBtn = document.getElementById("loadMoreBtn");
                 if (json.info && json.info.nextPage) {
                     loadMoreBtn.style.display = "inline-block";
+                    loadMoreBtn.disabled = false;
+                    loadMoreBtn.innerHTML = '<i class="bi bi-arrow-down-circle me-1"></i>Load More Characters';
                 } else {
                     loadMoreBtn.style.display = "none";
                 }
@@ -458,43 +626,112 @@
             }
         }
 
-        async function loadMore() {
-            const loadMoreBtn = document.getElementById("loadMoreBtn");
-            loadMoreBtn.disabled = true;
-            loadMoreBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Loading&hellip;';
+        async function runSearch(query) {
+            mode = "search";
+            clearResults();
+            document.getElementById("skeletonWrap").innerHTML = "";
+            renderSkeletons(8);
+            document.getElementById("loadMoreBtn").style.display = "none";
+
+            const heading = document.getElementById("resultsHeading");
+            heading.style.display = "block";
+            heading.textContent = `Searching the full Disney API for "${query}"…`;
 
             try {
-                currentPage++;
-                const json = await fetchPage(currentPage);
+                const json = await fetchJson(`${API_BASE}?name=${encodeURIComponent(query)}&pageSize=50`);
                 const characters = json.data || [];
-                allCharacters = allCharacters.concat(characters);
-                renderCharacters(characters, true);
-                applyFilters();
+                document.getElementById("skeletonWrap").innerHTML = "";
 
-                if (json.info && json.info.nextPage) {
-                    loadMoreBtn.disabled = false;
-                    loadMoreBtn.innerHTML = '<i class="bi bi-arrow-down-circle me-1"></i>Load More Characters';
-                } else {
-                    loadMoreBtn.style.display = "none";
+                if (characters.length === 0) {
+                    heading.style.display = "none";
+                    document.getElementById("noResultsText").textContent =
+                        `No Disney character named "${query}" was found. Try a different spelling.`;
+                    document.getElementById("noResults").style.display = "block";
+                    return;
                 }
+
+                heading.textContent = `${characters.length} result${characters.length === 1 ? "" : "s"} for "${query}"`;
+                renderCharacters(characters);
+                applyFavoritesFilter();
             } catch (err) {
-                loadMoreBtn.disabled = false;
-                loadMoreBtn.innerHTML = '<i class="bi bi-arrow-down-circle me-1"></i>Load More Characters';
+                document.getElementById("skeletonWrap").innerHTML = "";
+                heading.style.display = "none";
+                document.getElementById("statusMessage").style.display = "block";
+                document.getElementById("statusMessage").innerHTML =
+                    "<p class='mb-0'><i class=\"bi bi-exclamation-triangle me-2\"></i>Search failed. Please try again.</p>";
             }
         }
 
-        document.getElementById("loadMoreBtn").addEventListener("click", loadMore);
-        document.getElementById("charSearch").addEventListener("input", applyFilters);
+        function backToBrowse() {
+            mode = "browse";
+            browsePage = 1;
+            document.getElementById("resultsHeading").style.display = "none";
+            loadBrowsePage(1);
+        }
+
+        document.getElementById("charSearch").addEventListener("input", (e) => {
+            const query = e.target.value.trim();
+            clearTimeout(searchDebounce);
+            searchDebounce = setTimeout(() => {
+                if (query.length === 0) {
+                    backToBrowse();
+                } else {
+                    runSearch(query);
+                }
+            }, 400);
+        });
+
+        document.getElementById("clearSearch").addEventListener("click", () => {
+            document.getElementById("charSearch").value = "";
+            backToBrowse();
+        });
+
+        document.getElementById("loadMoreBtn").addEventListener("click", () => {
+            browsePage++;
+            loadBrowsePage(browsePage);
+        });
+
         document.getElementById("favToggle").addEventListener("click", (e) => {
             showFavoritesOnly = !showFavoritesOnly;
             e.currentTarget.classList.toggle("active", showFavoritesOnly);
             e.currentTarget.innerHTML = showFavoritesOnly
                 ? '<i class="bi bi-star-fill me-1"></i>Showing Favorites'
                 : '<i class="bi bi-star me-1"></i>Show Favorites Only';
-            applyFilters();
+            applyFavoritesFilter();
         });
 
-        loadInitialCharacters();
+        document.getElementById("surpriseBtn").addEventListener("click", async (e) => {
+            const btn = e.currentTarget;
+            const originalHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Finding someone magical…';
+
+            try {
+                if (!totalPages) {
+                    const json = await fetchJson(`${API_BASE}?page=1&pageSize=1`);
+                    totalPages = json.info.totalPages;
+                }
+                const randomPage = Math.floor(Math.random() * totalPages) + 1;
+                const json = await fetchJson(`${API_BASE}?page=${randomPage}&pageSize=24`);
+                const characters = json.data || [];
+                const randomChar = characters[Math.floor(Math.random() * characters.length)];
+
+                const name = randomChar.name;
+                const film = randomChar.films && randomChar.films.length > 0 ? randomChar.films[0] : "No film listed";
+                const img = randomChar.imageUrl || FALLBACK_IMG;
+                const url = "view.html?id=" + encodeURIComponent(randomChar._id) +
+                    "&name=" + encodeURIComponent(name) +
+                    "&film=" + encodeURIComponent(film) +
+                    "&img=" + encodeURIComponent(img);
+                window.location.href = url;
+            } catch (err) {
+                btn.disabled = false;
+                btn.innerHTML = originalHtml;
+            }
+        });
+
+        generateSparkles(18);
+        loadBrowsePage(browsePage);
 
         function toggleTheme() {
             const html = document.documentElement;

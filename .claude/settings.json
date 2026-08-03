@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(open /Users/macbookair/Carlll-1.github.io/index.html)"
+      "Bash(open /Users/macbookair/Carlll-1.github.io/index.html)",
+      "Bash(python3 -c ' *)",
+      "Bash(open /Users/macbookair/Carlll-1.github.io/A07/index.html)"
     ]
   }
 }

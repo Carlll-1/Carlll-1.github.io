@@ -12,23 +12,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f8f1e9;
-            --surface: #fff9f4;
-            --text: #2c2418;
-            --text-muted: #6b5f4c;
-            --border: #ecdfc9;
-            --accent: #a9744f;
-            --accent-dark: #8c5e3d;
+            --bg: #f7f3ec;
+            --surface: #fffdfa;
+            --text: #241f2e;
+            --text-muted: #6c6478;
+            --border: #e9e2d6;
+            --accent: #6c4fd1;
+            --accent-dark: #4f37a8;
+            --gold: #e0a72e;
         }
 
         [data-bs-theme="dark"] {
-            --bg: #17140f;
-            --surface: #201a12;
-            --text: #f2ede1;
-            --text-muted: #b4a891;
-            --border: #332a1c;
-            --accent: #d99a6c;
-            --accent-dark: #e6b088;
+            --bg: #14121c;
+            --surface: #1e1b28;
+            --text: #f3f0f8;
+            --text-muted: #aca3bd;
+            --border: #322c40;
+            --accent: #9c85ef;
+            --accent-dark: #b7a3ff;
+            --gold: #f0bf55;
         }
 
         body {
@@ -95,8 +97,33 @@
         }
 
         .fav-toggle.is-fav {
-            background-color: #e0a11c;
-            border-color: #e0a11c;
+            background-color: var(--gold);
+            border-color: var(--gold);
+            color: #fff;
+        }
+
+        .action-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .sound-toggle {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-weight: 600;
+            border-radius: 2rem;
+            padding: 0.5rem 1.25rem;
+            margin-top: 1.25rem;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .sound-toggle:hover,
+        .sound-toggle.is-speaking {
+            background-color: var(--accent);
+            border-color: var(--accent);
             color: #fff;
         }
 
@@ -166,9 +193,14 @@
             </div>
             <h2 id="characterName">Name</h2>
             <p id="characterFilm">Film</p>
-            <button id="favToggle" class="fav-toggle">
-                <i class="bi bi-star me-1"></i>Add to Favorites
-            </button>
+            <div class="action-row">
+                <button id="favToggle" class="fav-toggle">
+                    <i class="bi bi-star me-1"></i>Add to Favorites
+                </button>
+                <button id="soundToggle" class="sound-toggle">
+                    <i class="bi bi-volume-up-fill me-1"></i>Hear Name
+                </button>
+            </div>
         </div>
     </div>
 
@@ -231,6 +263,17 @@
         } else {
             favToggle.style.display = "none";
         }
+
+        const soundToggle = document.getElementById("soundToggle");
+        soundToggle.addEventListener("click", () => {
+            if (!("speechSynthesis" in window) || !name) return;
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(`${name}. From ${film || "an unknown film"}.`);
+            utterance.rate = 0.95;
+            soundToggle.classList.add("is-speaking");
+            utterance.onend = () => soundToggle.classList.remove("is-speaking");
+            window.speechSynthesis.speak(utterance);
+        });
     </script>
 </body>
 
