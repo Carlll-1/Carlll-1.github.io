@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QE Reviewer — Practice Exam</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0B0F14;
+            --bg-soft: #0F151C;
+            --panel: #141C25;
+            --panel-2: #1B2530;
+            --border: #263140;
+            --border-soft: #1D2733;
+            --text: #EAF1F7;
+            --text-dim: #93A3B4;
+            --text-mute: #5A6A7B;
+            --amber: #F2B84C;
+            --amber-dim: #7A5E2C;
+            --blue: #5B9DFF;
+            --green: #46D18A;
+            --green-dim: #1D3B2C;
+            --red: #F16565;
+            --red-dim: #3F2225;
+            --radius-lg: 18px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 15% -10%, rgba(91, 157, 255, 0.08), transparent 45%),
+                radial-gradient(circle at 100% 0%, rgba(242, 184, 76, 0.06), transparent 40%),
+                var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+            }
+        }
+
+        .wrap {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 28px 20px 80px;
+        }
+
+        /* ---------- topbar ---------- */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-mark {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(160deg, #1B2530, #0F151C);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: var(--amber);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .brand-text h1 {
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.2px;
+        }
+
+        .brand-text p {
+            margin: 2px 0 0;
+            font-size: 12px;
+            color: var(--text-mute);
+            font-family: var(--font-mono);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 7px;
+            height: 14px;
+            background: var(--amber);
+            margin-left: 2px;
+            vertical-align: -2px;
+            animation: blink 1.1s steps(1) infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .score-chip {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-dim);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 6px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .score-chip b {
+            color: var(--amber);
+            font-weight: 600;
+        }
+
+        /* ---------- screens ---------- */
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: screenIn 0.45s cubic-bezier(.2, .8, .2, 1);
+        }
+
+        @keyframes screenIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---------- setup ---------- */
+        .hero {
+            margin-bottom: 30px;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--amber);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin: 0 0 10px;
+        }
+
+        .hero h2 {
+            font-family: var(--font-display);
+            font-size: clamp(26px, 5vw, 38px);
+            line-height: 1.15;
+            margin: 0 0 12px;
+            font-weight: 700;
+        }
+
+        .hero h2 span {
+            color: var(--amber);
+        }
+
+        .hero p {
+            color: var(--text-dim);
+            font-size: 15px;
+            line-height: 1.6;
+            max-width: 560px;
+            margin: 0;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+        }
+
+        .panel+.panel {
+            margin-top: 16px;
+        }
+
+        .panel-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-mute);
+            margin: 0 0 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-label button {
+            background: none;
+            border: none;
+            color: var(--blue);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            cursor: pointer;
+            padding: 0;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .panel-label button:hover {
+            text-decoration: underline;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 10px;
+        }
+
+        .topic-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            background: var(--bg-soft);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: border-color .15s ease, background .15s ease, transform .15s ease;
+            user-select: none;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-1px);
+            border-color: var(--border);
+        }
+
+        .topic-card.on {
+            border-color: var(--amber-dim);
+            background: linear-gradient(180deg, rgba(242, 184, 76, 0.08), rgba(242, 184, 76, 0.02));
+        }
+
+        .topic-num {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-mute);
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: var(--panel-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background .15s ease, color .15s ease;
+        }
+
+        .topic-card.on .topic-num {
+            background: var(--amber);
+            color: #241905;
+        }
+
+        .topic-name {
+            font-size: 13.5px;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        .topic-count {
+            font-size: 11px;
+            color: var(--text-mute);
+            font-family: var(--font-mono);
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .count-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .count-btn {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-soft);
+            background: var(--bg-soft);
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: all .15s ease;
+        }
+
+        .count-btn:hover {
+            border-color: var(--border);
+        }
+
+        .count-btn.on {
+            background: var(--amber);
+            border-color: var(--amber);
+            color: #241905;
+            font-weight: 600;
+        }
+
+        .start-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 22px;
+            flex-wrap: wrap;
+        }
+
+        .start-note {
+            font-size: 12.5px;
+            color: var(--text-mute);
+            font-family: var(--font-mono);
+        }
+
+        .btn {
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 14.5px;
+            padding: 13px 26px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: linear-gradient(180deg, #FFCB6B, #F2B84C);
+            color: #241905;
+            box-shadow: 0 8px 20px -8px rgba(242, 184, 76, 0.55);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 10px 26px -8px rgba(242, 184, 76, 0.7);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-ghost {
+            background: var(--panel-2);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            background: var(--panel);
+        }
+
+        /* ---------- quiz ---------- */
+        .quiz-head {
+            margin-bottom: 22px;
+        }
+
+        .quiz-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-mute);
+            margin-bottom: 10px;
+        }
+
+        .quiz-meta .topic-tag {
+            color: var(--amber);
+        }
+
+        .progress-track {
+            height: 6px;
+            border-radius: 999px;
+            background: var(--panel-2);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #5B9DFF, #F2B84C);
+            transition: width .4s cubic-bezier(.2, .8, .2, 1);
+        }
+
+        .qcard {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            animation: qIn .35s cubic-bezier(.2, .8, .2, 1);
+        }
+
+        @keyframes qIn {
+            from {
+                opacity: 0;
+                transform: translateX(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .qtext {
+            font-family: var(--font-display);
+            font-size: clamp(18px, 3vw, 21px);
+            line-height: 1.45;
+            font-weight: 600;
+            margin: 0 0 22px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-align: left;
+            padding: 14px 16px;
+            background: var(--bg-soft);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 14.5px;
+            color: var(--text);
+            transition: border-color .15s ease, background .15s ease, transform .1s ease;
+            width: 100%;
+        }
+
+        .option:hover:not(:disabled) {
+            border-color: var(--blue);
+            transform: translateX(2px);
+        }
+
+        .option:disabled {
+            cursor: default;
+        }
+
+        .opt-letter {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            background: var(--panel-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--text-dim);
+            transition: all .15s ease;
+        }
+
+        .option.correct {
+            border-color: var(--green);
+            background: linear-gradient(180deg, rgba(70, 209, 138, 0.14), rgba(70, 209, 138, 0.05));
+            animation: pop .3s ease;
+        }
+
+        .option.correct .opt-letter {
+            background: var(--green);
+            color: #0B1F14;
+        }
+
+        .option.wrong {
+            border-color: var(--red);
+            background: linear-gradient(180deg, rgba(241, 101, 101, 0.14), rgba(241, 101, 101, 0.05));
+            animation: shake .3s ease;
+        }
+
+        .option.wrong .opt-letter {
+            background: var(--red);
+            color: #2B0E0E;
+        }
+
+        .option.dim {
+            opacity: 0.45;
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0.98);
+            }
+
+            60% {
+                transform: scale(1.015);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-4px);
+            }
+
+            75% {
+                transform: translateX(4px);
+            }
+        }
+
+        .feedback {
+            margin-top: 18px;
+            padding: 16px 18px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background: var(--bg-soft);
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--text-dim);
+            display: none;
+            animation: fadeUp .3s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback .fb-tag {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+
+        .feedback.right .fb-tag {
+            color: var(--green);
+        }
+
+        .feedback.wrong .fb-tag {
+            color: var(--red);
+        }
+
+        .quiz-nav {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        /* ---------- results ---------- */
+        .results-head {
+            text-align: center;
+            padding: 34px 20px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            margin-bottom: 20px;
+        }
+
+        .ring-wrap {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 18px;
+        }
+
+        .ring-wrap svg {
+            transform: rotate(-90deg);
+        }
+
+        .ring-pct {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .ring-pct b {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .ring-pct span {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-mute);
+            margin-top: 2px;
+        }
+
+        .results-head h3 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            margin: 0 0 6px;
+        }
+
+        .results-head p {
+            margin: 0;
+            color: var(--text-dim);
+            font-size: 13.5px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-card b {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+
+        .stat-card span {
+            font-size: 11.5px;
+            color: var(--text-mute);
+            font-family: var(--font-mono);
+        }
+
+        .stat-card.correct b {
+            color: var(--green);
+        }
+
+        .stat-card.wrong b {
+            color: var(--red);
+        }
+
+        .breakdown-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .breakdown-row:last-child {
+            border-bottom: none;
+        }
+
+        .breakdown-name {
+            font-size: 13px;
+            width: 160px;
+            flex-shrink: 0;
+            color: var(--text-dim);
+        }
+
+        .breakdown-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--bg-soft);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .breakdown-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #5B9DFF, #46D18A);
+            border-radius: 999px;
+            transition: width .6s ease;
+        }
+
+        .breakdown-score {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-mute);
+            width: 44px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .review-item {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px 18px;
+            margin-bottom: 10px;
+        }
+
+        .review-item .rq {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 10px;
+            line-height: 1.5;
+        }
+
+        .review-item .ra {
+            font-size: 13px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .review-item .ra.correct {
+            background: rgba(70, 209, 138, 0.1);
+            color: var(--green);
+        }
+
+        .review-item .ra.wrong {
+            background: rgba(241, 101, 101, 0.1);
+            color: var(--red);
+        }
+
+        .review-item .ra-label {
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+            opacity: 0.8;
+            width: 70px;
+        }
+
+        .review-item .rexp {
+            font-size: 12.5px;
+            color: var(--text-mute);
+            margin-top: 8px;
+            line-height: 1.6;
+        }
+
+        .results-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 22px;
+            flex-wrap: wrap;
+        }
+
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-mute);
+            margin: 26px 0 12px;
+        }
+
+        @media (max-width:640px) {
+            .wrap {
+                padding: 20px 14px 60px;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stat-card:last-child {
+                grid-column: 1 / -1;
+            }
+
+            .breakdown-name {
+                width: 110px;
+                font-size: 12px;
+            }
+
+            .topbar {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+
+        <div class="topbar">
+            <div class="brand">
+                <div class="brand-mark">QE</div>
+                <div class="brand-text">
+                    <h1>QE Reviewer<span class="cursor"></span></h1>
+                    <p>explained the easy way</p>
+                </div>
+            </div>
+            <div class="score-chip" id="topScoreChip" style="display:none;">
+                Score <b id="topScoreVal">0/0</b>
+            </div>
+        </div>
+
+        <!-- SETUP SCREEN -->
+        <section class="screen active" id="screen-setup">
+            <div class="hero">
+                <p class="hero-eyebrow">Practice exam</p>
+                <h2>Every topic. Every detail.<br>Just check what you <span>actually</span> know.</h2>
+                <p>Pick your topics and question count, then answer each item — you'll see instantly whether you got it
+                    right, with a plain-words explanation right after.</p>
+            </div>
+
+            <div class="panel">
+                <p class="panel-label">Topics <button type="button" id="topicToggle">select all</button></p>
+                <div class="topic-grid" id="topicGrid"></div>
+            </div>
+
+            <div class="panel">
+                <p class="panel-label">Number of questions</p>
+                <div class="count-row" id="countRow"></div>
+            </div>
+
+            <div class="start-row">
+                <span class="start-note" id="startNote">— questions selected</span>
+                <button class="btn btn-primary" id="startBtn">Start exam →</button>
+            </div>
+        </section>
+
+        <!-- QUIZ SCREEN -->
+        <section class="screen" id="screen-quiz">
+            <div class="quiz-head">
+                <div class="quiz-meta">
+                    <span class="topic-tag" id="quizTopicTag">Topic</span>
+                    <span id="quizCounter">1 / 10</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill" style="width:0%;"></div>
+                </div>
+            </div>
+
+            <div class="qcard" id="qcard">
+                <p class="qtext" id="qtext"></p>
+                <div class="options" id="options"></div>
+                <div class="feedback" id="feedback">
+                    <span class="fb-tag" id="fbTag"></span>
+                    <div id="fbText"></div>
+                </div>
+            </div>
+
+            <div class="quiz-nav">
+                <button class="btn btn-primary" id="nextBtn" disabled>Next question →</button>
+            </div>
+        </section>
+
+        <!-- RESULTS SCREEN -->
+        <section class="screen" id="screen-results">
+            <div class="results-head">
+                <div class="ring-wrap">
+                    <svg width="160" height="160" viewBox="0 0 160 160">
+                        <circle cx="80" cy="80" r="70" fill="none" stroke="#1B2530" stroke-width="12" />
+                        <circle cx="80" cy="80" r="70" fill="none" stroke="url(#gradRing)" stroke-width="12"
+                            stroke-linecap="round" id="ringProgress" stroke-dasharray="440" stroke-dashoffset="440" />
+                        <defs>
+                            <linearGradient id="gradRing" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#5B9DFF" />
+                                <stop offset="100%" stop-color="#F2B84C" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="ring-pct"><b id="ringPct">0%</b><span>accuracy</span></div>
+                </div>
+                <h3 id="resultTitle">Nice work</h3>
+                <p id="resultSub">Here's how you did.</p>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card correct"><b id="statCorrect">0</b><span>correct</span></div>
+                <div class="stat-card wrong"><b id="statWrong">0</b><span>missed</span></div>
+                <div class="stat-card"><b id="statTotal">0</b><span>total items</span></div>
+            </div>
+
+            <p class="section-title">By topic</p>
+            <div class="panel" id="breakdownPanel"></div>
+
+            <p class="section-title">Review answers</p>
+            <div id="reviewList"></div>
+
+            <div class="results-actions">
+                <button class="btn btn-primary" id="retakeBtn">Retake same set</button>
+                <button class="btn btn-ghost" id="newSetBtn">Change topics</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const QUESTIONS = [
+            { topic: "Introduction to Computing", q: "Which computer generation introduced Integrated Circuits — many transistors packed onto one chip?", options: ["1st Generation (Vacuum tubes)", "2nd Generation (Transistors)", "3rd Generation (Integrated Circuits)", "4th Generation (Microprocessors)"], correct: 2, explain: "3rd Generation computers moved from single transistors to Integrated Circuits, packing many transistors onto one chip — a big leap toward smaller, faster machines." },
+            { topic: "Introduction to Computing", q: "Which type of memory is temporary and gets erased the moment the computer turns off?", options: ["ROM", "RAM", "Cache Memory", "Hard Drive"], correct: 1, explain: "RAM (Random Access Memory) is temporary, like a whiteboard — everything on it disappears once the power goes off." },
+            { topic: "Introduction to Computing", q: "In the simplified reviewer's memory sizes, how many bytes make up 1 KB?", options: ["8 bytes", "100 bytes", "1,000 bytes", "1,024 bytes"], correct: 2, explain: "The reviewer simplifies it as 1 KB = 1,000 bytes, 1 MB = 1,000 KB, and 1 GB = 1,000 MB — think of bytes as little boxes stacking up." },
+            { topic: "Introduction to Computing", q: "Which software type runs the computer itself, like the operating system and utility programs?", options: ["Application Software", "System Software", "Multimedia Software", "Peripheral Software"], correct: 1, explain: "System Software (OS, utility programs) runs the computer itself, while Application Software is what you actually use, like MS Word or Photoshop." },
+            { topic: "Introduction to Computing", q: "In file management, what does choosing \"Save As\" do?", options: ["Overwrites the existing file", "Deletes the current file", "Creates a new file under a new name", "Converts the file to another format"], correct: 2, explain: "\"Save\" overwrites the existing file, while \"Save As\" creates a brand new file with a new name, leaving the original untouched." },
+            { topic: "Introduction to Computing", q: "Which number system is base 16 and is often used to shorten binary?", options: ["Decimal", "Binary", "Hexadecimal", "Octal"], correct: 2, explain: "Hexadecimal is base 16 (0–9 then A–F). It's popular for shortening long binary strings into something more compact and readable." },
+
+            { topic: "Data Structures and Algorithms", q: "A stack follows which principle when adding and removing elements?", options: ["FIFO — First In, First Out", "LIFO — Last In, First Out", "Random access", "Round robin"], correct: 1, explain: "A stack is like a pile of plates: you can only add or remove from the top, which is LIFO — Last In, First Out." },
+            { topic: "Data Structures and Algorithms", q: "What is the Big-O time complexity of binary search on a sorted array?", options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"], correct: 2, explain: "Binary search keeps cutting the search space in half, so it grows very slowly even as the pile gets huge — that's O(log n)." },
+            { topic: "Data Structures and Algorithms", q: "Which binary tree traversal order visits nodes as Left → Root → Right?", options: ["Preorder", "Inorder", "Postorder", "Level-order"], correct: 1, explain: "Inorder traversal visits the left subtree first, then the root, then the right subtree — Left → Root → Right." },
+            { topic: "Data Structures and Algorithms", q: "In a min-heap, how does a parent node's value compare to its children?", options: ["Parent is always greater than or equal to children", "Parent is always less than or equal to children", "Parent equals the sum of children", "There's no fixed rule"], correct: 1, explain: "A min-heap keeps the smallest value at the root — every parent is less than or equal to its children." },
+            { topic: "Data Structures and Algorithms", q: "What defines an Abstract Data Type (ADT)?", options: ["The exact programming language used to build it", "The operations it supports, not how they're implemented", "How much memory it uses", "The hardware it runs on"], correct: 1, explain: "An ADT is like a vending machine — you only care WHAT it does (push a button, get a snack), not HOW it's wired inside." },
+            { topic: "Data Structures and Algorithms", q: "Which data structure uses FIFO — First In, First Out — ordering?", options: ["Stack", "Queue", "Binary Search Tree", "Linked List"], correct: 1, explain: "A queue works like a grocery store line: the first person in line is the first one served — First In, First Out." },
+
+            { topic: "Operating Systems", q: "Which CPU scheduling algorithm can suffer from the \"convoy effect,\" where short jobs wait a long time behind long ones?", options: ["Round Robin", "Shortest Job First", "First-Come, First-Served (FCFS)", "Priority Scheduling"], correct: 2, explain: "FCFS is a simple FIFO queue, so a long process at the front can force every short job behind it to wait — the convoy effect." },
+            { topic: "Operating Systems", q: "Which type of Real-Time OS has zero tolerance for delay, as used in airbags or missile systems?", options: ["Soft RTOS", "Hard RTOS", "Batch OS", "Distributed OS"], correct: 1, explain: "Hard RTOS must react instantly every single time — like a goalie in a penalty shootout — because a delay can mean disaster." },
+            { topic: "Operating Systems", q: "The Process Control Block (PCB) stores information for each process. Which of these is part of it?", options: ["Process state and CPU registers", "Only the process's file extension", "The user's login password", "The monitor's screen resolution"], correct: 0, explain: "The PCB holds details like process state, program counter, CPU registers, scheduling info, memory info, and I/O status." },
+            { topic: "Operating Systems", q: "Which scheduler selects which processes get admitted into the ready queue?", options: ["Short-term scheduler", "Medium-term scheduler", "Long-term scheduler", "Dispatcher"], correct: 2, explain: "The long-term (job) scheduler decides which processes are let into the ready queue in the first place." },
+            { topic: "Operating Systems", q: "In Round Robin scheduling, each process is given a fixed amount of time called a...?", options: ["Burst cycle", "Time quantum", "Response ratio", "Aging window"], correct: 1, explain: "Round Robin gives each process a fixed time quantum before switching to the next, keeping CPU access fair for everyone." },
+            { topic: "Operating Systems", q: "After a process is created (\"New\"), which state does it enter next?", options: ["Running", "Waiting", "Ready", "Terminated"], correct: 2, explain: "The typical process lifecycle is New → Ready → Running → Waiting → Terminated, so Ready comes right after New." },
+
+            { topic: "Discrete Structures", q: "In propositional logic, what does the connective ∧ represent?", options: ["OR", "NOT", "AND", "IMPLIES"], correct: 2, explain: "∧ is the AND connective — a statement made of A∧B is only true when both A and B are true." },
+            { topic: "Discrete Structures", q: "Which principle says that if you place more items into containers than there are containers, at least one container must hold two or more items?", options: ["Inclusion-Exclusion Principle", "Pigeonhole Principle", "Binomial Theorem", "Rule of Product"], correct: 1, explain: "The Pigeonhole Principle is exactly this idea — more pigeons than pigeonholes means at least one hole gets more than one pigeon." },
+            { topic: "Discrete Structures", q: "BFS and DFS are two common strategies used for what task?", options: ["Sorting an array", "Traversing a graph", "Compressing a file", "Encrypting data"], correct: 1, explain: "Breadth-First Search and Depth-First Search are both standard techniques for visiting every node in a graph." },
+            { topic: "Discrete Structures", q: "Which law states that ¬(A ∧ B) is equivalent to ¬A ∨ ¬B?", options: ["Distributive Law", "Absorption Law", "De Morgan's Law", "Idempotent Law"], correct: 2, explain: "De Morgan's Laws describe how negation distributes over AND/OR, flipping ∧ to ∨ (and vice versa) while negating each part." },
+            { topic: "Discrete Structures", q: "A relation that is reflexive, symmetric, and transitive is called what?", options: ["A partial order relation", "An equivalence relation", "A bijective function", "A Cartesian product"], correct: 1, explain: "When a relation satisfies all three properties — reflexive, symmetric, and transitive — it's called an equivalence relation." },
+            { topic: "Discrete Structures", q: "\"Discrete\" math, as opposed to continuous math, deals with values that are...?", options: ["Smooth and real-valued", "Distinct and countable, like whole numbers", "Only true or false", "Always infinite"], correct: 1, explain: "Discrete means distinct, separate, countable values — like counting whole apples — instead of a smooth continuous stream." },
+
+            { topic: "Information Management (DBMS)", q: "Which key uniquely identifies each row in a database table?", options: ["Foreign Key", "Candidate Key", "Primary Key", "Composite Key"], correct: 2, explain: "A Primary Key works like a student ID number — no two rows share one, and it's how you always find that exact record." },
+            { topic: "Information Management (DBMS)", q: "SELECT, INSERT, UPDATE, and DELETE belong to which category of SQL commands?", options: ["DDL — Data Definition Language", "DML — Data Manipulation Language", "DCL — Data Control Language", "TCL — Transaction Control Language"], correct: 1, explain: "DML (Data Manipulation Language) is used to work with the actual data — selecting, inserting, updating, and deleting rows." },
+            { topic: "Information Management (DBMS)", q: "In the ACID properties of a transaction, what does the \"I\" stand for?", options: ["Integrity", "Isolation", "Indexing", "Iteration"], correct: 1, explain: "Isolation means transactions running at the same time don't interfere with each other, as if each one runs on its own." },
+            { topic: "Information Management (DBMS)", q: "Which normal form focuses on removing partial dependencies from a table?", options: ["1NF", "2NF", "3NF", "BCNF"], correct: 1, explain: "2NF removes partial dependency — where a non-key attribute depends on only part of a composite primary key." },
+            { topic: "Information Management (DBMS)", q: "What does the ETL process in data warehousing stand for?", options: ["Extract, Transform, Load", "Enter, Test, Launch", "Export, Transfer, Link", "Evaluate, Track, Log"], correct: 0, explain: "ETL — Extract, Transform, Load — is the process of pulling data from sources, cleaning/reshaping it, then loading it into a warehouse." },
+            { topic: "Information Management (DBMS)", q: "What does a Foreign Key do in a relational database?", options: ["It uniquely identifies rows in its own table", "It links to another table's primary key", "It encrypts sensitive columns", "It speeds up every query automatically"], correct: 1, explain: "A Foreign Key is a column that points to the Primary Key of another table, creating a relationship between the two." },
+
+            { topic: "Data Communications and Networking", q: "Which network topology connects every computer to one central hub?", options: ["Bus Topology", "Star Topology", "Ring Topology", "Mesh Topology"], correct: 1, explain: "In a Star Topology, every device connects individually to one central hub, rather than to each other directly." },
+            { topic: "Data Communications and Networking", q: "How many layers does the OSI model have?", options: ["4", "5", "7", "9"], correct: 2, explain: "The OSI Model has 7 layers, like a 7-floor building passing a package down floor by floor until it reaches the truck." },
+            { topic: "Data Communications and Networking", q: "The TCP/IP model is often described as a simplified version of the OSI model with how many layers?", options: ["3", "4", "5", "6"], correct: 1, explain: "TCP/IP condenses networking into 4 layers: Network Interface, Internet, Transport, and Application." },
+            { topic: "Data Communications and Networking", q: "In a peer-to-peer (P2P) network, what role does each device play?", options: ["Only a server", "Only a client", "Both client and server", "Neither — just a passive relay"], correct: 2, explain: "A Peer functions as both client and server at the same time — sometimes serving files, sometimes requesting them." },
+            { topic: "Data Communications and Networking", q: "The IEEE 802.11 standard defines which networking technology?", options: ["Ethernet", "Wi-Fi", "Bluetooth", "Fiber optics"], correct: 1, explain: "IEEE 802.11 is the standard behind Wi-Fi, while IEEE 802.3 covers wired Ethernet." },
+            { topic: "Data Communications and Networking", q: "According to this reviewer's layering (top to bottom, Application first), which layer sits at the very bottom, closest to the physical cable?", options: ["Application Layer", "Transport Layer", "Data Link Layer", "Physical Layer"], correct: 3, explain: "Listed top to bottom from Application down to Physical, the Physical Layer is the very last floor — the one touching the actual cable." },
+
+            { topic: "Software Engineering", q: "Which SDLC model follows a strict, linear, sequential path from requirements to maintenance?", options: ["Agile", "Spiral", "Waterfall", "Scrum"], correct: 2, explain: "The Waterfall Model flows in one direction — Requirements → Design → Implementation → Testing → Deployment → Maintenance — with no looping back." },
+            { topic: "Software Engineering", q: "What does the KISS principle stand for in software development?", options: ["Keep It Simple, Stupid", "Keep It Structured, Secure", "Know Your Software Standards", "Kernel Interface Software System"], correct: 0, explain: "KISS reminds developers to keep designs and code as simple as possible instead of overengineering things." },
+            { topic: "Software Engineering", q: "Which Agile method organizes work using sprints, a backlog, and regular reviews?", options: ["Extreme Programming (XP)", "Scrum", "Kanban", "Rational Unified Process (RUP)"], correct: 1, explain: "Scrum structures development into fixed-length sprints, with a backlog of work and reviews at the end of each sprint." },
+            { topic: "Software Engineering", q: "In Extreme Programming (XP), what is it called when two developers write code together at one workstation?", options: ["Pair programming", "Refactoring", "Code review", "Unit testing"], correct: 0, explain: "Pair programming has two developers working together — one typing, one reviewing — to catch mistakes and share knowledge early." },
+            { topic: "Software Engineering", q: "The Single Responsibility Principle (SRP) says a class should have how many reasons to change?", options: ["As many as needed", "Exactly one", "At least two", "Zero — classes shouldn't change"], correct: 1, explain: "SRP means each class should be responsible for just one thing, so it only ever has one reason to change." },
+            { topic: "Software Engineering", q: "Which estimation technique relies on gathering expert opinions and reaching consensus?", options: ["Work Breakdown Structure", "Three-Point Estimation", "Delphi Technique", "Empirical Estimation Models"], correct: 2, explain: "The Delphi Technique surveys multiple experts and refines their estimates together until the group reaches consensus." },
+
+            { topic: "Web Development", q: "Which of these technologies is used to style and lay out what a user sees in the browser?", options: ["PHP", "CSS", "MySQL", "Node.js"], correct: 1, explain: "CSS handles the visual styling and layout of a webpage — colors, spacing, fonts, and positioning." },
+            { topic: "Web Development", q: "Which HTTP method is used to retrieve data without changing anything on the server?", options: ["POST", "PUT", "DELETE", "GET"], correct: 3, explain: "GET requests fetch data from the server and are not meant to modify anything, unlike POST, PUT, or DELETE." },
+            { topic: "Web Development", q: "Media queries and frameworks like Bootstrap are tools used to build what kind of design?", options: ["Responsive Design", "Static Design", "Print Design", "Monolithic Design"], correct: 0, explain: "Responsive design uses tools like media queries and Bootstrap to make a site adapt to different screen sizes." },
+            { topic: "Web Development", q: "Which of these is a backend programming language commonly used in web development?", options: ["HTML", "CSS", "PHP", "JPEG"], correct: 2, explain: "PHP runs on the server side, handling the logic and data behind a website — the invisible kitchen behind the scenes." },
+            { topic: "Web Development", q: "MySQL and MongoDB are both examples of which kind of technology?", options: ["Web servers", "Databases", "Frontend frameworks", "Image formats"], correct: 1, explain: "MySQL (relational) and MongoDB (document-based) are both databases used to store and organize a web app's data." },
+
+            { topic: "Multimedia", q: "Multimedia is defined as the combination of which types of media?", options: ["Only text and images", "Text, images, audio, and video", "Only audio and video", "Only spreadsheets and slides"], correct: 1, explain: "Multimedia means mixing multiple kinds of media together — text, images, audio, and video — in one experience." },
+            { topic: "Multimedia", q: "Which file format below is commonly used for audio files?", options: ["JPEG", "MP4", "MP3", "GIF"], correct: 2, explain: "MP3 is a widely used compressed audio format, while JPEG, MP4, and GIF are image/video formats." },
+            { topic: "Multimedia", q: "Which of these tools is primarily used for video editing?", options: ["Photoshop", "Adobe Premiere", "Canva", "PowerPoint"], correct: 1, explain: "Adobe Premiere is a dedicated video editing tool, while Photoshop and Canva focus more on images and graphics." },
+            { topic: "Multimedia", q: "Which file format is commonly used for compressed photographs?", options: ["JPEG", "MP3", "MP4", "DOCX"], correct: 0, explain: "JPEG is a standard compressed image format, well-suited for photographs where some quality loss is acceptable." },
+
+            { topic: "Java Programming", q: "In Java's OOP model, what concept lets a class like \"Dog\" be treated as a special version of a class like \"Animal\"?", options: ["Encapsulation", "Polymorphism", "Inheritance", "Abstraction"], correct: 2, explain: "Inheritance lets one class (Dog) inherit properties and behaviors from a more general class (Animal)." },
+            { topic: "Java Programming", q: "Which Java block structure is used to catch and handle runtime errors?", options: ["if-else", "switch-case", "try-catch-finally", "for-loop"], correct: 2, explain: "try-catch-finally lets a program attempt risky code, catch any error that occurs, and clean up afterward regardless of outcome." },
+            { topic: "Java Programming", q: "Which Java collection type stores data as key-value pairs?", options: ["ArrayList", "HashMap", "LinkedList", "Array"], correct: 1, explain: "A HashMap stores data as key-value pairs, letting you quickly look up a value using its associated key." },
+            { topic: "Java Programming", q: "What would `new StringBuilder(\"hello\").reverse().toString()` produce in Java?", options: ["\"hello\"", "\"HELLO\"", "\"olleh\"", "An error"], correct: 2, explain: "StringBuilder's reverse() method flips the character order, turning \"hello\" into \"olleh\"." },
+            { topic: "Java Programming", q: "ArrayList and HashMap in Java both belong to which part of the language?", options: ["The Collections framework", "The Exception Handling system", "The primitive data types", "The I/O package only"], correct: 0, explain: "ArrayList and HashMap are both part of Java's Collections framework, used to store and manage groups of data." },
+            { topic: "Introduction to Computing", q: "Which storage device's read/write speed is measured in R.P.M. (revolutions per minute)?", options: ["Hard Drive", "CD-ROM", "Flash Drive (USB)", "ROM"], correct: 0, explain: "A Hard Drive is a mechanical, magnetic storage device, and its speed is measured in R.P.M. — how fast its internal disk spins." },
+            { topic: "Introduction to Computing", q: "About how much data can a standard CD-ROM hold?", options: ["1.44 MB", "600–700 MB", "4 GB", "1 TB"], correct: 1, explain: "A CD-ROM is an optical disc read by a laser, and it typically holds around 600–700 MB of data." },
+            { topic: "Introduction to Computing", q: "Which type of memory is permanent and holds the essential instructions a computer needs to start up?", options: ["RAM", "ROM", "Cache Memory", "VRAM"], correct: 1, explain: "ROM (Read Only Memory) is permanent — like a printed manual — and holds essential instructions that survive a power-off." },
+            { topic: "Introduction to Computing", q: "In a Graphical User Interface (GUI) like Windows, how do users mainly interact with the system?", options: ["By typing text commands only", "By clicking on images and icons", "By using punch cards", "Through voice commands only"], correct: 1, explain: "GUI systems use a visual desktop with icons and images, letting users point and click instead of typing commands, unlike UNIX's text-command style." },
+            { topic: "Introduction to Computing", q: "What does VRAM on a video card mainly help improve?", options: ["CPU processing speed", "Refresh rate, for smoother images", "Hard drive storage capacity", "Printer resolution"], correct: 1, explain: "VRAM is video memory built into the video card that helps improve the refresh rate, making images look smoother on screen." },
+            { topic: "Introduction to Computing", q: "A screen resolution of 1600 × 1200 is considered which of the following?", options: ["Low resolution", "Medium resolution", "High resolution", "Invalid resolution"], correct: 2, explain: "Resolution is the number of pixels making up the image — 1600×1200 packs in far more pixels than 640×480 or 800×600, making it High resolution." },
+            { topic: "Introduction to Computing", q: "What is the key difference between Multitasking and Multiprocessing?", options: ["Multitasking uses multiple CPUs; Multiprocessing uses only one", "Multitasking is one CPU quickly switching between tasks; Multiprocessing is multiple CPUs working together", "They mean exactly the same thing", "Multiprocessing only works on old computers"], correct: 1, explain: "Multitasking is a single CPU switching rapidly between tasks so it feels simultaneous. Multiprocessing is genuinely multiple CPUs working together at the same time." },
+
+            { topic: "Data Structures and Algorithms", q: "Pseudocode is meant to be independent of what, so it focuses on WHAT to do rather than HOW?", options: ["Any specific programming language", "The problem being solved", "The data structure used", "The person writing it"], correct: 0, explain: "Pseudocode is an English-like description of an algorithm's logic that isn't tied to any particular programming language — it's about the plan, not the syntax." },
+            { topic: "Data Structures and Algorithms", q: "An Array-based implementation of an ADT gives fast access to elements, but what's its main downside?", options: ["It can only store numbers", "Resizing the array is expensive", "It cannot be sorted", "It uses no memory at all"], correct: 1, explain: "Array-based ADTs store elements sequentially for fast access, but growing or shrinking that array (resizing) is a costly operation." },
+            { topic: "Data Structures and Algorithms", q: "Which statement correctly describes the difference between an array variable and a pointer variable?", options: ["An array variable is fixed, while a pointer can be reassigned to point elsewhere", "Pointers can never store a memory address", "Arrays automatically resize themselves", "sizeof(array) always equals sizeof(pointer)"], correct: 0, explain: "An array variable is fixed once declared, but a pointer is just a re-assignable variable that can be pointed at different memory addresses over time." },
+            { topic: "Data Structures and Algorithms", q: "Which type of linked list has its last node link back to the very first node?", options: ["Singly-linked list", "Doubly-linked list", "Circular linked list", "Array-based list"], correct: 2, explain: "In a Circular linked list, the last node points back to the first node, forming a loop instead of ending at a dead end." },
+            { topic: "Data Structures and Algorithms", q: "Which type of queue assigns elements a priority level instead of serving them in strict arrival order?", options: ["Simple Queue", "Circular Queue", "Priority Queue", "Doubly-linked Queue"], correct: 2, explain: "A Priority Queue serves elements based on priority rather than the order they arrived in, unlike a simple FIFO queue." },
+            { topic: "Data Structures and Algorithms", q: "In tree terminology, what do you call a node that has no children?", options: ["Root", "Leaf", "Sibling", "Ancestor"], correct: 1, explain: "A Leaf is a node at the very end of a branch — it has no children of its own, like the tip of a family tree." },
+            { topic: "Data Structures and Algorithms", q: "In a Binary Heap stored as an array, what is the index of a node's left child if the node is at index i?", options: ["i / 2", "2i", "2i + 1", "i + 1"], correct: 1, explain: "In the array representation of a binary heap, a node at index i has its left child at index 2i and its right child at index 2i + 1." },
+
+            { topic: "Operating Systems", q: "Which type of Operating System groups jobs together into batches with no direct user interaction while running?", options: ["Batch Operating System", "Time-Sharing OS", "Network OS", "Real-Time OS"], correct: 0, explain: "A Batch OS processes jobs grouped together in batches, without the user directly interacting with each one as it runs." },
+            { topic: "Operating Systems", q: "During booting, what does the BIOS primarily do?", options: ["Performs hardware checks and loads the boot loader, then hands control to the OS", "Compiles all installed application software", "Manages user account passwords", "Encrypts the entire hard drive"], correct: 0, explain: "BIOS checks the hardware, finds and loads the boot loader from storage, and then hands control over to the operating system." },
+            { topic: "Operating Systems", q: "Restarting a computer without fully powering it off is called what?", options: ["Cold Booting", "Warm Booting", "Dual Booting", "Safe Booting"], correct: 1, explain: "Warm Booting (Soft Boot) restarts the system without a full power-off, unlike Cold Booting which starts from a powered-off state." },
+            { topic: "Operating Systems", q: "Which scheduler is responsible for swapping processes between main memory and disk?", options: ["Long-term scheduler", "Short-term scheduler", "Medium-term scheduler", "Dispatcher"], correct: 2, explain: "The Medium-term scheduler handles swapping processes out of memory and back in from disk, managing the balance between the two." },
+            { topic: "Operating Systems", q: "Which CPU scheduling algorithm is based on the formula: (Waiting time + Service time) / Service time?", options: ["First-Come, First-Served", "Shortest Job First", "Highest Response Ratio Next (HRRN)", "Multi-Level Queue"], correct: 2, explain: "HRRN calculates a response ratio using that exact formula, and it's non-preemptive while still helping prevent starvation." },
+            { topic: "Operating Systems", q: "How does a Multi-Level Feedback Queue (MLFQ) help prevent starvation?", options: ["By giving every process the same fixed priority forever", "By allowing processes to move between queues over time (aging)", "By running only one process at a time", "By ignoring process priority entirely"], correct: 1, explain: "MLFQ lets processes move between different priority queues over time, which — combined with aging — keeps long-waiting processes from starving." },
+
+            { topic: "Discrete Structures", q: "Which set operation combines all the distinct elements from two sets into one?", options: ["Union (∪)", "Intersection (∩)", "Complement (′)", "Cartesian product (×)"], correct: 0, explain: "Union (∪) merges the elements of two sets together, keeping every distinct value from both." },
+            { topic: "Discrete Structures", q: "Which counting technique is used when the ORDER of the chosen items does NOT matter?", options: ["Permutations", "Combinations", "Factorials", "Recursion"], correct: 1, explain: "Combinations count the number of ways to choose items when order doesn't matter, unlike Permutations where order counts." },
+            { topic: "Discrete Structures", q: "A connected, acyclic graph is the formal definition of which structure?", options: ["A Tree", "A Cycle", "A Bipartite graph", "A Complete graph"], correct: 0, explain: "In graph theory terms, a Tree is exactly a connected graph with no cycles — every node reachable, no loops back." },
+            { topic: "Discrete Structures", q: "What is the main purpose of a Karnaugh Map (K-map) in Boolean Algebra?", options: ["Simplifying Boolean expressions", "Encrypting sensitive data", "Sorting an array of numbers", "Measuring network bandwidth"], correct: 0, explain: "K-maps give a visual way to simplify Boolean expressions and logic circuits, making them easier to reduce to their simplest form." },
+
+            { topic: "Information Management (DBMS)", q: "What's the key difference between Data and Information, as this reviewer defines it?", options: ["Data is raw facts; Information is data that actually means something", "They are exactly the same thing", "Data only exists in spreadsheets; Information only exists in databases", "Information is always numeric while Data is always text"], correct: 0, explain: "Data is raw, unprocessed facts. Information is what you get once that data has been organized or interpreted to mean something." },
+            { topic: "Information Management (DBMS)", q: "Which database model organizes data into tables made up of rows (tuples) and columns (attributes), and is the most widely used today?", options: ["Hierarchical Model", "Network Model", "Relational Model", "Object-Oriented Model"], correct: 2, explain: "The Relational Model — using tables, rows, and columns — is the most widely used database model, underlying systems like MySQL and PostgreSQL." },
+            { topic: "Information Management (DBMS)", q: "A column (or set of columns) that COULD serve as the primary key, but wasn't chosen, is called what?", options: ["Candidate Key", "Foreign Key", "Composite Key", "Alternate Index"], correct: 0, explain: "A Candidate Key is any column or set of columns that qualifies to be a primary key — the one actually chosen becomes the Primary Key." },
+            { topic: "Information Management (DBMS)", q: "Which category of SQL commands includes GRANT and REVOKE?", options: ["DDL (Data Definition Language)", "DML (Data Manipulation Language)", "DCL (Data Control Language)", "TCL (Transaction Control Language)"], correct: 2, explain: "DCL (Data Control Language) handles permissions — GRANT gives access, REVOKE takes it away." },
+            { topic: "Information Management (DBMS)", q: "In ER Modeling, if one student can have many enrollments but each enrollment belongs to only one student, what type of relationship is this?", options: ["1:1 (One-to-One)", "1:M (One-to-Many)", "M:N (Many-to-Many)", "None of these"], correct: 1, explain: "This is a 1:M relationship — one student connects to many enrollment records, but each enrollment traces back to just one student." },
+            { topic: "Information Management (DBMS)", q: "Which normal form is described as a stricter version of 3NF?", options: ["1NF", "2NF", "3NF", "BCNF"], correct: 3, explain: "BCNF (Boyce-Codd Normal Form) tightens the rules further than 3NF, closing a few edge cases 3NF doesn't fully cover." },
+            { topic: "Information Management (DBMS)", q: "In the normalization problem-solving steps, what does reaching 1NF specifically require you to eliminate?", options: ["Repeating groups", "Partial dependencies", "Transitive dependencies", "Foreign keys"], correct: 0, explain: "1NF requires eliminating repeating groups so every attribute holds a single, atomic value — the first step toward a clean table." },
+            { topic: "Information Management (DBMS)", q: "Which concurrency problem happens when one transaction's update gets overwritten by another before it's ever saved?", options: ["Lost Update", "Dirty Read", "Inconsistent Retrieval", "Deadlock"], correct: 0, explain: "A Lost Update occurs when two transactions write to the same data and one transaction's change gets silently erased by the other's." },
+            { topic: "Information Management (DBMS)", q: "A database that is physically spread across multiple locations is called what?", options: ["A Relational Database", "A Data Warehouse", "A Distributed Database", "A Flat File Database"], correct: 2, explain: "A Distributed Database stores its data across multiple physical locations rather than in one central place." },
+
+            { topic: "Data Communications and Networking", q: "Which of the following is listed as an ADVANTAGE of computer networks?", options: ["Increased communication speed", "High installation cost", "Vulnerability to malware", "Dependence on a single server"], correct: 0, explain: "Networks speed up communication between users and systems — one of their clearest advantages, alongside cost sharing and centralized management." },
+            { topic: "Data Communications and Networking", q: "Which of the following is listed as a DISADVANTAGE of computer networks?", options: ["Reduced cost of sharing resources", "Flexible access to data", "Vulnerability to viruses and malware", "Increased communication speed"], correct: 2, explain: "Being connected also opens the door to threats — networks are vulnerable to viruses and malware spreading between devices." },
+            { topic: "Data Communications and Networking", q: "Which network medium transmits data as light through glass strands?", options: ["Copper-wired (Ethernet cables)", "Glass-wired (fiber optics)", "Air-wireless (microwave, infrared)", "Radio-wireless (Wi-Fi, Bluetooth)"], correct: 1, explain: "Fiber optic cables are glass-wired media that carry data as pulses of light, offering very high-speed transmission." },
+            { topic: "Data Communications and Networking", q: "Which hardware component enables a device's physical connectivity to a network?", options: ["Network Interface Card (NIC)", "Firewall", "Router", "Modem"], correct: 0, explain: "The Network Interface Card (NIC) is the hardware that lets a device actually plug into and communicate over a network." },
+            { topic: "Data Communications and Networking", q: "Which network topology connects every device to every other device, offering high redundancy?", options: ["Bus Topology", "Star Topology", "Mesh Topology", "Ring Topology"], correct: 2, explain: "Mesh Topology links every device to every other device directly, so if one connection fails, data can still travel another path." },
+            { topic: "Data Communications and Networking", q: "Which network type covers a city-wide area — bigger than a LAN but smaller than a WAN?", options: ["LAN", "MAN", "WAN", "PAN"], correct: 1, explain: "A MAN (Metropolitan Area Network) spans a city-sized area, sitting between the small scope of a LAN and the global reach of a WAN." },
+            { topic: "Data Communications and Networking", q: "Which emerging networking technology refers to everyday physical devices — like smart appliances — connected to the internet?", options: ["Cloud Networking", "Internet of Things (IoT)", "5G Networks", "Software Defined Networking (SDN)"], correct: 1, explain: "IoT (Internet of Things) is about connecting everyday physical objects to the internet so they can send and receive data." },
+
+            { topic: "Software Engineering", q: "Which principle says a feature shouldn't be built until it's actually needed?", options: ["KISS", "YAGNI (You Aren't Gonna Need It)", "DRY", "OCP"], correct: 1, explain: "YAGNI reminds developers not to build functionality speculatively — only add it once it's genuinely required." },
+            { topic: "Software Engineering", q: "Which software process model is an extension of Waterfall that emphasizes validation and testing at every stage?", options: ["V-Model", "Spiral Model", "RAD Model", "Prototyping Model"], correct: 0, explain: "The V-Model extends Waterfall by pairing each development stage with a corresponding validation/testing stage, forming a V shape." },
+            { topic: "Software Engineering", q: "Which Agile method centers on a visual board to manage and limit work in progress?", options: ["Scrum", "Kanban", "Extreme Programming (XP)", "DSDM"], correct: 1, explain: "Kanban uses a visual workflow board to manage tasks and limit work in progress, rather than fixed-length sprints." },
+            { topic: "Software Engineering", q: "In the Rational Unified Process (RUP), what do its three building blocks represent?", options: ["Roles (who), Work products (what), and Tasks (how)", "Planning, Coding, and Testing only", "Waterfall, Agile, and Spiral combined", "Front-end, Back-end, and Database"], correct: 0, explain: "RUP's building blocks describe Roles (who does the work), Work products (what gets produced), and Tasks (how the work gets done)." },
+
+            { topic: "Introduction to Computing", q: "Which category of computers is the most powerful, typically used for weather forecasting and complex scientific calculations?", options: ["Supercomputers", "Mainframes", "Minicomputers", "Microcomputers"], correct: 0, explain: "Supercomputers are the fastest and most powerful category, built for heavy scientific workloads like weather forecasting." },
+            { topic: "Introduction to Computing", q: "Which of these is an example of an INPUT device?", options: ["Scanner", "Printer", "Monitor", "Speaker"], correct: 0, explain: "A scanner is an input device — it's how you feed information into the computer, alongside a keyboard, mouse, or digital camera." },
+            { topic: "Introduction to Computing", q: "Which of the following is a CPU brand mentioned in the reviewer?", options: ["AMD", "Adobe", "Oracle", "Cisco"], correct: 0, explain: "AMD is listed among the processor brands, alongside Pentium, Celeron, MAC, and Cyrix." },
+            { topic: "Introduction to Computing", q: "Which storage device holds only about 1.44 MB and uses magnetic storage?", options: ["Floppy Diskette", "Flash Drive", "CD-ROM", "Hard Drive"], correct: 0, explain: "The Floppy Diskette is an old magnetic storage format with a tiny capacity of about 1.44 MB." },
+            { topic: "Introduction to Computing", q: "Which storage device is known for offering plug-and-play support?", options: ["Flash Drive (USB)", "Floppy Diskette", "CD-ROM", "Hard Drive"], correct: 0, explain: "A USB Flash Drive is portable and electronic, and it supports plug-and-play so it works as soon as it's connected." },
+            { topic: "Introduction to Computing", q: "Which type of memory speeds up processing by anticipating what data the CPU will need next?", options: ["Cache Memory", "ROM", "VRAM", "Floppy storage"], correct: 0, explain: "Cache Memory is a super-fast memory that guesses what you'll need next, helping speed up overall processing." },
+            { topic: "Introduction to Computing", q: "In a GUI, what do we call the small pictures that represent files, commands, or windows?", options: ["Icons", "Pixels", "Ports", "Registers"], correct: 0, explain: "Icons are the small visual symbols in a GUI that represent files, programs, or commands you can click on." },
+            { topic: "Introduction to Computing", q: "Which of these is an example of a computer PORT used for connecting devices?", options: ["USB", "RAM", "VRAM", "ROM"], correct: 0, explain: "USB is a common port type used to physically connect peripherals to a computer, alongside Serial and Parallel ports." },
+            { topic: "Introduction to Computing", q: "Screen resolution is typically measured in which unit?", options: ["Pixels per inch (ppi)", "Dots per inch (dpi)", "Bits per second", "Revolutions per minute"], correct: 0, explain: "Screen resolution is measured in pixels per inch (ppi), around 72 ppi, while printer resolution uses dots per inch (dpi) instead." },
+            { topic: "Introduction to Computing", q: "Which of these is listed as an example of multimedia software in the Computing section?", options: ["Macromedia Director", "MySQL", "AutoCAD", "Excel"], correct: 0, explain: "Macromedia Director is listed as an example of multimedia software, alongside PowerPoint and Flash." },
+            { topic: "Introduction to Computing", q: "Which characters should be avoided when naming a file, according to the reviewer?", options: ["The @, *, and . characters", "Letters and numbers", "Spaces only", "Uppercase letters"], correct: 0, explain: "The reviewer specifically warns against using special characters like @, *, and . in filenames." },
+            { topic: "Introduction to Computing", q: "What does Exporting a file mean, in the reviewer's file management section?", options: ["Converting it to a non-native file format", "Deleting the file permanently", "Renaming the file", "Compressing the file into a zip"], correct: 0, explain: "Exporting means converting your file into a format that isn't its native, original type." },
+
+            { topic: "Data Structures and Algorithms", q: "Which part of an algorithm's components describes its input, output, and constraints?", options: ["Purpose, Conditions & Return", "Header", "Variables", "Analysis"], correct: 0, explain: "Purpose, Conditions & Return covers what the algorithm needs as input, what it produces as output, and any constraints involved." },
+            { topic: "Data Structures and Algorithms", q: "Which of these is an example of a Primitive (Atomic) data type?", options: ["int (integer)", "Telephone number", "Employee record", "Home address"], correct: 0, explain: "Primitive data types like int, float, and char can't be broken down any further — unlike composite types like a telephone number." },
+            { topic: "Data Structures and Algorithms", q: "Which of these is NOT typically listed as a common operation on a data structure?", options: ["Compiling", "Insert", "Traverse", "Sort"], correct: 0, explain: "Compiling is a programming language step, not a data structure operation — Insert, Search, Delete, Traverse, Sort, and Recursion are the common ones." },
+            { topic: "Data Structures and Algorithms", q: "In a Linear List, how many predecessors and successors does each element have, like train cars?", options: ["Exactly one of each", "Multiple predecessors only", "Multiple successors only", "None at all"], correct: 0, explain: "A Linear List's elements each have exactly one predecessor and one successor, forming a straight chain like a train." },
+            { topic: "Data Structures and Algorithms", q: "Which type of linked list has both forward AND backward links between its nodes?", options: ["Doubly-linked list", "Singly-linked list", "Circular list", "Array-based list"], correct: 0, explain: "A Doubly-linked list lets you traverse in both directions since each node links to both the next and the previous node." },
+            { topic: "Data Structures and Algorithms", q: "Letting a user undo their last several actions is an example of which stack application?", options: ["Backtracking", "Sorting", "Indexing", "Hashing"], correct: 0, explain: "Backtracking (like undo operations or maze solving) is a classic use of a stack, since it naturally reverses the last action first." },
+            { topic: "Data Structures and Algorithms", q: "What is the basic operation called when you remove an element from the front of a queue?", options: ["Dequeue", "Enqueue", "Pop", "Push"], correct: 0, explain: "Dequeue removes an element from the front of a queue, while Enqueue adds one at the rear." },
+            { topic: "Data Structures and Algorithms", q: "In tree terminology, what do you call a disjoint set of multiple trees?", options: ["A Forest", "A Grove", "A Branch", "A Cluster"], correct: 0, explain: "A Forest is simply a collection of separate, disjoint trees — no shared root connecting them." },
+            { topic: "Data Structures and Algorithms", q: "Which binary tree traversal visits nodes in the order Root, then Left, then Right?", options: ["Preorder", "Inorder", "Postorder", "Level-order"], correct: 0, explain: "Preorder traversal visits the Root first, then recurses into the Left subtree, then the Right subtree." },
+            { topic: "Data Structures and Algorithms", q: "In a Binary Search Tree (BST), how do elements in the left subtree compare to the root?", options: ["They are less than the root", "They are greater than the root", "They are equal to the root", "There is no fixed rule"], correct: 0, explain: "A BST keeps things sorted: the left subtree always holds values less than the root, and the right subtree holds values greater." },
+            { topic: "Data Structures and Algorithms", q: "What is the allowed balance factor range for any node in a valid AVL Tree?", options: ["-1, 0, or +1", "0 to 10", "Any positive number", "Exactly 0, always"], correct: 0, explain: "An AVL Tree stays balanced by only allowing a balance factor of -1, 0, or +1 at every node, rebalancing with rotations otherwise." },
+            { topic: "Data Structures and Algorithms", q: "In a Max-Heap, how does a parent node compare to its children?", options: ["The parent is greater than or equal to its children", "The parent is always less than its children", "The parent equals the sum of its children", "There is no fixed relationship"], correct: 0, explain: "A Max-Heap keeps the largest value at the root — every parent is greater than or equal to its children." },
+
+            { topic: "Operating Systems", q: "In OS terms, what is the Kernel?", options: ["The core program of the OS that is always running", "A type of computer virus", "A physical hardware chip", "A user-installed application"], correct: 0, explain: "The Kernel is the core part of the operating system, always running and managing the system's hardware resources." },
+            { topic: "Operating Systems", q: "Which type of OS connects multiple autonomous computers over a network, offering fault tolerance and scalability?", options: ["Distributed OS", "Batch OS", "Real-Time OS", "Network OS"], correct: 0, explain: "A Distributed OS links loosely-coupled, independent computers together, gaining benefits like fault tolerance and scalability." },
+            { topic: "Operating Systems", q: "Which type of OS runs on servers and provides shared access to files, printers, and security?", options: ["Network OS", "Batch OS", "Time-Sharing OS", "Real-Time OS"], correct: 0, explain: "A Network OS runs on servers, offering centralized control over shared resources like files, printers, and security." },
+            { topic: "Operating Systems", q: "Which OS service handles creating, reading, writing, deleting, and searching files?", options: ["File-System Manipulation", "Program Execution", "Error Detection", "Communication"], correct: 0, explain: "File-System Manipulation is the OS service responsible for all the basic file operations: create, read, write, delete, and search." },
+            { topic: "Operating Systems", q: "What is the System Bus responsible for in a computer's structure?", options: ["Acting as the communication path among the CPU, memory, and I/O", "Storing the OS permanently", "Displaying the graphical interface", "Cooling the CPU"], correct: 0, explain: "The System Bus is the shared communication pathway that lets the CPU, memory, and I/O modules talk to each other." },
+            { topic: "Operating Systems", q: "Which OS interface type relies on typed text commands rather than icons and windows?", options: ["CLI (Command-Line Interface)", "GUI", "Batch Interface", "Voice Interface"], correct: 0, explain: "CLI (Command-Line Interface) requires typing text commands, in contrast to a GUI's point-and-click icons and windows." },
+            { topic: "Operating Systems", q: "Which I/O bus type connects multiple devices through a single controller?", options: ["SCSI bus", "PCI bus", "Expansion bus", "Daisy-chain bus"], correct: 0, explain: "SCSI bus lets multiple devices connect and communicate through one shared controller." },
+            { topic: "Operating Systems", q: "Which type of register in the I/O system holds data waiting to be sent out from a device?", options: ["Data-out register", "Data-in register", "Status register", "Control register"], correct: 0, explain: "The Data-out register holds data that's about to be sent out from the device, while Data-in holds incoming data." },
+            { topic: "Operating Systems", q: "What makes Memory-Mapped I/O fast and suitable for large data transfers?", options: ["It lets devices communicate using the processor's own memory space", "It bypasses the CPU entirely", "It only works with printers", "It requires no drivers at all"], correct: 0, explain: "Memory-Mapped I/O uses the processor's memory space directly for device communication, making it fast for large transfers." },
+            { topic: "Operating Systems", q: "Which storage type is described as volatile, holding data and programs only while the computer stays powered on?", options: ["Main Memory (RAM)", "Secondary Storage", "ROM", "Flash Storage"], correct: 0, explain: "Main Memory (RAM) is volatile — it only holds data while power is on, unlike secondary storage or ROM." },
+            { topic: "Operating Systems", q: "Which performance metric measures the total time from a process's submission to its completion?", options: ["Turnaround time", "Waiting time", "Response time", "Throughput"], correct: 0, explain: "Turnaround time covers the entire span from when a process is submitted to when it finishes completely." },
+            { topic: "Operating Systems", q: "When a parent process terminates and all its child processes are killed along with it, what is this called?", options: ["Cascading termination", "Forced termination", "Abnormal termination", "Aging"], correct: 0, explain: "Cascading termination happens when a parent process ends and takes all of its child processes down with it." },
+            { topic: "Operating Systems", q: "In Priority Scheduling, what technique solves the problem of starvation for low-priority processes?", options: ["Aging — gradually increasing a waiting process's priority", "Ignoring low-priority processes permanently", "Running processes in random order", "Switching to FCFS entirely"], correct: 0, explain: "Aging gradually raises the priority of processes that have been waiting a long time, eventually letting them run." },
+
+            { topic: "Discrete Structures", q: "Which quantifier symbol means 'for all'?", options: ["∀", "∃", "∧", "¬"], correct: 0, explain: "The ∀ symbol means 'for all', while ∃ means 'there exists'." },
+            { topic: "Discrete Structures", q: "A table showing every possible combination of true and false values for a logical statement is called what?", options: ["A Truth Table", "A Venn Diagram", "A Karnaugh Map", "An Adjacency Matrix"], correct: 0, explain: "A Truth Table lays out every possible true/false combination for the variables in a logical statement." },
+            { topic: "Discrete Structures", q: "Which type of set has absolutely no elements in it?", options: ["Null set (empty set)", "Universal set", "Finite set", "Subset"], correct: 0, explain: "A Null set, also called an empty set, contains no elements at all." },
+            { topic: "Discrete Structures", q: "A function where every element in the range is mapped to by exactly one element in the domain is called what?", options: ["Injective (one-to-one)", "Surjective (onto)", "Bijective", "Reflexive"], correct: 0, explain: "Injective, or one-to-one, functions map distinct inputs to distinct outputs — no two inputs share the same output." },
+            { topic: "Discrete Structures", q: "A relation that relates every element to itself has which property?", options: ["Reflexive", "Symmetric", "Transitive", "Bijective"], correct: 0, explain: "Reflexive means every element relates to itself — for example, a = a always holds." },
+            { topic: "Discrete Structures", q: "Which Big-notation gives a tight bound, describing both the best and worst case growth at once?", options: ["Big-Θ (Theta)", "Big-O", "Big-Ω", "Big-π"], correct: 0, explain: "Big-Θ (Theta) gives a tight bound, sandwiching the growth rate between an upper (Big-O) and lower (Big-Ω) limit." },
+            { topic: "Discrete Structures", q: "Which counting principle helps you avoid double-counting when combining overlapping sets?", options: ["The Inclusion-Exclusion Principle", "The Pigeonhole Principle", "The Binomial Theorem", "The Rule of Product"], correct: 0, explain: "The Inclusion-Exclusion Principle adjusts for overlap between sets so shared elements aren't counted twice." },
+            { topic: "Discrete Structures", q: "Which method for solving recurrence relations is specifically used to analyze divide-and-conquer algorithms?", options: ["Master Theorem", "Substitution", "Iteration", "Truth Tables"], correct: 0, explain: "The Master Theorem gives a direct formula for solving the recurrences that come from divide-and-conquer algorithms." },
+            { topic: "Discrete Structures", q: "In graph theory, a graph where edges have numeric costs or values assigned to them is called what?", options: ["A Weighted graph", "A Bipartite graph", "A Complete graph", "A Cyclic graph"], correct: 0, explain: "A Weighted graph attaches a number, or weight, to each edge — often representing cost, distance, or time." },
+            { topic: "Discrete Structures", q: "Which representation of a graph uses a grid of 0s and 1s to show which vertices are connected?", options: ["Adjacency matrix", "Adjacency list", "Truth table", "Karnaugh map"], correct: 0, explain: "An Adjacency matrix is a grid where a 1 marks a connection between two vertices and a 0 marks no connection." },
+            { topic: "Discrete Structures", q: "A tree that connects all vertices of a graph using the minimum number of edges, with no cycles, is called what?", options: ["A Spanning tree", "A Binary tree", "A Forest", "A Complete graph"], correct: 0, explain: "A Spanning tree touches every vertex of the original graph using the fewest possible edges, with no cycles." },
+            { topic: "Discrete Structures", q: "In Automata Theory, patterns used to describe and match text, like in search or validation, are called what?", options: ["Regular Expressions", "Truth Tables", "Finite State Machines", "Karnaugh Maps"], correct: 0, explain: "Regular Expressions describe text patterns for matching and validation, closely tied to Finite State Machines and formal languages." },
+
+            { topic: "Information Management (DBMS)", q: "Which of these is one of the four components of a database system?", options: ["Hardware", "Firewall", "Cache", "Compiler"], correct: 0, explain: "A database system's components are Data, Hardware, Software (the DBMS), and Users." },
+            { topic: "Information Management (DBMS)", q: "Which of these is listed as a FUNCTION of a DBMS?", options: ["Backup and recovery", "Compiling source code", "Rendering 3D graphics", "Managing CPU temperature"], correct: 0, explain: "Backup and recovery is one of a DBMS's core functions, alongside data storage, access control, and transaction management." },
+            { topic: "Information Management (DBMS)", q: "Which of these is listed as a DISADVANTAGE of using a DBMS?", options: ["High cost of hardware and software", "Reduced data redundancy", "Improved data sharing", "Centralized management"], correct: 0, explain: "A DBMS's disadvantages include the high cost of hardware and software, complexity, and the need for trained personnel." },
+            { topic: "Information Management (DBMS)", q: "Which database model organizes data in a tree-like, parent-child structure?", options: ["Hierarchical Model", "Relational Model", "Object-Oriented Model", "Network Model"], correct: 0, explain: "The Hierarchical Model arranges data in a tree-like structure, with each child record having a single parent." },
+            { topic: "Information Management (DBMS)", q: "Which integrity constraint ensures that a foreign key value must match an existing primary key value in the related table?", options: ["Referential Integrity", "Entity Integrity", "Data Independence", "Normalization"], correct: 0, explain: "Referential Integrity makes sure foreign key values always point to a valid, existing primary key in the related table." },
+            { topic: "Information Management (DBMS)", q: "Which SQL command category includes CREATE, ALTER, and DROP?", options: ["DDL (Data Definition Language)", "DML (Data Manipulation Language)", "DCL (Data Control Language)", "TCL (Transaction Control Language)"], correct: 0, explain: "DDL commands define and modify the structure of database objects — creating, altering, and dropping tables." },
+            { topic: "Information Management (DBMS)", q: "Which SQL command is used to permanently save a transaction's changes to the database?", options: ["COMMIT", "SELECT", "GRANT", "ALTER"], correct: 0, explain: "COMMIT permanently saves all the changes made during a transaction, as part of the Transaction Control Language (TCL)." },
+            { topic: "Information Management (DBMS)", q: "In ER modeling, an entity that cannot exist without being linked to another entity is called what?", options: ["A Weak Entity", "A Strong Entity", "A Composite Entity", "A Candidate Entity"], correct: 0, explain: "A Weak Entity depends on another entity for its existence and identification — it can't stand alone." },
+            { topic: "Information Management (DBMS)", q: "What is the correct order of the Database Design Process?", options: ["Requirement Analysis → Conceptual Design → Logical Design → Physical Design → Implementation", "Implementation → Requirement Analysis → Physical Design → Logical Design", "Physical Design → Conceptual Design → Requirement Analysis → Implementation", "Logical Design → Implementation → Requirement Analysis → Conceptual Design"], correct: 0, explain: "Database design flows from understanding requirements, to conceptual (ERD), to logical (relational schema), to physical design, then implementation." },
+            { topic: "Information Management (DBMS)", q: "Which ACID property guarantees that a transaction either completes fully or doesn't happen at all?", options: ["Atomicity", "Consistency", "Isolation", "Durability"], correct: 0, explain: "Atomicity is the all-or-nothing promise — a transaction either fully completes or has no effect at all." },
+            { topic: "Information Management (DBMS)", q: "Which concurrency control technique orders transactions based on when they started, to keep execution consistent?", options: ["Timestamp ordering", "Locking", "Serializability", "Aging"], correct: 0, explain: "Timestamp ordering assigns each transaction a timestamp and uses it to keep concurrent execution consistent and conflict-free." },
+            { topic: "Information Management (DBMS)", q: "Which of these is listed as a database security THREAT?", options: ["SQL injection", "Encryption", "Authentication", "Backup and recovery"], correct: 0, explain: "SQL injection is a threat that attackers use to manipulate a database through malicious input, unlike encryption or authentication, which are defenses." },
+            { topic: "Information Management (DBMS)", q: "Which type of database index is built on a column other than the primary key, to speed up searches on that column?", options: ["Secondary Index", "Primary Index", "Clustered File", "Hash Table"], correct: 0, explain: "A Secondary Index is created on a non-primary-key column to make searches on that column faster." },
+            { topic: "Information Management (DBMS)", q: "A distributed database where every site uses the same DBMS software and structure is called what type?", options: ["Homogeneous", "Heterogeneous", "Centralized", "Relational"], correct: 0, explain: "A Homogeneous distributed database has every site running the same DBMS software and schema structure." },
+            { topic: "Information Management (DBMS)", q: "In data warehousing, what does OLAP stand for and what is it used for?", options: ["Online Analytical Processing, used for complex data analysis", "Offline Archive Processing, used for backups", "Online Automated Payments, used for billing", "Object Layer Access Protocol, used for networking"], correct: 0, explain: "OLAP (Online Analytical Processing) is used for complex, multi-dimensional data analysis within a data warehouse." },
+            { topic: "Information Management (DBMS)", q: "Which of these is an example of a NoSQL database category?", options: ["Document-based", "Relational", "Hierarchical-only", "Spreadsheet-based"], correct: 0, explain: "Document-based databases are one of the main NoSQL categories, alongside key-value, columnar, and graph databases." },
+            { topic: "Information Management (DBMS)", q: "Which normal form specifically focuses on removing TRANSITIVE dependencies from a table?", options: ["3NF", "1NF", "2NF", "BCNF"], correct: 0, explain: "3NF specifically targets transitive dependencies, where a non-key attribute depends on another non-key attribute instead of directly on the key." },
+
+            { topic: "Software Engineering", q: "Which of these is an example of System Software mentioned in the reviewer?", options: ["Device Drivers", "MS Word", "Photoshop", "A video game"], correct: 0, explain: "Device Drivers are System Software, managing hardware and core functionality, unlike Application Software like MS Word or Photoshop." },
+            { topic: "Software Engineering", q: "Which organization's definition describes Software Engineering as the application of a systematic, disciplined, computable approach?", options: ["IEEE", "ISO", "ACM", "W3C"], correct: 0, explain: "IEEE 610.12-1990 defines Software Engineering as applying a systematic, disciplined, computable approach to development." },
+            { topic: "Software Engineering", q: "Which type of Software Engineering focuses on portability, scalability, and flexibility across different environments?", options: ["Transitional SE", "Operational SE", "Maintenance SE", "Structural SE"], correct: 0, explain: "Transitional SE is concerned with how well software adapts across different environments — portability, scalability, and flexibility." },
+            { topic: "Software Engineering", q: "Which principle tells developers to avoid writing the same code more than once?", options: ["DRY (Don't Repeat Yourself)", "KISS", "YAGNI", "SRP"], correct: 0, explain: "DRY reminds developers to avoid duplicating logic — instead, reuse a single, well-placed piece of code." },
+            { topic: "Software Engineering", q: "Which principle states that software entities should be open for extension but closed for modification?", options: ["OCP (Open/Closed Principle)", "SRP", "LSP", "DRY"], correct: 0, explain: "The Open/Closed Principle says you should be able to extend a class's behavior without changing its existing code." },
+            { topic: "Software Engineering", q: "Which principle says objects of a subclass should be usable in place of objects of their superclass without breaking the program?", options: ["LSP (Liskov Substitution Principle)", "OCP", "SRP", "DRY"], correct: 0, explain: "The Liskov Substitution Principle ensures a subclass can stand in for its superclass without causing unexpected behavior." },
+            { topic: "Software Engineering", q: "Which software team role mainly represents the customer's priorities and manages the product backlog?", options: ["Product Owner", "QA/Tester", "Business Analyst", "Software Architect"], correct: 0, explain: "The Product Owner represents the customer's interests and is responsible for managing and prioritizing the product backlog." },
+            { topic: "Software Engineering", q: "A team structure organized by department in a top-down hierarchy is called what?", options: ["A Functional Team", "A Cross-functional Team", "A Scrum Team", "A Distributed Team"], correct: 0, explain: "A Functional Team follows a top-down, department-based hierarchy, unlike a Cross-functional Team that spans multiple departments." },
+            { topic: "Software Engineering", q: "Which of these is one of the four core SDLC activities in the reviewer's process structure?", options: ["Validation", "Marketing", "Sales", "Deployment Only"], correct: 0, explain: "The four core SDLC activities are Specification, Design & Implementation, Validation, and Evolution." },
+            { topic: "Software Engineering", q: "Which Evolutionary Development approach builds a quick, disposable version of software just to explore requirements?", options: ["Throwaway Prototyping", "Component-Based SE", "RAD Model", "Spiral Model"], correct: 0, explain: "Throwaway Prototyping builds a quick prototype meant to be discarded once it has helped clarify requirements." },
+            { topic: "Software Engineering", q: "Which software process model combines iterative development with a strong focus on risk analysis at each cycle?", options: ["Spiral Model", "Waterfall Model", "RAD Model", "V-Model"], correct: 0, explain: "The Spiral Model loops through iterative cycles, with risk analysis built into every pass around the spiral." },
+            { topic: "Software Engineering", q: "In Extreme Programming (XP), short descriptions of a feature written from an end-user's perspective are called what?", options: ["User stories", "Use cases", "Sprints", "Backlogs"], correct: 0, explain: "User stories are short, plain-language descriptions of a feature from the end-user's point of view, central to XP." },
+            { topic: "Software Engineering", q: "Which Agile method emphasizes active user involvement throughout iterative development?", options: ["Dynamic Systems Development Method (DSDM)", "Kanban", "Scrum", "RUP"], correct: 0, explain: "DSDM specifically stresses active, continuous user involvement across the iterative development process." },
+            { topic: "Software Engineering", q: "Which RUP discipline is considered a Supporting discipline rather than an Engineering one?", options: ["Configuration Management", "Requirements", "Implementation", "Testing"], correct: 0, explain: "Configuration Management is one of RUP's Supporting disciplines, alongside Project Management and Environment — separate from the Engineering disciplines." },
+            { topic: "Software Engineering", q: "Which of these is listed as one of RUP's best practices?", options: ["Develop iteratively", "Skip requirements gathering", "Avoid using UML", "Finalize design before any testing"], correct: 0, explain: "Developing iteratively is one of RUP's core best practices, alongside managing requirements and modeling visually with UML." },
+            { topic: "Software Engineering", q: "Which estimation technique breaks project tasks into a hierarchical structure of smaller, manageable pieces?", options: ["Work Breakdown Structure (WBS)", "Delphi Technique", "Three-Point Estimation", "Empirical Estimation"], correct: 0, explain: "A Work Breakdown Structure (WBS) hierarchically breaks a project down into smaller, more manageable tasks." },
+            { topic: "Software Engineering", q: "Which estimation technique combines an optimistic, most likely, and pessimistic estimate into one figure?", options: ["Three-Point Estimation", "Delphi Technique", "Work Breakdown Structure", "Decomposition Technique"], correct: 0, explain: "Three-Point Estimation blends optimistic, most likely, and pessimistic scenarios to produce a more balanced estimate." },
+
+            { topic: "Data Communications and Networking", q: "Which of these best matches the reviewer's definition of a Network?", options: ["A collection of interconnected hardware components linked for sharing resources", "A single standalone computer", "A type of programming language", "A category of software license"], correct: 0, explain: "A Network is defined as a collection of interconnected hardware components (nodes, devices) linked by communication links to share resources and information." },
+            { topic: "Data Communications and Networking", q: "Which of these is listed as an APPLICATION of computer networks?", options: ["Sharing hardware resources like printers", "Increasing hardware failure rates", "Encrypting all files automatically", "Removing the need for protocols"], correct: 0, explain: "Sharing hardware resources, like printers, is one of the core applications of computer networks." },
+            { topic: "Data Communications and Networking", q: "Resource Sharing and Connectivity are described as which part of computer networking?", options: ["Network Categories", "Network Topologies", "Network Devices", "Network Media"], correct: 0, explain: "Resource Sharing (software/hardware) and Connectivity (the links enabling interaction) are the two Network Categories described in the reviewer." },
+            { topic: "Data Communications and Networking", q: "Which IEEE standard defines wired Ethernet connections?", options: ["IEEE 802.3", "IEEE 802.11", "IEEE 802.15", "IEEE 802.1"], correct: 0, explain: "IEEE 802.3 is the standard behind wired Ethernet, while IEEE 802.11 covers Wi-Fi." },
+            { topic: "Data Communications and Networking", q: "Which type of software supports networking functions on servers, like Windows Server or Linux?", options: ["Network Operating System", "Real-Time OS", "Batch OS", "Distributed OS"], correct: 0, explain: "A Network Operating System is built to support networking functions, running on servers like Windows Server or Linux." },
+            { topic: "Data Communications and Networking", q: "Which networking device connects two different networks together, often translating between different protocols?", options: ["Gateway", "Switch", "Hub", "NIC"], correct: 0, explain: "A Gateway connects two different networks and can translate between differing protocols, unlike a switch or hub which work within one network." },
+            { topic: "Data Communications and Networking", q: "In which topology do all computers share a single main cable?", options: ["Bus Topology", "Star Topology", "Ring Topology", "Mesh Topology"], correct: 0, explain: "Bus Topology has every computer sharing one single main cable, unlike a Star which routes through a central hub." },
+            { topic: "Data Communications and Networking", q: "In which topology do computers form a circle, with data passing from one to the next around the loop?", options: ["Ring Topology", "Bus Topology", "Star Topology", "Mesh Topology"], correct: 0, explain: "Ring Topology arranges computers in a circle, with data passing around the loop from one device to the next." },
+            { topic: "Data Communications and Networking", q: "Which type of network has a very small range, often used for Bluetooth connections?", options: ["PAN (Personal Area Network)", "LAN", "MAN", "WAN"], correct: 0, explain: "PAN (Personal Area Network) covers a very small range, typically for things like Bluetooth-connected devices." },
+            { topic: "Data Communications and Networking", q: "In the Client-Server network model, what role does the server play?", options: ["It provides resources and services to client devices", "It only requests resources from clients", "It has no role in the network", "It functions only as a cable"], correct: 0, explain: "In a Client-Server model, the server provides resources and services, while clients request and use them." },
+            { topic: "Data Communications and Networking", q: "Which OSI layer is responsible for formatting and encrypting data so different systems can understand it?", options: ["Presentation Layer", "Session Layer", "Application Layer", "Transport Layer"], correct: 0, explain: "The Presentation Layer formats, translates, and encrypts data so it's understandable between different systems." },
+            { topic: "Data Communications and Networking", q: "Which OSI layer manages sessions or connections between two communicating applications?", options: ["Session Layer", "Presentation Layer", "Data Link Layer", "Network Layer"], correct: 0, explain: "The Session Layer establishes, manages, and ends the sessions or connections between two communicating applications." },
+            { topic: "Data Communications and Networking", q: "Which OSI layer handles error detection and framing of data as it moves across a physical link?", options: ["Data Link Layer", "Physical Layer", "Network Layer", "Transport Layer"], correct: 0, explain: "The Data Link Layer handles framing data and detecting errors as it travels across a physical connection." },
+            { topic: "Data Communications and Networking", q: "A network attack designed to overwhelm a server with traffic so it can't respond to real users is called what?", options: ["Denial-of-Service (DoS) attack", "Phishing", "Firewall breach", "Encryption failure"], correct: 0, explain: "A Denial-of-Service (DoS) attack floods a server with traffic to overwhelm it, preventing legitimate users from getting through." },
+            { topic: "Data Communications and Networking", q: "Which emerging networking technology lets administrators control traffic flow through software instead of physical hardware configuration?", options: ["Software Defined Networking (SDN)", "5G Networks", "Cloud Networking", "Internet of Things (IoT)"], correct: 0, explain: "Software Defined Networking (SDN) shifts network control into software, instead of manually configuring physical hardware." },
+
+            { topic: "Web Development", q: "Which HTTP method is used to completely update or replace an existing resource on a server?", options: ["PUT", "GET", "DELETE", "HEAD"], correct: 0, explain: "PUT is used to update or replace an existing resource entirely, while GET only retrieves data." },
+            { topic: "Web Development", q: "Which of these technologies runs primarily in the user's browser to add interactivity to a webpage?", options: ["JavaScript", "PHP", "MySQL", "Apache"], correct: 0, explain: "JavaScript runs in the browser, making pages interactive, while PHP and MySQL typically run on the server side." },
+            { topic: "Web Development", q: "Node.js and Python are commonly used for which side of web development?", options: ["Backend", "Frontend", "Database schema design only", "Print layout"], correct: 0, explain: "Node.js and Python are backend technologies, handling server-side logic behind the scenes." },
+            { topic: "Web Development", q: "What do you need to register to give your website a memorable web address, like example.com?", options: ["A Domain name", "A Firewall", "An API key", "A Cache"], correct: 0, explain: "A Domain name is the human-readable address, like example.com, that you register so people can find your website." },
+
+            { topic: "Multimedia", q: "Which image file format supports simple animations and transparency, often used for short looping clips online?", options: ["GIF", "JPEG", "MP3", "DOCX"], correct: 0, explain: "GIF supports basic animation and transparency, making it popular for short looping clips online." },
+            { topic: "Multimedia", q: "Which multimedia tool is commonly used for quick graphic design, like social media posts?", options: ["Canva", "Adobe Premiere", "MySQL", "Node.js"], correct: 0, explain: "Canva is a popular tool for quick, accessible graphic design work, like creating social media posts." },
+            { topic: "Multimedia", q: "Which of these is listed as a common APPLICATION area for multimedia?", options: ["Marketing", "Data encryption", "Network routing", "Memory management"], correct: 0, explain: "Marketing is listed as a common application area for multimedia, alongside Education and Entertainment." },
+
+            { topic: "Java Programming", q: "Which OOP concept means hiding an object's internal details and only exposing what's necessary?", options: ["Encapsulation", "Inheritance", "Polymorphism", "Abstraction"], correct: 0, explain: "Encapsulation hides an object's internal details, exposing only what other parts of the program actually need to use." },
+            { topic: "Java Programming", q: "Which OOP concept lets a method behave differently depending on the object calling it?", options: ["Polymorphism", "Encapsulation", "Inheritance", "Abstraction"], correct: 0, explain: "Polymorphism lets the same method name behave differently depending on which object or class is calling it." },
+            { topic: "Java Programming", q: "Which Java loop structure is best suited when you know exactly how many times you want to repeat an action?", options: ["for loop", "if-else", "try-catch", "switch-case"], correct: 0, explain: "A for loop is ideal when you already know the exact number of repetitions you need." },
+            { topic: "Java Programming", q: "In a Java method signature, what does the return type specify?", options: ["The type of value the method sends back after it finishes", "The method's name", "The number of parameters it accepts", "Whether the method is public or private"], correct: 0, explain: "The return type tells you what kind of value the method will hand back once it finishes running." },
+            { topic: "Java Programming", q: "Which Java keyword block runs no matter what, whether an exception was thrown or not?", options: ["finally", "catch", "try", "throw"], correct: 0, explain: "The finally block always executes, regardless of whether an exception occurred, making it ideal for cleanup code." }
+        ];
+
+        const TOPIC_ORDER = [
+            "Introduction to Computing",
+            "Data Structures and Algorithms",
+            "Operating Systems",
+            "Discrete Structures",
+            "Information Management (DBMS)",
+            "Data Communications and Networking",
+            "Software Engineering",
+            "Web Development",
+            "Multimedia",
+            "Java Programming"
+        ];
+
+        const state = {
+            selectedTopics: new Set(TOPIC_ORDER),
+            count: "all",
+            order: [],
+            current: 0,
+            answers: [],
+            score: 0
+        };
+
+        const el = id => document.getElementById(id);
+
+        function topicCount(topic) {
+            return QUESTIONS.filter(q => q.topic === topic).length;
+        }
+
+        function buildSetupScreen() {
+            const grid = el('topicGrid');
+            grid.innerHTML = "";
+            TOPIC_ORDER.forEach((topic, i) => {
+                const card = document.createElement('div');
+                card.className = 'topic-card on';
+                card.dataset.topic = topic;
+                card.innerHTML = `
+      <div class="topic-num">${i + 1}</div>
+      <div class="topic-name">${topic}</div>
+      <div class="topic-count">${topicCount(topic)}</div>
+    `;
+                card.addEventListener('click', () => {
+                    if (state.selectedTopics.has(topic)) {
+                        state.selectedTopics.delete(topic);
+                        card.classList.remove('on');
+                    } else {
+                        state.selectedTopics.add(topic);
+                        card.classList.add('on');
+                    }
+                    updateStartNote();
+                });
+                grid.appendChild(card);
+            });
+
+            el('topicToggle').addEventListener('click', () => {
+                const allOn = state.selectedTopics.size === TOPIC_ORDER.length;
+                state.selectedTopics = new Set(allOn ? [] : TOPIC_ORDER);
+                document.querySelectorAll('.topic-card').forEach(c => {
+                    c.classList.toggle('on', state.selectedTopics.has(c.dataset.topic));
+                });
+                el('topicToggle').textContent = allOn ? 'select all' : 'clear all';
+                updateStartNote();
+            });
+
+            const counts = [
+                { label: "25", val: 25 },
+                { label: "50", val: 50 },
+                { label: "100", val: 100 },
+                { label: "All", val: "all" }
+            ];
+            const countRow = el('countRow');
+            countRow.innerHTML = "";
+            counts.forEach(c => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'count-btn' + (c.val === state.count ? ' on' : '');
+                btn.textContent = c.label + (c.val !== "all" ? " items" : "");
+                btn.addEventListener('click', () => {
+                    state.count = c.val;
+                    document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('on'));
+                    btn.classList.add('on');
+                    updateStartNote();
+                });
+                countRow.appendChild(btn);
+            });
+
+            updateStartNote();
+        }
+
+        function updateStartNote() {
+            const pool = QUESTIONS.filter(q => state.selectedTopics.has(q.topic)).length;
+            const n = state.count === "all" ? pool : Math.min(state.count, pool);
+            el('startNote').textContent = `${n} question${n === 1 ? '' : 's'} selected from ${state.selectedTopics.size} topic${state.selectedTopics.size === 1 ? '' : 's'}`;
+            el('startBtn').disabled = pool === 0;
+        }
+
+        function shuffle(arr) {
+            const a = arr.slice();
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function startQuiz() {
+            let pool = QUESTIONS.map((q, i) => i).filter(i => state.selectedTopics.has(QUESTIONS[i].topic));
+            pool = shuffle(pool);
+            if (state.count !== "all") {
+                pool = pool.slice(0, state.count);
+            }
+            state.order = pool;
+            state.current = 0;
+            state.answers = new Array(pool.length).fill(null);
+            state.score = 0;
+
+            showScreen('screen-quiz');
+            el('topScoreChip').style.display = 'flex';
+            renderQuestion();
+        }
+
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            el(id).classList.add('active');
+        }
+
+        function renderQuestion() {
+            const qi = state.order[state.current];
+            const q = QUESTIONS[qi];
+
+            el('quizTopicTag').textContent = q.topic;
+            el('quizCounter').textContent = `${state.current + 1} / ${state.order.length}`;
+            el('progressFill').style.width = `${(state.current / state.order.length) * 100}%`;
+            updateTopScore();
+
+            el('qtext').textContent = q.q;
+
+            const optWrap = el('options');
+            optWrap.innerHTML = "";
+            const letters = ['A', 'B', 'C', 'D'];
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option';
+                btn.innerHTML = `<span class="opt-letter">${letters[i]}</span><span>${opt}</span>`;
+                btn.addEventListener('click', () => selectOption(i));
+                optWrap.appendChild(btn);
+            });
+
+            el('feedback').className = 'feedback';
+            el('nextBtn').disabled = true;
+            el('nextBtn').textContent = state.current === state.order.length - 1 ? 'See results →' : 'Next question →';
+
+            const prior = state.answers[state.current];
+            if (prior !== null) {
+                lockOptions(prior, q.correct);
+                showFeedback(prior === q.correct, q.explain);
+                el('nextBtn').disabled = false;
+            }
+        }
+
+        function selectOption(i) {
+            if (state.answers[state.current] !== null) return;
+            const qi = state.order[state.current];
+            const q = QUESTIONS[qi];
+            state.answers[state.current] = i;
+            if (i === q.correct) state.score++;
+
+            lockOptions(i, q.correct);
+            showFeedback(i === q.correct, q.explain);
+            el('nextBtn').disabled = false;
+            updateTopScore();
+        }
+
+        function lockOptions(chosen, correctIdx) {
+            const buttons = el('options').querySelectorAll('.option');
+            buttons.forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === correctIdx) btn.classList.add('correct');
+                else if (i === chosen) btn.classList.add('wrong');
+                else btn.classList.add('dim');
+            });
+        }
+
+        function showFeedback(isRight, explainText) {
+            const fb = el('feedback');
+            fb.className = 'feedback show ' + (isRight ? 'right' : 'wrong');
+            el('fbTag').textContent = isRight ? 'Correct' : 'Not quite';
+            el('fbText').textContent = explainText;
+        }
+
+        function updateTopScore() {
+            const answered = state.answers.filter(a => a !== null).length;
+            el('topScoreVal').textContent = `${state.score}/${answered}`;
+        }
+
+        el('nextBtn').addEventListener('click', () => {
+            if (state.current < state.order.length - 1) {
+                state.current++;
+                renderQuestion();
+            } else {
+                finishQuiz();
+            }
+        });
+
+        function finishQuiz() {
+            el('progressFill').style.width = '100%';
+            const total = state.order.length;
+            const pct = total ? Math.round((state.score / total) * 100) : 0;
+
+            showScreen('screen-results');
+
+            el('statCorrect').textContent = state.score;
+            el('statWrong').textContent = total - state.score;
+            el('statTotal').textContent = total;
+
+            const circumference = 2 * Math.PI * 70;
+            const ring = el('ringProgress');
+            ring.setAttribute('stroke-dasharray', circumference);
+            ring.setAttribute('stroke-dashoffset', circumference);
+            requestAnimationFrame(() => {
+                ring.style.transition = 'stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)';
+                ring.setAttribute('stroke-dashoffset', circumference - (circumference * pct / 100));
+            });
+            el('ringPct').textContent = pct + '%';
+
+            let title, sub;
+            if (pct >= 90) { title = "Outstanding"; sub = "You clearly know this material cold."; }
+            else if (pct >= 75) { title = "Solid work"; sub = "You're in strong shape — polish a few gaps and you're set."; }
+            else if (pct >= 50) { title = "Good start"; sub = "Halfway there. Review the missed topics below and run it again."; }
+            else { title = "Keep going"; sub = "This is exactly what practice runs are for — review, then retry."; }
+            el('resultTitle').textContent = title;
+            el('resultSub').textContent = sub;
+
+            const byTopic = {};
+            state.order.forEach((qi, idx) => {
+                const q = QUESTIONS[qi];
+                if (!byTopic[q.topic]) byTopic[q.topic] = { correct: 0, total: 0 };
+                byTopic[q.topic].total++;
+                if (state.answers[idx] === q.correct) byTopic[q.topic].correct++;
+            });
+
+            const bp = el('breakdownPanel');
+            bp.innerHTML = "";
+            TOPIC_ORDER.filter(t => byTopic[t]).forEach(t => {
+                const { correct, total } = byTopic[t];
+                const p = total ? Math.round((correct / total) * 100) : 0;
+                const row = document.createElement('div');
+                row.className = 'breakdown-row';
+                row.innerHTML = `
+      <div class="breakdown-name">${t}</div>
+      <div class="breakdown-bar"><div class="breakdown-fill" style="width:0%;" data-w="${p}"></div></div>
+      <div class="breakdown-score">${correct}/${total}</div>
+    `;
+                bp.appendChild(row);
+            });
+            requestAnimationFrame(() => {
+                bp.querySelectorAll('.breakdown-fill').forEach(f => { f.style.width = f.dataset.w + '%'; });
+            });
+
+            const reviewList = el('reviewList');
+            reviewList.innerHTML = "";
+            state.order.forEach((qi, idx) => {
+                const q = QUESTIONS[qi];
+                const userIdx = state.answers[idx];
+                const isRight = userIdx === q.correct;
+                const letters = ['A', 'B', 'C', 'D'];
+                const item = document.createElement('div');
+                item.className = 'review-item';
+                item.innerHTML = `
+      <p class="rq">${idx + 1}. ${q.q}</p>
+      ${isRight ? '' : `<div class="ra wrong"><span class="ra-label">Your answer</span><span>${letters[userIdx]}. ${q.options[userIdx]}</span></div>`}
+      <div class="ra correct"><span class="ra-label">Correct</span><span>${letters[q.correct]}. ${q.options[q.correct]}</span></div>
+      <p class="rexp">${q.explain}</p>
+    `;
+                reviewList.appendChild(item);
+            });
+        }
+
+        el('retakeBtn').addEventListener('click', () => {
+            state.current = 0;
+            state.answers = new Array(state.order.length).fill(null);
+            state.score = 0;
+            showScreen('screen-quiz');
+            renderQuestion();
+        });
+
+        el('newSetBtn').addEventListener('click', () => {
+            el('topScoreChip').style.display = 'none';
+            showScreen('screen-setup');
+        });
+
+        el('startBtn').addEventListener('click', startQuiz);
+
+        buildSetupScreen();
+    </script>
+</body>
+
+</html>
