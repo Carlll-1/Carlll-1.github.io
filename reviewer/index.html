@@ -247,6 +247,23 @@
             text-decoration: underline;
         }
 
+        .code-cta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            background: linear-gradient(135deg, rgba(91, 157, 255, 0.08), rgba(242, 184, 76, 0.05));
+            border-color: var(--border);
+        }
+
+        .code-cta-desc {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-dim);
+            max-width: 440px;
+        }
+
         .topic-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
@@ -458,6 +475,170 @@
             line-height: 1.45;
             font-weight: 600;
             margin: 0 0 22px;
+        }
+
+        .qcode {
+            display: none;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.65;
+            color: var(--text);
+            background: var(--bg-soft);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 16px 18px;
+            margin: -6px 0 22px;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .qcode.show {
+            display: block;
+        }
+
+        .code-desc {
+            font-family: var(--font-body);
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-dim);
+            margin: -14px 0 18px;
+        }
+
+        .editor-wrap {
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .editor-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--panel-2);
+            padding: 8px 14px;
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            color: var(--text-mute);
+        }
+
+        .editor-reset {
+            background: none;
+            border: none;
+            color: var(--blue);
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .editor-reset:hover {
+            text-decoration: underline;
+        }
+
+        .code-editor {
+            display: block;
+            width: 100%;
+            min-height: 220px;
+            resize: vertical;
+            font-family: var(--font-mono);
+            font-size: 13.5px;
+            line-height: 1.65;
+            padding: 16px 18px;
+            border: none;
+            background: var(--bg-soft);
+            color: var(--text);
+            outline: none;
+            tab-size: 4;
+            white-space: pre;
+        }
+
+        .code-editor:disabled {
+            opacity: 0.65;
+        }
+
+        .run-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .run-status {
+            font-family: var(--font-mono);
+            font-size: 12.5px;
+            color: var(--text-mute);
+        }
+
+        .run-status.running {
+            color: var(--blue);
+        }
+
+        .test-results {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .test-results.show {
+            display: flex;
+        }
+
+        .test-case {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-size: 12.5px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-soft);
+            background: var(--bg-soft);
+            color: var(--text-dim);
+        }
+
+        .test-case .tc-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .test-case.pass {
+            border-color: var(--green-dim);
+        }
+
+        .test-case.pass .tc-icon {
+            background: var(--green);
+            color: #0B1F14;
+        }
+
+        .test-case.fail {
+            border-color: var(--red-dim);
+        }
+
+        .test-case.fail .tc-icon {
+            background: var(--red);
+            color: #2B0E0E;
+        }
+
+        .compile-error {
+            font-family: var(--font-mono);
+            font-size: 12.5px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            color: var(--red);
+            background: var(--red-dim);
+            border: 1px solid var(--red);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            margin-bottom: 16px;
         }
 
         .options {
@@ -867,6 +1048,15 @@
                     right, with a plain-words explanation right after.</p>
             </div>
 
+            <div class="panel code-cta">
+                <div class="code-cta-text">
+                    <p class="panel-label" style="margin-bottom:6px;">Java Coding Exam</p>
+                    <p class="code-cta-desc">Write real Java in the editor and fix broken code — it actually
+                        compiles and runs, no multiple choice involved.</p>
+                </div>
+                <button class="btn btn-ghost" id="startCodeExamBtn">Start coding exam →</button>
+            </div>
+
             <div class="panel">
                 <p class="panel-label">Topics <button type="button" id="topicToggle">select all</button></p>
                 <div class="topic-grid" id="topicGrid"></div>
@@ -897,6 +1087,7 @@
 
             <div class="qcard" id="qcard">
                 <p class="qtext" id="qtext"></p>
+                <pre class="qcode" id="qcode"></pre>
                 <div class="options" id="options"></div>
                 <div class="feedback" id="feedback">
                     <span class="fb-tag" id="fbTag"></span>
@@ -945,6 +1136,90 @@
             <div class="results-actions">
                 <button class="btn btn-primary" id="retakeBtn">Retake same set</button>
                 <button class="btn btn-ghost" id="newSetBtn">Change topics</button>
+            </div>
+        </section>
+
+        <!-- JAVA CODING EXAM (free-response) -->
+        <section class="screen" id="screen-codeexam">
+            <div class="quiz-head">
+                <div class="quiz-meta">
+                    <span class="topic-tag" id="codeKindTag">Write</span>
+                    <span id="codeCounter">1 / 8</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="codeProgressFill" style="width:0%;"></div>
+                </div>
+            </div>
+
+            <div class="qcard" id="codeCard">
+                <p class="qtext" id="codeTitle"></p>
+                <p class="code-desc" id="codeDescription"></p>
+
+                <div class="editor-wrap">
+                    <div class="editor-bar">
+                        <span>Main.java</span>
+                        <button type="button" class="editor-reset" id="codeResetBtn">Reset starter code</button>
+                    </div>
+                    <textarea id="codeEditor" class="code-editor" spellcheck="false" autocomplete="off"
+                        autocapitalize="off"></textarea>
+                </div>
+
+                <div class="run-row">
+                    <button class="btn btn-primary" id="codeRunBtn">Run &amp; check ▶</button>
+                    <span class="run-status" id="codeRunStatus"></span>
+                </div>
+
+                <div class="test-results" id="testResults"></div>
+
+                <div class="feedback" id="codeFeedback">
+                    <span class="fb-tag" id="codeFbTag"></span>
+                    <div id="codeFbText"></div>
+                </div>
+            </div>
+
+            <div class="quiz-nav" style="justify-content: space-between;">
+                <button class="btn btn-ghost" id="codeBackBtn">← Back to menu</button>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn btn-ghost" id="codeSkipBtn">Skip for now</button>
+                    <button class="btn btn-primary" id="codeNextBtn" disabled>Next exercise →</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- JAVA CODING EXAM RESULTS -->
+        <section class="screen" id="screen-codeexam-results">
+            <div class="results-head">
+                <div class="ring-wrap">
+                    <svg width="160" height="160" viewBox="0 0 160 160">
+                        <circle cx="80" cy="80" r="70" fill="none" stroke="#1B2530" stroke-width="12" />
+                        <circle cx="80" cy="80" r="70" fill="none" stroke="url(#gradRing2)" stroke-width="12"
+                            stroke-linecap="round" id="codeRingProgress" stroke-dasharray="440"
+                            stroke-dashoffset="440" />
+                        <defs>
+                            <linearGradient id="gradRing2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#5B9DFF" />
+                                <stop offset="100%" stop-color="#F2B84C" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="ring-pct"><b id="codeRingPct">0%</b><span>accuracy</span></div>
+                </div>
+                <h3 id="codeResultTitle">Nice work</h3>
+                <p id="codeResultSub">Here's how you did.</p>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card correct"><b id="codeStatCorrect">0</b><span>solved</span></div>
+                <div class="stat-card wrong"><b id="codeStatWrong">0</b><span>unsolved</span></div>
+                <div class="stat-card"><b id="codeStatTotal">0</b><span>total exercises</span></div>
+            </div>
+
+            <p class="section-title">Review your solutions</p>
+            <div id="codeReviewList"></div>
+
+            <div class="results-actions">
+                <button class="btn btn-primary" id="codeRetakeBtn">Retake coding exam</button>
+                <button class="btn btn-ghost" id="codeNewSetBtn">Back to menu</button>
             </div>
         </section>
 
@@ -1189,6 +1464,126 @@
             { topic: "Java Programming", q: "Which Java keyword block runs no matter what, whether an exception was thrown or not?", options: ["finally", "catch", "try", "throw"], correct: 0, explain: "The finally block always executes, regardless of whether an exception occurred, making it ideal for cleanup code." }
         ];
 
+        // Java Coding Exam — real Java, compiled and run for real (via the Wandbox API).
+        // "write" exercises give you a stub to implement; "debug" exercises give you working-looking
+        // code that has a real bug for you to find and fix. Either way, you edit actual code.
+        const CODE_EXERCISES = [
+            {
+                kind: "write",
+                title: "Sum of Digits",
+                description: "Implement sumOfDigits(int n) so it returns the sum of n's digits. Assume n is non-negative.",
+                starter:
+                    `static int sumOfDigits(int n) {
+    // TODO: return the sum of n's digits
+    // sumOfDigits(12345) should return 15
+    return 0;
+}`,
+                testCalls: ["sumOfDigits(12345)", "sumOfDigits(0)", "sumOfDigits(9)"],
+                expected: ["15", "0", "9"],
+                explain: "Peel off digits with n % 10, then shrink n with n /= 10, adding each digit to a running total until n reaches 0."
+            },
+            {
+                kind: "write",
+                title: "Palindrome Check",
+                description: "Implement isPalindrome(String s) so it returns true when s reads the same forwards and backwards.",
+                starter:
+                    `static boolean isPalindrome(String s) {
+    // TODO: return true if s reads the same forwards and backwards
+    return false;
+}`,
+                testCalls: ['isPalindrome("level")', 'isPalindrome("hello")', 'isPalindrome("a")'],
+                expected: ["true", "false", "true"],
+                explain: "Walk two pointers inward from both ends — if any pair of characters ever differs, it's not a palindrome; if the pointers meet first, it is."
+            },
+            {
+                kind: "write",
+                title: "Count Vowels",
+                description: "Implement countVowels(String s) so it returns how many of the characters a, e, i, o, u appear in s (input is lowercase).",
+                starter:
+                    `static int countVowels(String s) {
+    // TODO: count vowels (a, e, i, o, u) in s
+    return 0;
+}`,
+                testCalls: ['countVowels("hello world")', 'countVowels("xyz")', 'countVowels("aeiou")'],
+                expected: ["3", "0", "5"],
+                explain: "Loop through each character and check whether \"aeiou\".indexOf(c) is >= 0 — a quick way to test set membership without a chain of ORs."
+            },
+            {
+                kind: "debug",
+                title: "Debug: Find the Maximum",
+                description: "findMax(int[] arr) is supposed to return the largest value in arr, but it fails on some inputs. Find the bug and fix it.",
+                starter:
+                    `static int findMax(int[] arr) {
+    int max = 0;
+    for (int i = 0; i < arr.length; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}`,
+                testCalls: ["findMax(new int[]{3, 7, 2, 9, 4})", "findMax(new int[]{-5, -2, -9, -1})", "findMax(new int[]{10})"],
+                expected: ["9", "-1", "10"],
+                explain: "Starting max at 0 silently breaks on arrays of all-negative numbers, since nothing ever beats 0. max should start at arr[0], not 0."
+            },
+            {
+                kind: "debug",
+                title: "Debug: Factorial",
+                description: "factorial(int n) uses recursion but returns the wrong values for every input. Find the bug and fix it.",
+                starter:
+                    `static int factorial(int n) {
+    if (n == 0) return 0;
+    return n * factorial(n - 1);
+}`,
+                testCalls: ["factorial(0)", "factorial(1)", "factorial(5)"],
+                expected: ["1", "1", "120"],
+                explain: "The base case is wrong: factorial(0) is defined as 1, not 0. Returning 0 there makes every recursive multiplication collapse to 0."
+            },
+            {
+                kind: "write",
+                title: "Reverse a String",
+                description: "Implement reverseString(String s) so it returns s reversed. Don't use StringBuilder.reverse().",
+                starter:
+                    `static String reverseString(String s) {
+    // TODO: return s reversed, without using StringBuilder.reverse()
+    return s;
+}`,
+                testCalls: ['reverseString("hello")', 'reverseString("Java")', 'reverseString("a")'],
+                expected: ["olleh", "avaJ", "a"],
+                explain: "Walk the string from the last index down to 0, appending each character to a result string as you go."
+            },
+            {
+                kind: "debug",
+                title: "Debug: Is Prime",
+                description: "isPrime(int n) is supposed to return whether n is a prime number, but it always seems to disagree with the right answer. Find the bug and fix it.",
+                starter:
+                    `static boolean isPrime(int n) {
+    if (n < 2) return false;
+    for (int i = 1; i * i <= n; i++) {
+        if (n % i == 0) return false;
+    }
+    return true;
+}`,
+                testCalls: ["isPrime(2)", "isPrime(17)", "isPrime(15)"],
+                expected: ["true", "true", "false"],
+                explain: "The loop starts at i = 1, and every number is divisible by 1, so n % i == 0 triggers immediately and the method always returns false. The loop needs to start at i = 2."
+            },
+            {
+                kind: "write",
+                title: "Fibonacci Number",
+                description: "Implement fibonacci(int n) so it returns the nth Fibonacci number, where fibonacci(0) = 0 and fibonacci(1) = 1.",
+                starter:
+                    `static int fibonacci(int n) {
+    // TODO: return the nth Fibonacci number
+    // fibonacci(0) = 0, fibonacci(1) = 1, fibonacci(6) = 8
+    return 0;
+}`,
+                testCalls: ["fibonacci(0)", "fibonacci(1)", "fibonacci(6)"],
+                expected: ["0", "1", "8"],
+                explain: "Starting from a = 0 and b = 1, repeatedly slide the pair forward (a, b) = (b, a + b) n times — no recursion required, and it runs in a single pass."
+            }
+        ];
+
         const TOPIC_ORDER = [
             "Introduction to Computing",
             "Data Structures and Algorithms",
@@ -1299,6 +1694,7 @@
             return {
                 topic: q.topic,
                 q: q.q,
+                code: q.code || null,
                 options: order.map(i => q.options[i]),
                 correct: order.indexOf(q.correct),
                 explain: q.explain
@@ -1336,6 +1732,15 @@
             updateTopScore();
 
             el('qtext').textContent = q.q;
+
+            const qcode = el('qcode');
+            if (q.code) {
+                qcode.textContent = q.code;
+                qcode.classList.add('show');
+            } else {
+                qcode.textContent = "";
+                qcode.classList.remove('show');
+            }
 
             const optWrap = el('options');
             optWrap.innerHTML = "";
@@ -1492,6 +1897,281 @@
         });
 
         el('startBtn').addEventListener('click', startQuiz);
+
+        /* ---------- Java Coding Exam (real code, compiled + run via Wandbox) ---------- */
+
+        const WANDBOX_COMPILER = "openjdk-jdk-21+35";
+
+        const codeState = {
+            order: [],
+            current: 0,
+            results: [],   // per-exercise: { code, passed, testOutcomes, error } once run
+            solvedCount: 0
+        };
+
+        function escapeHtml(s) {
+            const div = document.createElement('div');
+            div.textContent = s;
+            return div.innerHTML;
+        }
+
+        function buildJavaSource(exercise, userCode) {
+            const calls = exercise.testCalls
+                .map(c => `        System.out.println(${c});`)
+                .join('\n');
+            return `class Main {\n${userCode}\n\n    public static void main(String[] args) {\n${calls}\n    }\n}`;
+        }
+
+        async function runOnWandbox(source) {
+            const response = await fetch('https://wandbox.org/api/compile.json', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: source, compiler: WANDBOX_COMPILER })
+            });
+            if (!response.ok) throw new Error('Request failed with status ' + response.status);
+            return response.json();
+        }
+
+        function startCodeExam() {
+            codeState.order = shuffle(CODE_EXERCISES.map((_, i) => i));
+            codeState.current = 0;
+            codeState.results = new Array(codeState.order.length).fill(null);
+            codeState.solvedCount = 0;
+            showScreen('screen-codeexam');
+            renderCodeExercise();
+        }
+
+        function renderCodeExercise() {
+            const exercise = CODE_EXERCISES[codeState.order[codeState.current]];
+
+            el('codeCounter').textContent = `${codeState.current + 1} / ${codeState.order.length}`;
+            el('codeProgressFill').style.width = `${(codeState.current / codeState.order.length) * 100}%`;
+            el('codeKindTag').textContent = exercise.kind === 'debug' ? 'Debug' : 'Write';
+
+            el('codeTitle').textContent = exercise.title;
+            el('codeDescription').textContent = exercise.description;
+
+            const editor = el('codeEditor');
+            editor.disabled = false;
+
+            const prior = codeState.results[codeState.current];
+            editor.value = prior ? prior.code : exercise.starter;
+
+            el('codeFeedback').className = 'feedback';
+            el('testResults').className = 'test-results';
+            el('testResults').innerHTML = '';
+            el('codeRunStatus').textContent = '';
+            el('codeRunStatus').className = 'run-status';
+            el('codeRunBtn').disabled = false;
+            el('codeRunBtn').textContent = 'Run & check ▶';
+            el('codeNextBtn').disabled = !(prior && prior.passed);
+            el('codeNextBtn').textContent = codeState.current === codeState.order.length - 1
+                ? 'See results →' : 'Next exercise →';
+
+            if (prior) {
+                renderRunOutcome(prior);
+            }
+        }
+
+        el('codeResetBtn').addEventListener('click', () => {
+            const exercise = CODE_EXERCISES[codeState.order[codeState.current]];
+            el('codeEditor').value = exercise.starter;
+            el('codeEditor').focus();
+        });
+
+        // Tab key inserts spaces instead of jumping focus out of the editor
+        el('codeEditor').addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                const editor = e.target;
+                const start = editor.selectionStart, end = editor.selectionEnd;
+                editor.value = editor.value.slice(0, start) + '    ' + editor.value.slice(end);
+                editor.selectionStart = editor.selectionEnd = start + 4;
+            }
+        });
+
+        async function runAndCheck() {
+            const exercise = CODE_EXERCISES[codeState.order[codeState.current]];
+            const userCode = el('codeEditor').value;
+
+            el('codeRunBtn').disabled = true;
+            el('codeEditor').disabled = true;
+            el('codeRunStatus').textContent = 'Compiling & running…';
+            el('codeRunStatus').className = 'run-status running';
+            el('testResults').className = 'test-results';
+            el('testResults').innerHTML = '';
+            el('codeFeedback').className = 'feedback';
+
+            let outcome;
+            try {
+                const source = buildJavaSource(exercise, userCode);
+                const result = await runOnWandbox(source);
+                outcome = evaluateResult(exercise, userCode, result);
+            } catch (err) {
+                outcome = {
+                    code: userCode,
+                    passed: false,
+                    networkError: true,
+                    message: "Couldn't reach the code runner. Check your connection and try again."
+                };
+            }
+
+            codeState.results[codeState.current] = outcome;
+            el('codeEditor').disabled = false;
+            el('codeRunBtn').disabled = false;
+            el('codeRunStatus').textContent = '';
+            el('codeRunStatus').className = 'run-status';
+
+            renderRunOutcome(outcome);
+
+            if (outcome.passed) {
+                el('codeNextBtn').disabled = false;
+            }
+        }
+
+        function evaluateResult(exercise, userCode, result) {
+            if (result.compiler_error && result.compiler_error.trim() !== '') {
+                return { code: userCode, passed: false, compileError: result.compiler_error };
+            }
+            if (result.program_error && result.program_error.trim() !== '') {
+                return { code: userCode, passed: false, runtimeError: result.program_error };
+            }
+
+            const lines = result.program_output.split('\n').filter((_, i, arr) => !(i === arr.length - 1 && arr[i] === ''));
+            const testOutcomes = exercise.expected.map((expected, i) => {
+                const actual = (lines[i] !== undefined ? lines[i] : '').trim();
+                return { call: exercise.testCalls[i], expected, actual, pass: actual === expected };
+            });
+            const passed = testOutcomes.every(t => t.pass);
+            return { code: userCode, passed, testOutcomes };
+        }
+
+        function renderRunOutcome(outcome) {
+            const testResults = el('testResults');
+            const fb = el('codeFeedback');
+            const exercise = CODE_EXERCISES[codeState.order[codeState.current]];
+
+            if (outcome.networkError) {
+                fb.className = 'feedback show wrong';
+                el('codeFbTag').textContent = 'Connection error';
+                el('codeFbText').textContent = outcome.message;
+                return;
+            }
+
+            if (outcome.compileError) {
+                testResults.className = 'test-results show';
+                testResults.innerHTML = `<div class="compile-error">${escapeHtml(outcome.compileError)}</div>`;
+                fb.className = 'feedback show wrong';
+                el('codeFbTag').textContent = "Doesn't compile yet";
+                el('codeFbText').textContent = "Read the compiler error above — it points at the exact line and reason.";
+                return;
+            }
+
+            if (outcome.runtimeError) {
+                testResults.className = 'test-results show';
+                testResults.innerHTML = `<div class="compile-error">${escapeHtml(outcome.runtimeError)}</div>`;
+                fb.className = 'feedback show wrong';
+                el('codeFbTag').textContent = 'Crashed while running';
+                el('codeFbText').textContent = "Your code compiled, but threw an exception at runtime. Check the stack trace above.";
+                return;
+            }
+
+            testResults.className = 'test-results show';
+            testResults.innerHTML = outcome.testOutcomes.map(t => `
+                <div class="test-case ${t.pass ? 'pass' : 'fail'}">
+                    <span class="tc-icon">${t.pass ? '✓' : '✕'}</span>
+                    <span>${escapeHtml(t.call)} → expected <strong>${escapeHtml(t.expected)}</strong>, got <strong>${escapeHtml(t.actual || '(nothing)')}</strong></span>
+                </div>
+            `).join('');
+
+            fb.className = 'feedback show ' + (outcome.passed ? 'right' : 'wrong');
+            el('codeFbTag').textContent = outcome.passed ? 'All tests passed' : 'Not quite yet';
+            el('codeFbText').textContent = outcome.passed
+                ? exercise.explain
+                : "Some test cases don't match. Fix your code above and run it again.";
+        }
+
+        el('codeRunBtn').addEventListener('click', runAndCheck);
+
+        el('codeSkipBtn').addEventListener('click', () => {
+            if (codeState.current < codeState.order.length - 1) {
+                codeState.current++;
+                renderCodeExercise();
+            } else {
+                finishCodeExam();
+            }
+        });
+
+        el('codeNextBtn').addEventListener('click', () => {
+            if (codeState.current < codeState.order.length - 1) {
+                codeState.current++;
+                renderCodeExercise();
+            } else {
+                finishCodeExam();
+            }
+        });
+
+        function finishCodeExam() {
+            const total = codeState.order.length;
+            const solved = codeState.results.filter(r => r && r.passed).length;
+            const pct = total ? Math.round((solved / total) * 100) : 0;
+
+            showScreen('screen-codeexam-results');
+
+            el('codeStatCorrect').textContent = solved;
+            el('codeStatWrong').textContent = total - solved;
+            el('codeStatTotal').textContent = total;
+
+            const circumference = 2 * Math.PI * 70;
+            const ring = el('codeRingProgress');
+            ring.setAttribute('stroke-dasharray', circumference);
+            ring.setAttribute('stroke-dashoffset', circumference);
+            requestAnimationFrame(() => {
+                ring.style.transition = 'stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)';
+                ring.setAttribute('stroke-dashoffset', circumference - (circumference * pct / 100));
+            });
+            el('codeRingPct').textContent = pct + '%';
+
+            let title, sub;
+            if (pct >= 90) { title = "Outstanding"; sub = "You wrote and debugged real, compiling Java — that's the actual skill."; }
+            else if (pct >= 75) { title = "Solid work"; sub = "Most of that compiled and ran correctly on the first few tries."; }
+            else if (pct >= 50) { title = "Good start"; sub = "Halfway there. Revisit the unsolved ones and give them another pass."; }
+            else { title = "Keep going"; sub = "Writing and debugging code takes reps — review what tripped you up, then retry."; }
+            el('codeResultTitle').textContent = title;
+            el('codeResultSub').textContent = sub;
+
+            const reviewList = el('codeReviewList');
+            reviewList.innerHTML = "";
+            codeState.order.forEach((exIdx, idx) => {
+                const exercise = CODE_EXERCISES[exIdx];
+                const result = codeState.results[idx];
+                const attempted = !!result;
+                const passed = attempted && result.passed;
+                const item = document.createElement('div');
+                item.className = 'review-item';
+                item.innerHTML = `
+      <p class="rq">${idx + 1}. ${escapeHtml(exercise.title)} <span style="color: var(--text-mute); font-weight:400;">(${exercise.kind === 'debug' ? 'Debug' : 'Write'})</span></p>
+      <pre class="qcode show" style="margin-top:0;">${escapeHtml(attempted ? result.code : exercise.starter)}</pre>
+      ${!attempted ? `<div class="ra wrong"><span class="ra-label">Status</span><span>Skipped</span></div>`
+                        : passed ? `<div class="ra correct"><span class="ra-label">Status</span><span>All tests passed</span></div>`
+                            : `<div class="ra wrong"><span class="ra-label">Status</span><span>Not solved yet</span></div>`}
+      <p class="rexp">${escapeHtml(exercise.explain)}</p>
+    `;
+                reviewList.appendChild(item);
+            });
+        }
+
+        el('startCodeExamBtn').addEventListener('click', startCodeExam);
+
+        el('codeBackBtn').addEventListener('click', () => {
+            showScreen('screen-setup');
+        });
+
+        el('codeRetakeBtn').addEventListener('click', startCodeExam);
+
+        el('codeNewSetBtn').addEventListener('click', () => {
+            showScreen('screen-setup');
+        });
 
         buildSetupScreen();
     </script>
