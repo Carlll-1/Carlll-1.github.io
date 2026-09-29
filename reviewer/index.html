@@ -798,6 +798,87 @@
             margin-top: 20px;
         }
 
+        /* ---------- flashcards ---------- */
+        .flashcard {
+            perspective: 1400px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            min-height: 260px;
+            transform-style: preserve-3d;
+            transition: transform .5s cubic-bezier(.2, .8, .2, 1);
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 14px;
+        }
+
+        .flashcard-back {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--amber);
+        }
+
+        .flashcard-front p {
+            font-family: var(--font-display);
+            font-size: clamp(20px, 4vw, 28px);
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .flashcard-back p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-dim);
+            margin: 0;
+            max-height: 190px;
+            overflow-y: auto;
+        }
+
+        .flashcard-hint {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-mute);
+        }
+
+        .fc-grade-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .fc-grade-row .btn {
+            flex: 1;
+            justify-content: center;
+        }
+
         /* ---------- results ---------- */
         .results-head {
             text-align: center;
@@ -1057,6 +1138,15 @@
                 <button class="btn btn-ghost" id="startCodeExamBtn">Start coding exam →</button>
             </div>
 
+            <div class="panel code-cta">
+                <div class="code-cta-text">
+                    <p class="panel-label" style="margin-bottom:6px;">Definition of Terms — Flashcards</p>
+                    <p class="code-cta-desc">Flip through term ↔ definition pairs from Ecology &amp; Ecosystems and
+                        Population Growth — built for exams that are just definitions.</p>
+                </div>
+                <button class="btn btn-ghost" id="startFlashcardsBtn">Start flashcards →</button>
+            </div>
+
             <div class="panel">
                 <p class="panel-label">Topics <button type="button" id="topicToggle">select all</button></p>
                 <div class="topic-grid" id="topicGrid"></div>
@@ -1220,6 +1310,63 @@
             <div class="results-actions">
                 <button class="btn btn-primary" id="codeRetakeBtn">Retake coding exam</button>
                 <button class="btn btn-ghost" id="codeNewSetBtn">Back to menu</button>
+            </div>
+        </section>
+
+        <!-- FLASHCARDS -->
+        <section class="screen" id="screen-flashcards">
+            <div class="quiz-head">
+                <div class="quiz-meta">
+                    <span class="topic-tag" id="fcTopicTag">Topic</span>
+                    <span id="fcCounter">1 / 10</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="fcProgressFill" style="width:0%;"></div>
+                </div>
+            </div>
+
+            <div class="flashcard" id="flashcard">
+                <div class="flashcard-inner" id="flashcardInner">
+                    <div class="flashcard-face flashcard-front">
+                        <span class="flashcard-label">Term</span>
+                        <p id="fcTerm"></p>
+                        <span class="flashcard-hint">Tap the card to reveal the definition</span>
+                    </div>
+                    <div class="flashcard-face flashcard-back">
+                        <span class="flashcard-label">Definition</span>
+                        <p id="fcDefinition"></p>
+                        <span class="flashcard-hint">Tap to flip back</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fc-grade-row" id="fcGradeRow" style="display:none;">
+                <button class="btn btn-ghost" id="fcStillLearningBtn">Still learning</button>
+                <button class="btn btn-primary" id="fcKnewItBtn">I knew it →</button>
+            </div>
+
+            <div class="quiz-nav" style="justify-content: space-between;">
+                <button class="btn btn-ghost" id="fcExitBtn">← Back to menu</button>
+                <button class="btn btn-ghost" id="fcSkipBtn">Skip →</button>
+            </div>
+        </section>
+
+        <!-- FLASHCARDS RESULTS -->
+        <section class="screen" id="screen-flashcards-results">
+            <div class="results-head">
+                <h3>Deck complete</h3>
+                <p id="fcResultSub">Here's how you did.</p>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card correct"><b id="fcStatKnew">0</b><span>knew it</span></div>
+                <div class="stat-card wrong"><b id="fcStatLearning">0</b><span>still learning</span></div>
+                <div class="stat-card"><b id="fcStatTotal">0</b><span>total terms</span></div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-primary" id="fcRetakeBtn">Go again (shuffled)</button>
+                <button class="btn btn-ghost" id="fcNewSetBtn">Back to menu</button>
             </div>
         </section>
 
@@ -1565,6 +1712,74 @@
             { topic: "Population Growth", q: "Which two named programs address environmental problems tied to population growth, alongside the Clean Water and Clean Air Acts?", options: ["Pasig Rehabilitation Program and Haribon Foundation Program", "National Housing Authority and DOST Program", "Green Revolution and Blue Ocean Program", "Clean Streets and Safe Schools Program"], correct: 0, explain: "The Pasig Rehabilitation Program and the Haribon Foundation Program are named environmental solutions, alongside Congress passing the Philippine Clean Water Act and Clean Air Act." },
             { topic: "Population Growth", q: "Which two laws did Congress pass to address environmental problems from population growth?", options: ["The Philippine Clean Water Act and Clean Air Act", "The Cybercrime Prevention Act and Data Privacy Act", "The Labor Code and Social Security Act", "The Local Government Code and Build Act"], correct: 0, explain: "Congress passed the Philippine Clean Water Act and Clean Air Act as legal solutions to environmental problems linked to a growing population." },
             { topic: "Population Growth", q: "Development programs aimed at increasing food production, providing potable water, and building more roads and bridges are meant to solve what?", options: ["Problems caused by rapid population growth", "Problems in animal migration patterns", "Problems in food chain energy loss", "Problems in ecosystem biome classification"], correct: 0, explain: "These development programs — more food production, potable water, roads and bridges — are solutions aimed at easing the strains that rapid population growth places on resources and infrastructure." }
+        ];
+
+        // Definition-of-terms flashcards — for exams that are just term/definition recall.
+        const FLASHCARDS = [
+            { topic: "Ecology and Ecosystems", term: "Ecology", definition: "Term given by German biologist Haeckel in 1869, from Greek oikos (house, place of living) and logos (to study). The study of interactions among organisms and their environment." },
+            { topic: "Ecology and Ecosystems", term: "Ecosystem", definition: "Term proposed by A.G. Tansley in 1935. A community of different species interacting with each other and with their non-living environment, exchanging energy and matter. Examples: pond, desert, forest, estuary, ocean." },
+            { topic: "Ecology and Ecosystems", term: "Biotic", definition: "Living components of an ecosystem: plants, animals, microorganisms." },
+            { topic: "Ecology and Ecosystems", term: "Abiotic", definition: "Non-living components of an ecosystem: light, water, wind, heat, solar radiation, atmosphere, soil nutrients, climate." },
+            { topic: "Ecology and Ecosystems", term: "Photosynthesis", definition: "Chlorophyll in leaves converts CO2 and H2O, using sunlight, into carbohydrates." },
+            { topic: "Ecology and Ecosystems", term: "Biome", definition: "A very large region with similar climate, animals and plants (flora and fauna). Many ecosystems can exist within one biome." },
+            { topic: "Ecology and Ecosystems", term: "Producers (Autotrophs)", definition: "Make their own food by photosynthesis. Examples: green plants, trees." },
+            { topic: "Ecology and Ecosystems", term: "Primary consumers (Herbivores)", definition: "Feed on plants directly. Examples: insects, rat, goat, deer, cow." },
+            { topic: "Ecology and Ecosystems", term: "Secondary consumers (Primary carnivores)", definition: "Feed on primary consumers. Examples: frog, cat, snakes, small birds." },
+            { topic: "Ecology and Ecosystems", term: "Tertiary consumers (Secondary carnivores)", definition: "Feed on secondary consumers. Examples: top carnivores." },
+            { topic: "Ecology and Ecosystems", term: "Omnivores", definition: "Feed on both plants and animals. Examples: human, rat, birds." },
+            { topic: "Ecology and Ecosystems", term: "Detritivores", definition: "Feed on dead organisms, wastes, and partly decomposed matter. Examples: termites, earthworm, ants." },
+            { topic: "Ecology and Ecosystems", term: "Decomposers", definition: "Micro-organisms that feed on dead producers and consumers, breaking them into simpler compounds and releasing inorganic nutrients for producers to reuse. Examples: bacteria and fungi." },
+            { topic: "Ecology and Ecosystems", term: "Natural ecosystem", definition: "An ecosystem that runs itself under natural conditions, without human maintenance." },
+            { topic: "Ecology and Ecosystems", term: "Man-made (artificial) ecosystem", definition: "An ecosystem that is operated or maintained by humans." },
+            { topic: "Ecology and Ecosystems", term: "Primary function (of an ecosystem)", definition: "Manufacture of starch through photosynthesis." },
+            { topic: "Ecology and Ecosystems", term: "Secondary function (of an ecosystem)", definition: "Distribution of energy, as food, to all consumers." },
+            { topic: "Ecology and Ecosystems", term: "Tertiary function (of an ecosystem)", definition: "Dead organisms are decomposed, starting the cycling of nutrients." },
+            { topic: "Ecology and Ecosystems", term: "Food chain", definition: "The sequence of eating and being eaten. It starts with plant life and ends with animals; decomposers break down what dies." },
+            { topic: "Ecology and Ecosystems", term: "Food web", definition: "The interlocking pattern of many food chains. If one species is affected, the effect on other levels is less serious than in a single chain." },
+            { topic: "Ecology and Ecosystems", term: "Bio-magnification", definition: "Non-biodegradable materials pass up trophic levels and their concentration increases at each successive level." },
+            { topic: "Ecology and Ecosystems", term: "Grazing food chain", definition: "Starts with green plants (producers), through herbivores and carnivores. Found in grassland and pond ecosystems." },
+            { topic: "Ecology and Ecosystems", term: "Detritus food chain", definition: "Starts with dead organic matter, through decomposers. Found in grassland and forest ecosystems." },
+            { topic: "Ecology and Ecosystems", term: "Forest ecosystem", definition: "High density of trees; about 31% of world land. Rich soil; poor light penetration makes decomposition fast." },
+            { topic: "Ecology and Ecosystems", term: "Grassland ecosystem", definition: "About 20% of Earth's surface. Rich soil, low or uneven rainfall. Overgrazing leads to desertification." },
+            { topic: "Ecology and Ecosystems", term: "Desert ecosystem", definition: "About 14% of world land; under 25 cm rain; dry air is a poor insulator. Poor soil and vegetation." },
+            { topic: "Ecology and Ecosystems", term: "Pond", definition: "Stagnant fresh water; temporary or seasonal; gets polluted easily; a lentic ecosystem." },
+            { topic: "Ecology and Ecosystems", term: "Lake", definition: "Large, shallow, permanent fresh water body. Types: oligotrophic (low nutrients), eutrophic (overnourished by N and P), dystrophic (low pH, brown water), volcanic." },
+            { topic: "Ecology and Ecosystems", term: "River or stream", definition: "Free-flowing fresh water; well oxygenated; deposits large amounts of nutrients; few animals." },
+            { topic: "Ecology and Ecosystems", term: "Ocean", definition: "Over two thirds of Earth's surface; high salts and minerals. Zones: coastal (warm, nutrient rich, high productivity) and open sea (deeper)." },
+            { topic: "Ecology and Ecosystems", term: "Estuary", definition: "River mouth where sea water mixes with fresh water; affected by tides; rich in nutrients; organisms have wide tolerance." },
+            { topic: "Ecology and Ecosystems", term: "Littoral zone", definition: "The shallow top zone of a lake, near the shore." },
+            { topic: "Ecology and Ecosystems", term: "Limnetic zone", definition: "The zone of a lake where light penetrates." },
+            { topic: "Ecology and Ecosystems", term: "Profundal zone", definition: "The deep, dark zone of a lake." },
+            { topic: "Ecology and Ecosystems", term: "Benthic zone", definition: "The bottom zone of a lake." },
+            { topic: "Ecology and Ecosystems", term: "Tropical rainforest", definition: "Near the equator; high temperature and moist; poor soil because plants take up nutrients quickly." },
+            { topic: "Ecology and Ecosystems", term: "Temperate forest", definition: "Four distinct seasons; deciduous trees; rich soil." },
+            { topic: "Ecology and Ecosystems", term: "Taiga", definition: "Coniferous forest in the barren north; boreal forest is the more southerly part." },
+            { topic: "Ecology and Ecosystems", term: "Prairie", definition: "Large open grassland in the heart of a continent (bison, Great Plains)." },
+            { topic: "Ecology and Ecosystems", term: "Savanna", definition: "Transitional biome between forest and desert (African elephant)." },
+            { topic: "Ecology and Ecosystems", term: "Steppe", definition: "Dry, grassy, semi-arid plain with 25 to 50 cm rain, cold winters and warm summers." },
+            { topic: "Ecology and Ecosystems", term: "Floodplain", definition: "Flat land next to a river, formed by deposition and overbank flow." },
+            { topic: "Ecology and Ecosystems", term: "Wetland", definition: "Flooded permanently or seasonally, with aquatic plants and hydric soil." },
+
+            { topic: "Population Growth", term: "Population", definition: "A group of organisms of the same kind or species living in the same place at the same time." },
+            { topic: "Population Growth", term: "Population change", definition: "A population may increase or decrease due to birth, death, immigration and migration." },
+            { topic: "Population Growth", term: "Population growth", definition: "The change in a population over time, measured \"per unit time.\"" },
+            { topic: "Population Growth", term: "Population growth rate (PGR)", definition: "The rate at which the number of individuals increases in a given time period, as a fraction of the initial population." },
+            { topic: "Population Growth", term: "Birth rate exceeds death rate (factor)", definition: "The population naturally increases when births outnumber deaths, or when the death rate is slower than the birth rate." },
+            { topic: "Population Growth", term: "Science and technology (factor)", definition: "Life expectancy of Filipinos is longer. DOST develops pharmaceutical products for priority health problems, giving better health and long life." },
+            { topic: "Population Growth", term: "Beliefs and practices (factor)", definition: "Children are seen as blessings, so more children mean more blessings. In rural farming areas, more children mean more hands for tilling and harvesting." },
+            { topic: "Population Growth", term: "Food shortage", definition: "Not enough food supply. Leads to panic buying, hoarding and higher prices of commodities." },
+            { topic: "Population Growth", term: "Water shortage", definition: "More people need more water; a big population means a water problem." },
+            { topic: "Population Growth", term: "Housing problem", definition: "Few families own house and lot. Some build along railroads, riverbanks and sidewalks: they are informal settlers." },
+            { topic: "Population Growth", term: "Unemployment", definition: "Too many people compete for limited jobs; the government cannot provide enough. Many become underemployed (jobs below their qualifications)." },
+            { topic: "Population Growth", term: "Peace and order (problem)", definition: "Unemployment, hunger, homelessness and sickness push people to crime, which endangers peace and security." },
+            { topic: "Population Growth", term: "Health problems", definition: "Malnutrition; unsanitary surroundings from careless garbage disposal; poor hygiene; bronchitis in babies, diarrhea and tuberculosis." },
+            { topic: "Population Growth", term: "Garbage problem", definition: "More garbage needs more space. Rotting garbage gives off methane (air pollution). Biodegradable garbage decays; non-biodegradable (plastics) does not, and clogs esteros and canals, contributing to flooding." },
+            { topic: "Population Growth", term: "Pollution", definition: "Polluted air, contaminated water, noise. Factories give off nitrogen oxide, carbon monoxide and lead." },
+            { topic: "Population Growth", term: "Education (as a population issue)", definition: "The government provides free elementary and secondary education to everyone." },
+            { topic: "Population Growth", term: "Development programs (solution)", definition: "Increase food production, provide potable water, build more roads and bridges." },
+            { topic: "Population Growth", term: "Health and wellness (solution)", definition: "Build more hospitals and health clinics; provide effective health services." },
+            { topic: "Population Growth", term: "Housing (solution)", definition: "Low cost housing programs with the National Housing Authority (NHA)." },
+            { topic: "Population Growth", term: "Environment (solution)", definition: "Pasig Rehabilitation Program and Haribon Foundation Program; Congress passed the Philippine Clean Water Act and Clean Air Act." }
         ];
 
         // Java Coding Exam — real Java, compiled and run for real (via the Wandbox API).
@@ -2278,6 +2493,78 @@
         el('codeNewSetBtn').addEventListener('click', () => {
             showScreen('screen-setup');
         });
+
+        /* ---------- Flashcards (definition of terms) ---------- */
+
+        const fcState = {
+            deck: [],
+            index: 0,
+            flipped: false,
+            knew: 0,
+            learning: 0
+        };
+
+        function buildFlashcardDeck() {
+            fcState.deck = shuffle(FLASHCARDS);
+            fcState.index = 0;
+            fcState.knew = 0;
+            fcState.learning = 0;
+        }
+
+        function renderFlashcard() {
+            const card = fcState.deck[fcState.index];
+            el('fcTopicTag').textContent = card.topic;
+            el('fcCounter').textContent = `${fcState.index + 1} / ${fcState.deck.length}`;
+            el('fcProgressFill').style.width = `${(fcState.index / fcState.deck.length) * 100}%`;
+            el('fcTerm').textContent = card.term;
+            el('fcDefinition').textContent = card.definition;
+            fcState.flipped = false;
+            el('flashcard').classList.remove('flipped');
+            el('fcGradeRow').style.display = 'none';
+        }
+
+        function flipFlashcard() {
+            fcState.flipped = !fcState.flipped;
+            el('flashcard').classList.toggle('flipped', fcState.flipped);
+            el('fcGradeRow').style.display = fcState.flipped ? 'flex' : 'none';
+        }
+
+        function advanceFlashcard() {
+            if (fcState.index + 1 >= fcState.deck.length) {
+                el('fcStatKnew').textContent = fcState.knew;
+                el('fcStatLearning').textContent = fcState.learning;
+                el('fcStatTotal').textContent = fcState.deck.length;
+                el('fcResultSub').textContent = `You marked ${fcState.knew} of ${fcState.deck.length} terms as known.`;
+                showScreen('screen-flashcards-results');
+            } else {
+                fcState.index++;
+                renderFlashcard();
+            }
+        }
+
+        function startFlashcards() {
+            buildFlashcardDeck();
+            renderFlashcard();
+            showScreen('screen-flashcards');
+        }
+
+        el('startFlashcardsBtn').addEventListener('click', startFlashcards);
+        el('flashcard').addEventListener('click', flipFlashcard);
+
+        el('fcKnewItBtn').addEventListener('click', () => {
+            fcState.knew++;
+            advanceFlashcard();
+        });
+
+        el('fcStillLearningBtn').addEventListener('click', () => {
+            fcState.learning++;
+            advanceFlashcard();
+        });
+
+        el('fcSkipBtn').addEventListener('click', advanceFlashcard);
+        el('fcExitBtn').addEventListener('click', () => showScreen('screen-setup'));
+        el('fcRetakeBtn').addEventListener('click', startFlashcards);
+        el('fcNewSetBtn').addEventListener('click', () => showScreen('screen-setup'));
 
         buildSetupScreen();
     </script>
