@@ -1079,6 +1079,66 @@
             margin: 26px 0 12px;
         }
 
+        .search-input-wrap {
+            position: relative;
+            margin-bottom: 14px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: var(--text);
+            font-size: 15px;
+            padding: 13px 16px;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--blue);
+        }
+
+        .search-count {
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            color: var(--text-mute);
+            margin: 2px 0 14px;
+        }
+
+        .search-empty {
+            text-align: center;
+            color: var(--text-mute);
+            font-size: 13.5px;
+            padding: 40px 10px;
+        }
+
+        .review-item .ra.term {
+            background: rgba(91, 157, 255, 0.1);
+            color: var(--blue);
+        }
+
+        .search-topic-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            color: var(--amber);
+            background: var(--amber-dim);
+            border-radius: 999px;
+            padding: 3px 10px;
+            margin-bottom: 10px;
+        }
+
+        .review-item mark {
+            background: rgba(242, 184, 76, 0.35);
+            color: inherit;
+            border-radius: 3px;
+            padding: 0 1px;
+        }
+
         @media (max-width:640px) {
             .wrap {
                 padding: 20px 14px 60px;
@@ -1145,6 +1205,15 @@
                         Population Growth — built for exams that are just definitions.</p>
                 </div>
                 <button class="btn btn-ghost" id="startFlashcardsBtn">Start flashcards →</button>
+            </div>
+
+            <div class="panel code-cta">
+                <div class="code-cta-text">
+                    <p class="panel-label" style="margin-bottom:6px;">Search Reviewer</p>
+                    <p class="code-cta-desc">Forgot something from a past quiz? Look it up by keyword across every
+                        question and flashcard — great for reviewing afterward, not for use during an exam.</p>
+                </div>
+                <button class="btn btn-ghost" id="startSearchBtn">Search reviewer →</button>
             </div>
 
             <div class="panel">
@@ -1367,6 +1436,26 @@
             <div class="results-actions">
                 <button class="btn btn-primary" id="fcRetakeBtn">Go again (shuffled)</button>
                 <button class="btn btn-ghost" id="fcNewSetBtn">Back to menu</button>
+            </div>
+        </section>
+
+        <!-- SEARCH SCREEN -->
+        <section class="screen" id="screen-search">
+            <div class="hero">
+                <p class="hero-eyebrow">Review by keyword</p>
+                <h2>Forgot an answer?<br>Just <span>search</span> for it.</h2>
+                <p>Type a word, date, name, or topic — every matching question and flashcard across the whole
+                    reviewer shows up instantly. For reviewing past material, not for use during an exam.</p>
+            </div>
+
+            <div class="search-input-wrap">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search e.g. “Abakada”, “1987”, “stack”, “trophic”…" autocomplete="off">
+            </div>
+            <p class="search-count" id="searchCount"></p>
+            <div id="searchResults"></div>
+
+            <div class="quiz-nav">
+                <button class="btn btn-ghost" id="searchBackBtn">← Back to menu</button>
             </div>
         </section>
 
@@ -1889,7 +1978,57 @@
             { topic: "Wikang Pambansa", q: "Sino ang bumuo ng teknikal na panel na naghanda ng 2001 Revisyon sa Alfabetong Filipino at Patnubay sa Ispeling ng Wikang Filipino?", options: ["Komisyon ng Wikang Filipino", "Surian ng Wikang Pambansa", "Linangan ng mga Wika sa Pilipinas", "CHED"], correct: 0, explain: "Bumuo ang Komisyon ng Wikang Filipino ng isang teknikal na panel upang ihanda ang 2001 Revisyon sa Alfabetong Filipino at Patnubay sa Ispeling ng Wikang Filipino." },
             { topic: "Wikang Pambansa", q: "Alin sa mga sumusunod ang TAMANG paglalarawan sa 2001 Revisyon ng Ortografiyang Filipino?", options: ["Walang pagbabago sa komposisyon ng alpabeto at mga pangalan ng titik, ngunit pinalawak ang gamit ng ilang dagdag na titik tulad ng F, J, V, at Z", "Nagdagdag ito ng 11 bagong titik sa 28-titik na alpabeto", "Pinalitan nito ang Alpabetong Filipino ng Abakada", "Inalis nito ang Ñ at NG sa alpabeto"], correct: 0, explain: "Sa 2001 Revisyon, walang pagbabago sa komposisyon ng alpabeto at mga pangalan ng titik, ngunit pinalawak ang gamit ng mga titik na F, J, V, at Z na nilimitahan noong 1987." },
             { topic: "Wikang Pambansa", q: "Alin sa mga sumusunod ang TAMANG pagtutugma ng pangalan sa kanyang ambag, ayon sa memory guide ng aralin?", options: ["Lope K. Santos — bumuo ng Abakada", "Dr. Jose P. Rizal — bumuo ng Abakada", "Manuel L. Quezon — may-akda ng 'Tagalog, Pilipino, Filipino: May Pagkakaiba ba?'", "Leopoldo Yabes — kinilala sa pag-aaral ng bagong ortograpiyang Tagalog"], correct: 0, explain: "Si Lope K. Santos ang bumuo ng Abakada; si Rizal ang nagsulong ng Pilipinisasyon ng ortograpiya; si Constantino ang may-akda ng artikulo; si Yabes ang iniuugnay sa 'Tagalog Imperialism'." },
-            { topic: "Wikang Pambansa", q: "Ayon sa talahanayan ng paghahambing ng mga alpabeto, pagsunod-sunurin ang bilang ng titik: Alibata, Abakada, at Alpabetong Filipino (1987).", options: ["17, 20, 28", "20, 17, 28", "17, 28, 20", "20, 28, 17"], correct: 0, explain: "May 17 titik ang Alibata, 20 titik ang Abakada, at 28 titik ang Alpabetong Filipino noong 1987 (na nananatili rin sa Revisyon 2001)." }
+            { topic: "Wikang Pambansa", q: "Ayon sa talahanayan ng paghahambing ng mga alpabeto, pagsunod-sunurin ang bilang ng titik: Alibata, Abakada, at Alpabetong Filipino (1987).", options: ["17, 20, 28", "20, 17, 28", "17, 28, 20", "20, 28, 17"], correct: 0, explain: "May 17 titik ang Alibata, 20 titik ang Abakada, at 28 titik ang Alpabetong Filipino noong 1987 (na nananatili rin sa Revisyon 2001)." },
+            { topic: "Wikang Pambansa", q: "Ayon sa isang sanggunian (Bisa, et al., 1983) na binanggit sa aralin, mahigit ilang pulo mayroon ang Pilipinas?", options: ["7,000 pulo", "1,000 pulo", "3,000 pulo", "10,000 pulo"], correct: 0, explain: "Ayon kay Bisa, et al. (1983), may mahigit 7,000 pulo ang Pilipinas at higit 100 iba't ibang dayalekto o wikain." },
+            { topic: "Wikang Pambansa", q: "Sino ang nagsabi ng sumusunod tungkol sa pangangailangan ng wikang pambansa: \"...hangga't wala nito, hindi magiging isang bayan ang Pilipinas\"?", options: ["Manuel L. Quezon", "Jose P. Rizal", "Lope K. Santos", "Jaime C. Veyra"], correct: 0, explain: "Si Manuel L. Quezon ang nagsabing dumating na ang panahon upang magkaroon ng isang pambansang wika, at hangga't wala nito, hindi magiging isang bayan ang Pilipinas." },
+            { topic: "Wikang Pambansa", q: "Sa Saligang-Batas ng 1935, saang artikulo at seksyon matatagpuan ang probisyon tungkol sa pagpapaunlad ng wikang pambansa?", options: ["Artikulo XIV, Seksyon 3", "Artikulo XV, Seksyon 3", "Artikulo XIV, Seksyon 6", "Artikulo IX, Seksyon 1"], correct: 0, explain: "Sa Saligang-Batas ng 1935, ang Artikulo XIV, Seksyon 3 ang naglalaman ng probisyon na gagawa ang Kongreso ng hakbang tungo sa pagpapaunlad ng wikang pambansa." },
+            { topic: "Wikang Pambansa", q: "Kailan partikular pinagtibay ang Batas Komonwelt Blg. 333, na nagsusog sa ilang seksiyon ng Batas Komonwelt Blg. 184?", options: ["Hunyo 18, 1937", "Nobyembre 13, 1936", "Enero 12, 1937", "Disyembre 30, 1937"], correct: 0, explain: "Pinagtibay ang Batas Komonwelt Blg. 333 noong Hunyo 18, 1937, matapos ang Batas Komonwelt Blg. 184 (1936)." },
+            { topic: "Wikang Pambansa", q: "Anong partikular na sirkular ang inilabas ni Kalihim Jorge Bocobo noong Abril 12, 1940, tungkol sa pagtuturo ng Wikang Pambansa?", options: ["Sirkular Blg. 26, s. 1940", "Sirkular Blg. 184, s. 1936", "Memorandum Sirkular Blg. 172", "Kautusang Tagapagpaganap Blg. 263"], correct: 0, explain: "Inilabas ni Kalihim Jorge Bocobo ang Sirkular Blg. 26, s. 1940, na sinundan ng sirkular ni Patnugot Celedonio Salvador." },
+            { topic: "Wikang Pambansa", q: "Saang uri ng paaralan unang isinimulan ang pagtuturo ng Wikang Pambansa noong 1940, ayon sa aralin?", options: ["Mataas na paaralan at paaralang normal", "Elementarya lamang", "Kolehiyo at unibersidad lamang", "Bokasyunal na paaralan lamang"], correct: 0, explain: "Sinimulan muna ang pagtuturo ng Wikang Pambansa sa mataas na paaralan at paaralang normal, bago ito ipinalaganap nang buo." },
+            { topic: "Wikang Pambansa", q: "Sino ang Pangulong naglagda ng Proklama Blg. 12 (1954), na nagtatakda ng Linggo ng Wikang Pambansa tuwing Marso 29–Abril 4?", options: ["Ramon Magsaysay", "Manuel L. Quezon", "Ferdinand Marcos", "Corazon C. Aquino"], correct: 0, explain: "Si Pang. Ramon Magsaysay ang naglagda ng Proklama Blg. 12 (Marso 26, 1954), na nagtatakda ng Linggo ng Wikang Pambansa." },
+            { topic: "Wikang Pambansa", q: "Anong partikular na petsa ang Araw ni Balagtas na isinasaklaw ng Linggo ng Wikang Pambansa?", options: ["Abril 2", "Marso 29", "Abril 4", "Agosto 19"], correct: 0, explain: "Ang Araw ni Balagtas, na kasama sa saklaw ng Linggo ng Wikang Pambansa (Marso 29–Abril 4), ay ipinagdiriwang tuwing Abril 2." },
+            { topic: "Wikang Pambansa", q: "Kailan partikular inilagda ni Pang. Magsaysay ang Proklama Blg. 186 (1955), na naglipat ng pagdiriwang sa Agosto 13–19?", options: ["Setyembre 23, 1955", "Marso 26, 1955", "Agosto 19, 1955", "Enero 12, 1955"], correct: 0, explain: "Pinagtibay ni Pang. Magsaysay ang Proklama Blg. 186 noong Setyembre 23, 1955, inililipat ang pagdiriwang sa Agosto 13–19." },
+            { topic: "Wikang Pambansa", q: "Sino ang Pangulong naglagda ng Kautusang Tagapagpaganap Blg. 96 (1967), na nag-uutos na pangalanan sa Pilipino ang mga gusali, edipisyo at tanggapan ng pamahalaan?", options: ["Ferdinand Marcos", "Ramon Magsaysay", "Corazon C. Aquino", "Manuel L. Quezon"], correct: 0, explain: "Si Pang. Ferdinand Marcos ang naglagda ng Kautusang Tagapagpaganap Blg. 96 noong Oktubre 24, 1967." },
+            { topic: "Wikang Pambansa", q: "Sino ang Kalihim Tagapagpaganap na naglabas ng Memorandum Sirkular Blg. 172 (1968) at Blg. 199 (1968)?", options: ["Rafael M. Salas", "Ernesto M. Maceda", "Alejandro Melchor", "Juan L. Manuel"], correct: 0, explain: "Si Kalihim Tagapagpaganap Rafael M. Salas ang naglabas ng Memorandum Sirkular Blg. 172 (Marso 27, 1968) at Blg. 199 (Agosto 5, 1968)." },
+            { topic: "Wikang Pambansa", q: "Sino ang Kalihim Tagapagpaganap na naglabas ng Memorandum Blg. 277 (1969), na bumago sa Memorandum Sirkular Blg. 199?", options: ["Ernesto M. Maceda", "Rafael M. Salas", "Alejandro Melchor", "Isidro Cariño"], correct: 0, explain: "Si Kalihim Tagapagpaganap Ernesto M. Maceda ang naglabas ng Memorandum Blg. 277 noong Agosto 7, 1969." },
+            { topic: "Wikang Pambansa", q: "Sino ang Kalihim Tagapagpaganap na naglabas ng Memorandum Sirkular Blg. 384 (1970) at Blg. 443 (1971)?", options: ["Alejandro Melchor", "Rafael M. Salas", "Ernesto M. Maceda", "Juan L. Manuel"], correct: 0, explain: "Si Kalihim Tagapagpaganap Alejandro Melchor ang naglabas ng Memorandum Sirkular Blg. 384 (Agosto 17, 1970) at Blg. 443 (Marso 4, 1971)." },
+            { topic: "Wikang Pambansa", q: "Anong partikular na petsa ipinagdiwang ang ika-183 anibersaryo ng kapanganakan ni Francisco Balagtas ayon sa Memorandum Sirkular Blg. 443 (1971)?", options: ["Abril 2, 1971", "Marso 4, 1971", "Agosto 13, 1971", "Hulyo 29, 1971"], correct: 0, explain: "Ang palatuntunan sa ilalim ng Memorandum Sirkular Blg. 443 ay para sa ika-183 anibersaryo ng kapanganakan ni Francisco Balagtas noong Abril 2, 1971." },
+            { topic: "Wikang Pambansa", q: "Sino ang Pangulong naglagda ng Kautusang Tagapagpaganap Blg. 304 (1971), na nagpanauli sa SWP?", options: ["Ferdinand Marcos", "Ramon Magsaysay", "Corazon C. Aquino", "Fidel V. Ramos"], correct: 0, explain: "Si Pang. Ferdinand Marcos ang naglagda ng Kautusang Tagapagpaganap Blg. 304 noong Marso 16, 1971, na nagpanauli sa SWP." },
+            { topic: "Wikang Pambansa", q: "Sino ang Pangulong naglagda ng Kautusang Pangkalahatan Blg. 17 (1972), tungkol sa paglilimbag ng Official Gazette sa Pilipino at Ingles?", options: ["Ferdinand Marcos", "Ramon Magsaysay", "Manuel L. Quezon", "Corazon C. Aquino"], correct: 0, explain: "Si Pang. Ferdinand Marcos ang naglagda ng Kautusang Pangkalahatan Blg. 17 noong Disyembre 1, 1972." },
+            { topic: "Wikang Pambansa", q: "Bago anong mahalagang pangyayari isinagawa ang paglilimbag ng Official Gazette at mga pahayagan sa Pilipino at Ingles, ayon sa Kautusang Pangkalahatan Blg. 17 (1972)?", options: ["Bago idaos ang plebisito para sa ratipikasyon ng Saligang Batas (Enero 15, 1973)", "Bago ang eleksyon ng 1969", "Bago ang Batas Militar noong 1972", "Bago ang Kumbensyong Konstitusyunal noong 1971"], correct: 0, explain: "Isinagawa ang paglilimbag sa Pilipino at Ingles bago idaos ang plebisito para sa ratipikasyon ng Saligang Batas noong Enero 15, 1973." },
+            { topic: "Wikang Pambansa", q: "Sino ang Kalihim na naglabas ng Kautusang Pangkagawaran Blg. 25 (1974), tungkol sa patakaran sa edukasyong bilinggwal?", options: ["Juan L. Manuel", "Lourdes R. Quisumbing", "Isidro Cariño", "Jorge Bocobo"], correct: 0, explain: "Si Kalihim Juan L. Manuel ang naglabas ng Kautusang Pangkagawaran Blg. 25 noong Hunyo 19, 1974, tungkol sa patakaran sa edukasyong bilinggwal." },
+            { topic: "Wikang Pambansa", q: "Sino ring naglabas ng Kautusang Pangministri Blg. 22 (1978), bilang Ministro ng Edukasyon?", options: ["Juan L. Manuel", "Lourdes R. Quisumbing", "Jose E. Romero", "Jorge Bocobo"], correct: 0, explain: "Si Juan L. Manuel din, bilang Ministro, ang naglabas ng Kautusang Pangministri Blg. 22 noong Hulyo 21, 1978." },
+            { topic: "Wikang Pambansa", q: "Alinsunod sa Kautusang Pangministri Blg. 22 (1978), simula anong taong-aralan magbubukas ang lahat ng pangmataas na institusyon ng 6 na yunit ng Pilipino?", options: ["1979–1980", "1974–1975", "1983–84", "1987–1988"], correct: 0, explain: "Simula taong-aralan 1979–1980, magbubukas ang lahat ng pangmataas na institusyon ng 6 na yunit ng Pilipino, maliban sa kursong pagtuturo na mananatili sa 12 yunit." },
+            { topic: "Wikang Pambansa", q: "Alinsunod pa rin sa Kautusang Pangministri Blg. 22 (1978), simula anong taong-aralan gagamiting wikang panturo ang Pilipino sa ilang asignatura?", options: ["1983–84", "1979–1980", "1974–1975", "1996"], correct: 0, explain: "Simula taong-aralan 1983–84, gagamiting wikang panturo ang Pilipino sa ilang asignatura, ayon sa Kautusang Pangministri Blg. 22." },
+            { topic: "Wikang Pambansa", q: "Sino ang naging Tagapangulo ng SWP matapos itong panauliin noong 1971 sa ilalim ng Kautusang Tagapagpaganap Blg. 304?", options: ["Direktor Ponciano B.P. Pineda (Tagalog)", "Jaime C. Veyra (Visayang Samar)", "Cecilio Lopez (Tagalog)", "Fe Aldave-Yap"], correct: 0, explain: "Si Direktor Ponciano B.P. Pineda, kumakatawan sa Tagalog, ang naging Tagapangulo ng SWP matapos itong panauliin noong 1971." },
+            { topic: "Wikang Pambansa", q: "Sino ang kumatawan sa Pangasinan sa muling-itinatag na SWP noong 1971?", options: ["Dr. Juan L. Manuel", "Dr. Alejandro Q. Perez", "Dr. Lorenzo G. Cesar", "Dr. Mauyag M. Tamano"], correct: 0, explain: "Si Dr. Juan L. Manuel ang kagawad na kumatawan sa Pangasinan sa SWP noong 1971 (ang kaparehong Juan L. Manuel sa Kautusang Pangkagawaran Blg. 25 at Kautusang Pangministri Blg. 22)." },
+            { topic: "Wikang Pambansa", q: "Sino ang kumatawan sa Tausug (bilang wika ng minoryang kultural) sa SWP noong 1971?", options: ["Dr. Mauyag M. Tamano", "Dr. Clodualdo H. Leocadio", "Dr. Nelia Guanco Casambre", "Dr. Lino A. Arquiza"], correct: 0, explain: "Si Dr. Mauyag M. Tamano ang kumatawan sa Tausug, kinikilala bilang wika ng isang minoryang kultural, sa SWP noong 1971." },
+            { topic: "Wikang Pambansa", q: "Sino ang naging Pangalawang Direktor, Kalihim at Punong Tagapagpaganap ng SWP noong 1971?", options: ["Fe Aldave-Yap", "Cecilio Lopez", "Nelia Guanco Casambre", "Lourdes R. Quisumbing"], correct: 0, explain: "Si Fe Aldave-Yap ang naging Pangalawang Direktor, Kalihim at Punong Tagapagpaganap ng SWP sa ilalim ng Kautusang Tagapagpaganap Blg. 304 (1971)." },
+            { topic: "Wikang Pambansa", q: "Ayon sa Saligang Batas ng 1973, Artikulo XV, Seksyon 3, aling bersyon ang mananaig kapag may hidwaan sa pagitan ng tekstong English at ibang salin ng Saligang Batas?", options: ["Ang tekstong English", "Ang tekstong Pilipino", "Ang tekstong Kastila", "Ang tekstong Arabic"], correct: 0, explain: "Ayon sa Art. XV, Sek. 3 (1973), kapag may hidwaan, ang tekstong English ang mananaig sa Saligang Batas." },
+            { topic: "Wikang Pambansa", q: "Anong katawan ang dapat gumawa ng hakbang tungo sa pagpapaunlad at pormal na adopsyon ng panlahat na Wikang Pambansang Filipino, ayon sa Saligang Batas ng 1973?", options: ["Ang Pambansang Asemblea", "Ang Komisyon ng Wikang Pambansa", "Ang Surian ng Wikang Pambansa", "Ang Linangan ng mga Wika sa Pilipinas"], correct: 0, explain: "Ayon sa Art. XV, Sek. 3 (1973), ang Pambansang Asemblea ang gagawa ng hakbang tungo sa pagpapaunlad at pormal na adopsyon ng panlahat na Wikang Pambansa na makikilalang Filipino." },
+            { topic: "Wikang Pambansa", q: "Sino ang Pangulong naglagda ng Proklamasyon Blg. 19 (1986), na nagpahayag na ang Agosto 13–19 ay Linggo ng Wikang Pambansang Pilipino?", options: ["Corazon C. Aquino", "Ferdinand Marcos", "Fidel V. Ramos", "Ramon Magsaysay"], correct: 0, explain: "Si Pang. Corazon C. Aquino ang naglagda ng Proklamasyon Blg. 19 noong Agosto 12, 1986." },
+            { topic: "Wikang Pambansa", q: "Sa Proklamasyon Blg. 19 (1986), anong titulo o tawag ang ibinigay kay Manuel Quezon, kaugnay ng kanyang kaarawan sa Agosto 19?", options: ["Ama ng Wikang Pambansa", "Pangulo ng Wikang Pambansa", "Haring Tagapagtatag", "Punong Guro ng Wika"], correct: 0, explain: "Sa Proklamasyon Blg. 19 (1986), tinawag si Quezon na 'Ama ng Wikang Pambansa,' at ang Agosto 19 ang araw ng kanyang pagsilang." },
+            { topic: "Wikang Pambansa", q: "Anong kilusan ang binanggit sa Proklamasyon Blg. 19 (1986) bilang kaugnay sa mahalagang papel ng Wikang Pambansa?", options: ["Ang himagsikang pinasiklab ng Kapangyarihang Bayan (People Power)", "Ang Himagsikang Pilipino laban sa Espanya (1896)", "Ang Batas Militar noong 1972", "Ang Kumbensyong Konstitusyunal ng 1971"], correct: 0, explain: "Kinikilala ng Proklamasyon Blg. 19 (1986) ang mahalagang papel ng Wikang Pambansa sa himagsikang pinasiklab ng Kapangyarihang Bayan (People Power Revolution)." },
+            { topic: "Wikang Pambansa", q: "Anong partikular na petsa noong 1987 pinagtibay ang Bagong Konstitusyon ng Pilipinas?", options: ["Pebrero 2, 1987", "Agosto 6, 1987", "Agosto 25, 1987", "Marso 19, 1987"], correct: 0, explain: "Pinagtibay ang Bagong Konstitusyon ng 1987 noong Pebrero 2, 1987; dito matatagpuan ang Artikulo XIV, Seksyon 6–9 tungkol sa wika." },
+            { topic: "Wikang Pambansa", q: "Sino ang Kalihim ng DECS na naglabas ng parehong Kautusang Blg. 52 (bilinggwal) at Kautusang Pangkagawaran Blg. 81 (bagong alfabeto) noong 1987?", options: ["Lourdes R. Quisumbing", "Isidro Cariño", "Juan L. Manuel", "Jose E. Romero"], correct: 0, explain: "Si Kalihim Lourdes R. Quisumbing ng DECS ang naglabas ng Kautusang Blg. 52 at ng Kautusang Pangkagawaran Blg. 81, pareho noong 1987." },
+            { topic: "Wikang Pambansa", q: "Sino ang Pangulong naglagda ng Kautusang Tagapagpaganap Blg. 335 noong Agosto 25, 1988?", options: ["Corazon C. Aquino", "Ferdinand Marcos", "Fidel V. Ramos", "Ramon Magsaysay"], correct: 0, explain: "Si Pang. Corazon C. Aquino ang naglagda ng Kautusang Tagapagpaganap Blg. 335 noong Agosto 25, 1988." },
+            { topic: "Wikang Pambansa", q: "Sino ang Kalihim na naglabas ng Kautusang Pangkagawaran Blg. 21 (Marso 19, 1990), tungkol sa paggamit ng Filipino sa panunumpa ng katapatan?", options: ["Isidro Cariño", "Lourdes R. Quisumbing", "Juan L. Manuel", "Jorge Bocobo"], correct: 0, explain: "Si Kalihim Isidro Cariño ang naglabas ng Kautusang Pangkagawaran Blg. 21 noong Marso 19, 1990." },
+            { topic: "Wikang Pambansa", q: "Ayon sa CHED Memorandum Blg. 59 (1996), ano ang pamagat ng asignaturang Filipino 1?", options: ["Sining ng Pakikipagtalastasan", "Pagbasa at Pagsulat sa Iba't Ibang Disiplina", "Retorika", "Panitikang Pilipino"], correct: 0, explain: "Ayon sa CHED Memorandum Blg. 59 (1996), ang Filipino 1 ay pinamagatang Sining ng Pakikipagtalastasan." },
+            { topic: "Wikang Pambansa", q: "Ano naman ang pamagat ng Filipino 2 sa parehong CHED Memorandum Blg. 59 (1996)?", options: ["Pagbasa at Pagsulat sa Iba't Ibang Disiplina", "Sining ng Pakikipagtalastasan", "Retorika", "Kasaysayan ng Wikang Pambansa"], correct: 0, explain: "Ang Filipino 2, ayon sa CHED Memorandum Blg. 59, ay pinamagatang Pagbasa at Pagsulat sa Iba't Ibang Disiplina." },
+            { topic: "Wikang Pambansa", q: "Ano ang pamagat ng Filipino 3 sa parehong memorandum?", options: ["Retorika", "Sining ng Pakikipagtalastasan", "Pagbasa at Pagsulat sa Iba't Ibang Disiplina", "Panitikan ng Pilipinas"], correct: 0, explain: "Ang Filipino 3, ayon sa CHED Memorandum Blg. 59 (1996), ay pinamagatang Retorika." },
+            { topic: "Wikang Pambansa", q: "Sino ang Pangulong naglagda ng Proklama Blg. 1041 (1997), na nagtakda ng Agosto bilang Buwan ng Wikang Filipino?", options: ["Fidel V. Ramos", "Corazon C. Aquino", "Ferdinand Marcos", "Joseph Estrada"], correct: 0, explain: "Si Pang. Fidel V. Ramos ang naglagda ng Proklama Blg. 1041 noong Hulyo 1997." },
+            { topic: "Wikang Pambansa", q: "Ayon sa Art. XIV, Sek. 7 ng Konstitusyon ng 1987, sa anong batayan itinataguyod ang Kastila at Arabic bilang wika?", options: ["Kusa at opsyonal", "Sapilitan sa lahat ng paaralan", "Bilang tanging wikang panturo", "Bilang kapalit ng Ingles"], correct: 0, explain: "Ayon sa Konstitusyon ng 1987, itinataguyod ang Kastila at Arabic sa kusa at opsyonal na batayan, hindi sapilitan." },
+            { topic: "Wikang Pambansa", q: "Anong tula ni Jose P. Rizal (isinulat sa Calamba, 1869) ang ipinapalagay na nagpapahiwatig ng paniniwalang may sarili nang alpabeto at letra ang wika ng mga Pilipino, katulad ng ibang bansa?", options: ["Sa Aking mga Kababata", "Noli Me Tangere", "El Filibusterismo", "Mi Último Adiós"], correct: 0, explain: "Ang tulang 'Sa Aking mga Kababata,' isinulat umano ni Rizal sa Calamba noong 1869, ay ipinapalagay na nagpapahiwatig ng paniniwalang may sarili nang alpabeto at letra ang wika ng mga Pilipino." },
+            { topic: "Wikang Pambansa", q: "Sa Alibata/Baybayin, anong tunog ang kasama sa bawat katinig kung walang kudlit (tuldok)?", options: ["/a/", "/e/ o /i/", "/o/ o /u/", "Walang tunog na patinig"], correct: 0, explain: "Sa Alibata, bawat katinig ay may kasamang patinig na /a/ kung walang kudlit; nagbabago lamang ito tungong /e,i/ (kudlit sa itaas) o /o,u/ (kudlit sa ibaba)." },
+            { topic: "Wikang Pambansa", q: "Kaninong teorya ang binanggit tungkol sa direksyon ng pagsulat (patayo mula itaas pababa, pahalang mula kaliwa pakanan) ng mga sinaunang Pilipino?", options: ["Padre Pedro Chirino", "Dr. Trinidad Pardo de Tavera", "Dr. Jose P. Rizal", "Lope K. Santos"], correct: 0, explain: "Ayon sa teorya ni Padre Pedro Chirino, ang mga sinaunang Pilipino ay sumulat nang pavertikal (itaas pababa) at pahorizontal (kaliwa pakanan)." },
+            { topic: "Wikang Pambansa", q: "Saan at kailan unang nalathala ang akdang \"El Sanscrito en la Lengua Tagala\" ni Dr. Trinidad H. Pardo de Tavera?", options: ["Paris, 1884", "Berlin, 1887", "Leipzig, 1886", "Maynila, 1890"], correct: 0, explain: "Ang \"El Sanscrito en la Lengua Tagala\" ni Pardo de Tavera ay unang nalathala sa Paris noong 1884." },
+            { topic: "Wikang Pambansa", q: "Ano ang pangunahing mungkahi ni Rizal sa ortograpiya tungkol sa mga titik na dating ginagamit sa pagsulat ng Tagalog?", options: ["Gamitin ang k at w sa halip na c at o/u", "Gamitin ang c at o/u sa halip na k at w", "Alisin ang lahat ng patinig sa salita", "Gamitin lamang ang mga titik ng Abakada"], correct: 0, explain: "Iminungkahi ni Rizal na gamitin ang k at w sa halip na c at o/u, kaya naging salakot (mula sa salacot) at araw (mula sa arao)." },
+            { topic: "Wikang Pambansa", q: "Sa anong pambansang kaganapan noong 1971 isinagawa ng Lupon ng Sanggunian ng SWP ang mga public hearing kaugnay ng mungkahing bagong alfabeto?", options: ["Kumbensyong Konstitusyunal", "Linggo ng Wikang Pambansa", "Buwan ng Wikang Filipino", "Kumperensya ng SANGFIL"], correct: 0, explain: "Nagsagawa ang Lupon ng Sanggunian ng SWP ng pag-aaral at public hearings sa Pambansang Wika ng Kumbensyong Konstitusyunal noong 1971." },
+            { topic: "Wikang Pambansa", q: "Ilang titik ang iminungkahi ng Malakanyang bilang kapalit, sa liham nito noong Enero 11, 1973, laban sa pagsasama ng mga digrapong CH, LL, RR at NG?", options: ["27 titik", "20 titik", "31 titik", "28 titik"], correct: 0, explain: "Sa liham ng Malakanyang sa Direktor ng SWP (Enero 11, 1973), tumanggi ito sa pagsasama ng mga digrapo at iminungkahi ang 27 titik na lamang." },
+            { topic: "Wikang Pambansa", q: "Sa anong pahayagan at petsa unang nalathala ang artikulo ni Dr. Pamela C. Constantino na \"Tagalog, Pilipino, Filipino: May Pagkakaiba Ba?\"", options: ["Kabayan, Agosto 25", "La Solidaridad, Abril 15", "Official Gazette, Disyembre 1", "Philippine Star, Agosto 19"], correct: 0, explain: "Ang artikulo ni Dr. Pamela C. Constantino ay mula sa pahayagang Kabayan, inilathala noong Agosto 25." },
+            { topic: "Wikang Pambansa", q: "Saang departamento at unibersidad nagtuturo si Dr. Pamela C. Constantino bilang propesor?", options: ["Departamento ng Filipino at Panitikan ng Pilipinas, UP Diliman", "Departamento ng Lingguwistika, Ateneo de Manila", "Departamento ng Kasaysayan, UP Diliman", "Departamento ng Filipino, De La Salle University"], correct: 0, explain: "Si Dr. Pamela C. Constantino ay propesor sa Departamento ng Filipino at Panitikan ng Pilipinas, UP Diliman, at naging Chairperson din ng departamentong ito." },
+            { topic: "Wikang Pambansa", q: "Naging pangulo si Dr. Pamela Constantino ng anong organisasyon?", options: ["SANGFIL (Sanggunian ng mga Kolehiyo at Unibersidad sa Filipino)", "SWP (Surian ng Wikang Pambansa)", "Komisyon ng Wikang Filipino", "Linangan ng mga Wika sa Pilipinas"], correct: 0, explain: "Naging Pangulo si Dr. Pamela Constantino ng SANGFIL, ang Sanggunian ng mga Kolehiyo at Unibersidad sa Filipino." },
+            { topic: "Wikang Pambansa", q: "Ayon sa talahanayang paghahambing sa artikulo ni Constantino, anong taon unang ginamit ang terminong \"Filipino National Language,\" na batay sa Tagalog?", options: ["1943", "1937", "1959", "1973"], correct: 0, explain: "Ayon sa talahanayan sa artikulo, ang Pilipino bilang 'Filipino National Language' na batay sa Tagalog ay may kaugnayan sa 1943, bago pa man opisyal na ipinasa ang Department Order No. 7 noong 1959." }
         ];
 
         // Definition-of-terms flashcards — for exams that are just term/definition recall.
@@ -2053,7 +2192,28 @@
             { topic: "Wikang Pambansa", term: "28 titik ng Alpabetong Filipino", definition: "A, B, C, D, E, F, G, H, I, J, K, L, M, N, Ñ, NG, O, P, Q, R, S, T, U, V, W, X, Y, Z." },
             { topic: "Wikang Pambansa", term: "Pasalitang pagbabaybay", definition: "Binibigkas ang pangalan ng titik nang pa-Ingles maliban sa Ñ. Hal.: ibon = /ay bi o en/; bote = /bi o ti i/; U.P. = /yu pi/; M.L.Q.U. = /em el kyu yu/." },
             { topic: "Wikang Pambansa", term: "2001 Revisyon ng Ortograpiya", definition: "Binuo ng teknikal na panel ng Komisyon ng Wikang Filipino. Walang pagbabago sa komposisyon ng alpabeto/pangalan ng titik, ngunit pinalawak ang gamit ng F, J, V, at Z." },
-            { topic: "Wikang Pambansa", term: "Bilang ng titik sa magkaibang panahon", definition: "Alibata: 17. Abakada: 20. Mungkahing 1971: 31 (20+11, hindi tinanggap). Alpabetong Filipino 1987: 28. Revisyon 2001: 28 (parehong komposisyon)." }
+            { topic: "Wikang Pambansa", term: "Bilang ng titik sa magkaibang panahon", definition: "Alibata: 17. Abakada: 20. Mungkahing 1971: 31 (20+11, hindi tinanggap). Alpabetong Filipino 1987: 28. Revisyon 2001: 28 (parehong komposisyon)." },
+
+            { topic: "Wikang Pambansa", term: "Kontribusyon ng mga Pangulo", definition: "Quezon (SWP 1936; KT 134/1937; KT 263/1940). Magsaysay (Proklama 12/1954; 186/1955). Marcos (KT 96/1967; KT 187/1968; KT 304/1971; Kautusang Pangkalahatan 17/1972; Atas ng Pangulo 73). Aquino (Proklamasyon 19/1986; EO 335/1988). Ramos (Proklama 1041/1997)." },
+            { topic: "Wikang Pambansa", term: "Ama ng Wikang Pambansa", definition: "Titulong ibinigay kay Manuel L. Quezon sa Proklamasyon Blg. 19 (1986) ni Pang. Corazon Aquino; ang Agosto 19 ay araw ng kanyang pagsilang, kaya saklaw ng Linggo ng Wikang Pambansa (Ago. 13-19)." },
+            { topic: "Wikang Pambansa", term: "Mga Kalihim Tagapagpaganap (1968-1971)", definition: "Rafael M. Salas (MC 172 at 199, 1968). Ernesto M. Maceda (Memo 277, 1969). Alejandro Melchor (MC 384/1970, MC 443/1971)." },
+            { topic: "Wikang Pambansa", term: "Juan L. Manuel", definition: "Kalihim na naglabas ng Kautusang Pangkagawaran Blg. 25 (1974, edukasyong bilinggwal); naging Ministro nang ilabas ang Kautusang Pangministri Blg. 22 (1978). Kagawad din ng SWP 1971 (kumatawan sa Pangasinan)." },
+            { topic: "Wikang Pambansa", term: "Lourdes R. Quisumbing", definition: "Kalihim ng DECS noong 1987; naglabas ng Kautusang Blg. 52 (Filipino bilang wikang panturo, bilinggwal) at Kautusang Pangkagawaran Blg. 81 (bagong alfabeto, Ago. 6, 1987)." },
+            { topic: "Wikang Pambansa", term: "Isidro Cariño", definition: "Kalihim na naglabas ng Kautusang Pangkagawaran Blg. 21 (Marso 19, 1990), tungkol sa paggamit ng Filipino sa panunumpa ng katapatan sa Saligang-Batas." },
+            { topic: "Wikang Pambansa", term: "SWP noong 1971 (Kautusang Tagapagpaganap Blg. 304)", definition: "Direktor Ponciano B.P. Pineda (Tagalog, Tagapangulo); Dr. Lino A. Arquiza (Cebuano); Dr. Nelia Guanco Casambre (Hiligaynon); Dr. Lorenzo G. Cesar (Samar-Leyte); Dr. Clodualdo H. Leocadio (Bikol); Dr. Juan L. Manuel (Pangasinan); Dr. Alejandro Q. Perez (Pampango); Dr. Mauyag M. Tamano (Tausug); Fe Aldave-Yap (Pangalawang Direktor, Kalihim at Punong Tagapagpaganap)." },
+            { topic: "Wikang Pambansa", term: "Saligang Batas 1973, Art. XV Sek. 3 (detalye)", definition: "Ipapahayag sa English at Pilipino, isasalin sa dayalektong sinasalita ng mahigit 50,000 tao, at sa Kastila at Arabic; kapag may hidwaan, ang tekstong English ang mananaig. Ang Pambansang Asemblea ang gagawa ng hakbang tungo sa adopsyon ng Filipino." },
+            { topic: "Wikang Pambansa", term: "Filipino 1, 2, 3 (CHED Memo 59, 1996)", definition: "Filipino 1: Sining ng Pakikipagtalastasan. Filipino 2: Pagbasa at Pagsulat sa Iba't Ibang Disiplina. Filipino 3: Retorika. Siyam na yunit sa kabuuan." },
+            { topic: "Wikang Pambansa", term: "Plebisito ng Saligang Batas 1973", definition: "Isinagawa ang Enero 15, 1973; bago ito, iniutos ng Kautusang Pangkalahatan Blg. 17 (1972) na ilimbag ang Official Gazette at pahayagan sa Pilipino at Ingles." },
+            { topic: "Wikang Pambansa", term: "Sa Aking mga Kababata", definition: "Tulang isinulat umano ni Jose Rizal sa Calamba noong 1869; ipinapalagay na nagpapahiwatig ng paniniwalang may sarili nang alpabeto at letra ang wika ng mga Pilipino." },
+            { topic: "Wikang Pambansa", term: "Padre Pedro Chirino", definition: "Pinagmulan ng teoryang nagsasabing sumulat ang mga sinaunang Pilipino nang patayo (itaas pababa) at pahalang (kaliwa pakanan)." },
+            { topic: "Wikang Pambansa", term: "Alibata — default na tunog", definition: "Bawat katinig ay may kasamang patinig na /a/ kung walang kudlit; may tuldok sa itaas = /e/ o /i/; may tuldok sa ibaba = /o/ o /u/." },
+            { topic: "Wikang Pambansa", term: "El Sanscrito en la Lengua Tagala", definition: "Akda ni Dr. Trinidad H. Pardo de Tavera, unang nalathala sa Paris noong 1884; pinagbatayan ng bagong ortograpiyang Tagalog na kinilala ni Rizal." },
+            { topic: "Wikang Pambansa", term: "Mungkahi ni Rizal: k at w", definition: "Gamitin ang k at w sa halip na c at o/u sa pagbabaybay ng Tagalog — hal. salacot → salakot, arao → araw." },
+            { topic: "Wikang Pambansa", term: "Kumbensyong Konstitusyunal (1971) at ang alfabeto", definition: "Dito isinagawa ng Lupon ng Sanggunian ng SWP ang mga public hearing kaugnay ng mungkahing 31-titik na alfabeto (1971)." },
+            { topic: "Wikang Pambansa", term: "Mungkahi ng Malakanyang (Enero 11, 1973)", definition: "Tumanggi ang Malakanyang sa pagsasama ng mga digrapong CH, LL, RR at NG, at iminungkahi ang 27 titik na lamang bilang kapalit." },
+            { topic: "Wikang Pambansa", term: "Dr. Pamela C. Constantino — karagdagang detalye", definition: "Propesor, Departamento ng Filipino at Panitikan ng Pilipinas, UP Diliman; dating Chairperson ng departamento at Pangulo ng SANGFIL. Artikulo mula sa pahayagang Kabayan, Agosto 25." },
+            { topic: "Wikang Pambansa", term: "Filipino National Language (1943)", definition: "Ayon sa paghahambing nina Constantino, ang Pilipino bilang wikang pambansang batay sa Tagalog ay may kaugnayan na sa taong 1943, bago pa opisyal na ipinasa ang Department Order No. 7 (1959)." },
+            { topic: "Wikang Pambansa", term: "Bisa, et al. (1983)", definition: "Sanggunian na binanggit sa aralin para sa katotohanang mahigit 7,000 pulo mayroon ang Pilipinas at higit 100 dayalekto o wikain." }
         ];
 
         // Java Coding Exam — real Java, compiled and run for real (via the Wandbox API).
@@ -2841,6 +3001,95 @@
         el('fcExitBtn').addEventListener('click', () => showScreen('screen-setup'));
         el('fcRetakeBtn').addEventListener('click', startFlashcards);
         el('fcNewSetBtn').addEventListener('click', () => showScreen('screen-setup'));
+
+        // Search — look up past questions & flashcards by keyword, for review after a quiz.
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        function highlightMatch(str, query) {
+            const escaped = escapeHtml(str);
+            if (!query) return escaped;
+            const safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            return escaped.replace(new RegExp(`(${safeQuery})`, 'ig'), '<mark>$1</mark>');
+        }
+
+        function renderSearchResults(rawQuery) {
+            const query = rawQuery.trim().toLowerCase();
+            const resultsEl = el('searchResults');
+            const countEl = el('searchCount');
+            resultsEl.innerHTML = "";
+
+            if (!query) {
+                countEl.textContent = "";
+                resultsEl.innerHTML = `<p class="search-empty">Start typing to search across all ${QUESTIONS.length} questions and ${FLASHCARDS.length} flashcard terms.</p>`;
+                return;
+            }
+
+            const letters = ['A', 'B', 'C', 'D'];
+            const matchedQuestions = QUESTIONS.filter(q =>
+                q.topic.toLowerCase().includes(query) ||
+                q.q.toLowerCase().includes(query) ||
+                q.options.some(o => o.toLowerCase().includes(query)) ||
+                q.explain.toLowerCase().includes(query)
+            );
+            const matchedCards = FLASHCARDS.filter(c =>
+                c.topic.toLowerCase().includes(query) ||
+                c.term.toLowerCase().includes(query) ||
+                c.definition.toLowerCase().includes(query)
+            );
+
+            const total = matchedQuestions.length + matchedCards.length;
+            if (total === 0) {
+                countEl.textContent = "No matches.";
+                resultsEl.innerHTML = `<p class="search-empty">Nothing found for "${escapeHtml(rawQuery.trim())}". Try a shorter or different keyword.</p>`;
+                return;
+            }
+
+            const LIMIT = 60;
+            countEl.textContent = `${total} match${total === 1 ? '' : 'es'}${total > LIMIT ? ` — showing first ${LIMIT}` : ''}`;
+
+            const frag = document.createDocumentFragment();
+            let shown = 0;
+
+            matchedQuestions.forEach(q => {
+                if (shown >= LIMIT) return;
+                shown++;
+                const item = document.createElement('div');
+                item.className = 'review-item';
+                item.innerHTML = `
+          <span class="search-topic-tag">${escapeHtml(q.topic)}</span>
+          <p class="rq">${highlightMatch(q.q, query)}</p>
+          <div class="ra correct"><span class="ra-label">Answer</span><span>${letters[q.correct]}. ${highlightMatch(q.options[q.correct], query)}</span></div>
+          <p class="rexp">${highlightMatch(q.explain, query)}</p>
+        `;
+                frag.appendChild(item);
+            });
+
+            matchedCards.forEach(c => {
+                if (shown >= LIMIT) return;
+                shown++;
+                const item = document.createElement('div');
+                item.className = 'review-item';
+                item.innerHTML = `
+          <span class="search-topic-tag">${escapeHtml(c.topic)}</span>
+          <div class="ra term"><span class="ra-label">Term</span><span>${highlightMatch(c.term, query)}</span></div>
+          <p class="rexp">${highlightMatch(c.definition, query)}</p>
+        `;
+                frag.appendChild(item);
+            });
+
+            resultsEl.appendChild(frag);
+        }
+
+        el('startSearchBtn').addEventListener('click', () => {
+            showScreen('screen-search');
+            el('searchInput').value = "";
+            renderSearchResults("");
+            setTimeout(() => el('searchInput').focus(), 50);
+        });
+        el('searchBackBtn').addEventListener('click', () => showScreen('screen-setup'));
+        el('searchInput').addEventListener('input', e => renderSearchResults(e.target.value));
 
         buildSetupScreen();
     </script>
